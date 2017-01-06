@@ -36,24 +36,6 @@ class Skills extends Component {
     this.setState({modalIsOpen: false});
   }
 
-  saveModal() {
-    console.log("testsaves")
-    this.postNewSkill();
-    this.closeModal();
-  }
-
-  changeNameHandler(event) {
-    this.setState({
-      skill_name: event.target.value
-    });
-  }
-
-  changeValueHandler(event) {
-    this.setState({
-      skill_type: event.target.value
-    });
-  }
-
   componentDidMount() {
     axios.get(`http://localhost:8080/skills/`)
       .then(res => {
