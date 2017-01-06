@@ -1,21 +1,35 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ReactDOM from 'react-dom';
 
-class App extends Component {
+import { hashHistory, IndexRedirect, Route, Router } from 'react-router';
+import 'bootstrap/dist/css/bootstrap.css';
+
+import Skills from './Skills';
+import Header from './Header'
+import Team from './Team'
+
+
+
+class Home extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h1>Maryville</h1>
-          <h3>&lt;dev center&gt;</h3>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <h1>Skill Directory Home</h1>
     );
   }
 }
 
-export default App;
+const mountNode = document.createElement('div');
+document.body.appendChild(mountNode);
+
+ReactDOM.render(
+  <Router history={hashHistory}>
+    <Route path="/" component={Header}>
+      <IndexRedirect to="/home" />
+      <Route path="home" component={Home} />
+      <Route path="skills" component={Skills} />
+      <Route path="team" component={Team} />
+
+    </Route>
+  </Router>,
+  mountNode
+);

@@ -1,0 +1,37 @@
+/*
+.Header {
+  background-color: #555555;
+  height: 80px;
+  padding: 20px;
+  padding-left: 10px;
+  padding-top: 5px;
+  color: white;
+  text-align: left;
+}
+
+.Header-intro {
+  font-size: large;
+}
+
+h1 {
+  color: rgb(40, 185, 217);
+  font-size: 23px;
+  margin:0px;
+  padding: 0px;
+  width: inherit;
+}
+h3 {
+  font-size: 12px;
+  margin:0px;
+  padding:0px;
+}*/
+
+@media (min-width: 768px)
+.navbar-header {
+  float: inherit;
+}
+
+@media (min-width: 768px)
+.navbar-right {
+    margin-right: 15px;
+}
