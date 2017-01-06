@@ -1,7 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+You can find some great info on how to perform common tasks [here]([here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## To Run Locally
 ```bash
@@ -9,6 +8,8 @@ git clone https://github.com/maryvilledev/skilldirectoryui.git
 cd skilldirectoryui
 npm install
 npm install axios
+npm install react-modal
+npm install react-select
 npm start
 ```
 This will cause the project to start, and will open a new tab in your default browser. Note that you'll also want
