@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import Button from 'react-bootstrap/lib/Button';
+import Modal from 'react-modal';
+
+
 
 import axios from 'axios';
+import SkillForm from './SkillsModal'
 
 
 
@@ -10,8 +15,43 @@ class Skills extends Component {
     super(props);
 
     this.state = {
-      skills: []
+      skills: [],
+      modalIsOpen: false,
     };
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+  afterOpenModal() {
+ }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
+  saveModal() {
+    console.log("testsaves")
+    this.postNewSkill();
+    this.closeModal();
+  }
+
+  changeNameHandler(event) {
+    this.setState({
+      skill_name: event.target.value
+    });
+  }
+
+  changeValueHandler(event) {
+    this.setState({
+      skill_type: event.target.value
+    });
   }
 
   componentDidMount() {
@@ -23,7 +63,6 @@ class Skills extends Component {
         console.log(res.data);
       });
   }
-
   render() {
     return (
       <div>
@@ -33,25 +72,18 @@ class Skills extends Component {
             <li key={skill.id}>{skill.name}    {skill.skill_type}</li>
           )}
         </ul>
+        <Button bsStyle="primary" onClick={this.openModal}>Add Skill</Button>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+        >
+          <SkillForm />
+        </Modal>
       </div>
     );
   }
 }
-
-
-// class Skills extends Component {
-//     render(){
-//         return (
-//           <div>
-//             <h1>Skills</h1>
-//             <ul>
-//               <li>Java</li>
-//               <li>JavaScript</li>
-//             </ul>
-//           </div>
-//
-//         );
-//     }
-// }
 
 export default Skills
