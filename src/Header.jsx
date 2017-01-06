@@ -10,11 +10,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const Header = ({ children }) => (
   <Grid>
-    <Navbar bsStyle="default">
+    <Navbar bsStyle="default"  fluid="false">
       <Navbar.Header>
 
         <Navbar.Brand>
-          <Link to="/">React-Bootstrap</Link>
+          <Link to="/">Skill Directory</Link>
         </Navbar.Brand>
         <Nav>
           <NavItem eventKey={1}>
