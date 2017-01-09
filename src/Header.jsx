@@ -9,13 +9,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 const Header = ({ children }) => (
-  <Grid>
-    <Navbar bsStyle="default"  fluid="false">
+  <Grid fluid="true">
+    <Navbar bsStyle="default" fluid="true">
       <Navbar.Header>
 
         <Navbar.Brand>
           <Link to="/">Skill Directory</Link>
         </Navbar.Brand>
+      </Navbar.Header>
         <Nav>
           <NavItem eventKey={1}>
             <Link to="skills">Skills</Link>
@@ -24,11 +25,11 @@ const Header = ({ children }) => (
             <Link to="team">Team</Link>
           </NavItem>
         </Nav>
-      </Navbar.Header>
 
-        <Nav pullRight>
-          <NavItem  eventKey={3} disabled >Log in</NavItem>
-        </Nav>
+
+      <Nav pullRight>
+        <NavItem  eventKey={3} disabled >Log in</NavItem>
+      </Nav>
 
       </Navbar>
     {children}
