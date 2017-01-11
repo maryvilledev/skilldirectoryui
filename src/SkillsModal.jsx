@@ -36,13 +36,14 @@ class SkillForm extends React.Component {
     const skill_name = this.state.skill_name;
     const skill_type = this.state.skill_type;
 
-    axios.post(`http://localhost:8080/skills/`, {
+    axios.post(this.props.api + '/skills/', {
         name: skill_name,
         skill_type: skill_type
     })
     .then(function (response) {
       console.log(response);
-    })
+      this.props.closeModal();
+    }.bind(this))
     .catch(err => {
       console.log('caught an error', err);
     });

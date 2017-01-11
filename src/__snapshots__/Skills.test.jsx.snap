@@ -80,7 +80,9 @@ ShallowWrapper {
             parentSelector={[Function]}
             portalClassName="ReactModalPortal"
             shouldCloseOnOverlayClick={true}>
-            <SkillForm />
+            <SkillForm
+                api="http://localhost:8080"
+                closeModal={[Function]} />
         </Modal>
     </Row>
     <h1 />
@@ -164,7 +166,9 @@ ShallowWrapper {
                   parentSelector={[Function]}
                   portalClassName="ReactModalPortal"
                   shouldCloseOnOverlayClick={true}>
-                  <SkillForm />
+                  <SkillForm
+                        api="http://localhost:8080"
+                        closeModal={[Function]} />
             </Modal>
       </Row>
       <h1 />
@@ -294,7 +298,9 @@ ShallowWrapper {
                               parentSelector={[Function]}
                               portalClassName="ReactModalPortal"
                               shouldCloseOnOverlayClick={true}>
-                              <SkillForm />
+                              <SkillForm
+                                        api="http://localhost:8080"
+                                        closeModal={[Function]} />
                     </Modal>
           </Row>
           <h1 />
@@ -378,7 +384,9 @@ ShallowWrapper {
                               parentSelector={[Function]}
                               portalClassName="ReactModalPortal"
                               shouldCloseOnOverlayClick={true}>
-                              <SkillForm />
+                              <SkillForm
+                                        api="http://localhost:8080"
+                                        closeModal={[Function]} />
                     </Modal>
           </Row>
           <h1 />

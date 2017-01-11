@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
-import { Grid , Row, Col }  from 'react-bootstrap';
+import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
 import SkillForm from './SkillsModal'
 
 var Select = require('react-select');
+var api = (process.env.REACT_APP_API);
 
 class Skills extends Component {
   constructor(props) {
@@ -40,8 +41,7 @@ class Skills extends Component {
   }
 
   onChange(key, value) {
-    // console.log(key + value);
-    axios.get(`http://localhost:8080/skills/` + value)
+    axios.get(api + '/skills/' + value)
       .then(res => {
         const skillresults = res.data
         console.log(value)
@@ -59,7 +59,8 @@ class Skills extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/skills/`)
+    console.log(process.env)
+    axios.get(api + `/skills/`)
       .then(res => {
         const skills = res.data.map(obj => obj);
         this.setState({ skills });
@@ -90,7 +91,7 @@ class Skills extends Component {
               onRequestClose={this.closeModal}
               contentLabel="SkillModal"
             >
-              <SkillForm />
+              <SkillForm api={api} closeModal={this.closeModal} />
             </Modal>
 
             {/* <Col xs={4} md={4} /> */}
