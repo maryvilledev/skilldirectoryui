@@ -1,0 +1,5 @@
+echo $API
+
+REACT_APP_API=$API npm run build
+
+cd build && python -m SimpleHTTPServer 9000
