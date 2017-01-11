@@ -7,9 +7,6 @@ You can find some great info on how to perform common tasks [here](https://githu
 git clone https://github.com/maryvilledev/skilldirectoryui.git
 cd skilldirectoryui
 npm install
-npm install axios
-npm install react-modal
-npm install react-select
 npm start
 ```
 This will cause the project to start, and will open a new tab in your default browser. Note that you'll also want
