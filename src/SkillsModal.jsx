@@ -45,7 +45,8 @@ class SkillForm extends React.Component {
 
     .then(function (response) {
       console.log(response);
-    })
+      this.props.closeModal();
+    }.bind(this))
     .catch(err => {
     console.log('caught an error', err);
   });
