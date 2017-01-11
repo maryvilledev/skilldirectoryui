@@ -95,7 +95,7 @@ class Skills extends Component {
               onRequestClose={this.closeModal}
               contentLabel="SkillModal"
             >
-              <SkillForm api={api} />
+              <SkillForm api={api} closeModal={this.closeModal} />
             </Modal>
 
             {/* <Col xs={4} md={4} /> */}
