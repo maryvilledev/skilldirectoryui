@@ -63,6 +63,7 @@ class Skills extends Component {
   }
 
   componentDidMount() {
+    console.log(process.env)
     axios.get(api + `/skills/`)
       .then(res => {
         const skills = res.data.map(obj => obj);
