@@ -1,8 +1,5 @@
 import React from 'react';
-
 import axios from 'axios';
-
-
 import 'react-select/dist/react-select.css';
 
 var Select = require('react-select');
@@ -14,20 +11,21 @@ var skillTypes = [
   { value: 'orchestration', label: 'Orchestration' }
 ];
 
-
 class SkillForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       skill_name: "",
       skill_type: ""
     };
+    this.logChange = this.logChange.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   logChange(val) {
     console.log("Selected:" + val);
   }
-
 
   onChange(key, value) {
     this.setState({ [key]: value});
@@ -42,13 +40,12 @@ class SkillForm extends React.Component {
         name: skill_name,
         skill_type: skill_type
     })
-
     .then(function (response) {
       console.log(response);
     })
     .catch(err => {
-    console.log('caught an error', err);
-  });
+      console.log('caught an error', err);
+    });
   }
 
   render() {
@@ -56,10 +53,20 @@ class SkillForm extends React.Component {
     const onSkillTypeChange = ev => this.onChange("skill_type", ev.value);
     return (
       <form onSubmit={ev => this.onSubmit(ev)}>
-        <div>Name: <input name="skill_name" type="text" value={this.state.skill_name} onChange={onSkillNameChange} /></div>
-        <div>Skill Type: <Select name="skill_type" value={this.state.skill_type} onChange={onSkillTypeChange} options={skillTypes} /></div>
+        <div>
+          Name: <input name="skill_name" 
+                       type="text" 
+                       value={this.state.skill_name} 
+                       onChange={onSkillNameChange} />
+        </div>
+        <div>
+          Skill Type: <Select name="skill_type" 
+                              value={this.state.skill_type} 
+                              onChange={onSkillTypeChange} 
+                              options={skillTypes} />
+        </div>
         <button type="submit">Save</button>
-        </form>
+      </form>
     );
   }
 }
