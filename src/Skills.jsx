@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
 import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
-import SkillForm from './SkillsModal'
+import SkillForm from './SkillsForm'
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);

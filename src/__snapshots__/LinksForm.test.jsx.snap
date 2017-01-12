@@ -1,16 +1,24 @@
-exports[`<SkillsModal /> matches the stored snapshot 1`] = `
+exports[`<LinksForm /> matches the stored snapshot 1`] = `
 <form
   onSubmit={[Function]}>
   <div>
     Name: 
     <input
-      name="skill_name"
+      name="link_name"
       onChange={[Function]}
       type="text"
       value="" />
   </div>
   <div>
-    Skill Type: 
+    URL: 
+    <input
+      name="link_url"
+      onChange={[Function]}
+      type="text"
+      value="" />
+  </div>
+  <div>
+    Type: 
     <Select
       addLabelText="Add \"{label}\"?"
       arrowRenderer={[Function]}
@@ -35,7 +43,7 @@ exports[`<SkillsModal /> matches the stored snapshot 1`] = `
       menuBuffer={0}
       menuRenderer={[Function]}
       multi={false}
-      name="skill_type"
+      name="link_type"
       noResultsText="No results found"
       onBlurResetsInput={true}
       onChange={[Function]}
@@ -45,20 +53,16 @@ exports[`<SkillsModal /> matches the stored snapshot 1`] = `
       options={
         Array [
           Object {
-            "label": "Compiled",
-            "value": "compiled",
+            "label": "Blog",
+            "value": "blog",
           },
           Object {
-            "label": "Scripted",
-            "value": "scripted",
+            "label": "Tutorial",
+            "value": "tutorial",
           },
           Object {
-            "label": "Database",
-            "value": "database",
-          },
-          Object {
-            "label": "Orchestration",
-            "value": "orchestration",
+            "label": "Webpage",
+            "value": "webpage",
           },
         ]
       }
@@ -73,9 +77,5 @@ exports[`<SkillsModal /> matches the stored snapshot 1`] = `
       valueComponent={[Function]}
       valueKey="value" />
   </div>
-  <button
-    type="submit">
-    Save
-  </button>
 </form>
 `;
