@@ -1,0 +1,34 @@
+machine:
+
+  services:
+    - docker
+
+  node:
+    version: 0.10.22
+
+  environment:
+    DOCKER_USER: thebho
+    DOCKER_EMAIL: brian.hoehne@maryville.com
+    DOCKER_IMAGE: maryville/skilldirectoryui
+
+
+  post:
+    - mkdir -p download
+    - test -e download/$GODIST || curl -o download/$GODIST https://storage.googleapis.com/golang/$GODIST
+    - sudo rm -rf /usr/local/go
+    - sudo tar -C /usr/local -xzf download/$GODIST
+
+
+dependencies:
+  override:
+    - npm install --dev
+
+deployment:
+  master:
+    branch: [master,circleUI]
+    commands:
+      - echo $CIRCLE_BRANCH
+      - docker login -u "$DOCKER_USER" -p "$dockerPass" --email "$DOCKER_EMAIL"
+      - cd ${GOPATH}/src/${IMPORT_PATH} && export DEBUG_FLAG=false && docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH .
+      - docker images
+      - docker push $DOCKER_IMAGE:$CIRCLE_BRANCH
