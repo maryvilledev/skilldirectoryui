@@ -76,8 +76,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       shouldCloseOnOverlayClick={true}>
       <SkillForm
         api="http://localhost:8080"
-        closeModal={[Function]}
-        reloadSkills={[Function]} />
+        closeModal={[Function]} />
     </Modal>
   </Row>
   <h1 />
