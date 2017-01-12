@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
 import SkillForm from './SkillsModal'
+import DeleteSkillModal from './DeleteSkillModal'
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -16,6 +17,7 @@ class Skills extends Component {
     this.state = {
       skills: [],
       modalIsOpen: false,
+      deleteModalIsOpen: false,
       currentSkill: {
         skill_id: "",
         name: "",
@@ -25,19 +27,30 @@ class Skills extends Component {
     };
 
     this.openModal = this.openModal.bind(this);
+    this.openDeleteModal = this.openDeleteModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.afterDeleteModal = this.afterDeleteModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.deleteSkill = this.deleteSkill.bind(this);
   }
 
   openModal() {
     this.setState({modalIsOpen: true});
   }
-
+  openDeleteModal(){
+    this.setState({deleteModalIsOpen: true});
+  }
   afterOpenModal() {
   }
-
+  afterDeleteModal() {
+    //STUB
+  }
   closeModal() {
     this.setState({modalIsOpen: false});
+  }
+  closeDeleteModal() {
+    this.setState({deleteModalIsOpen: false});
   }
 
   onChange(key, value) {
@@ -56,6 +69,26 @@ class Skills extends Component {
 
         // console.log(res.data);
       });
+  }
+
+  deleteSkill() {
+    axios.delete(api + '/skills/' + this.state.currentSkill.skill_id)
+     .then(function(res){
+       this.setState({
+         skills: this.state.skills.filter(function(skill){
+           return skill.id !== this.state.currentSkill.skill_id;
+         }.bind(this)),
+         currentSkill: {
+           skill_id: "",
+           name: "",
+           skill_type: "",
+           links: [],
+         },
+       });
+     }.bind(this))
+     .catch(err => {
+       console.log(err);
+     });
   }
 
   componentDidMount() {
@@ -83,7 +116,12 @@ class Skills extends Component {
               />
               </form>
             </Col>
-            <Button bsStyle="primary" onClick={this.openModal}>Add Skill</Button>
+            <Button
+              name="SkillAdd"
+              bsStyle="primary"
+              onClick={this.openModal}
+              >
+            Add Skill</Button>
 
             <Modal
               isOpen={this.state.modalIsOpen}
@@ -101,6 +139,25 @@ class Skills extends Component {
           <h1>{this.state.currentSkill.name}</h1>
           <h4>{this.state.currentSkill.skill_type}</h4>
           <div>{this.state.currentSkill.links}</div>
+          <Button
+            name="SkillDelete"
+            bsStyle="danger"
+            onClick={this.openDeleteModal}
+            disabled={this.state.currentSkill.skill_id === ""}
+          >
+              Delete
+            </Button>
+            <Modal
+              isOpen={this.state.deleteModalIsOpen}
+              onAfterOpen={this.afterDeleteModal}
+              onRequestClose={this.closeDeleteModal}
+              contentLabel="DeleteSkillModal"
+            >
+              <DeleteSkillModal
+                doDelete={this.deleteSkill}
+                closeModal={this.closeDeleteModal}
+              />
+            </Modal>
 
         </div>
     );
