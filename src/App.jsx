@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
 import { hashHistory, IndexRedirect, Route, Router } from 'react-router';
-import 'bootstrap/dist/css/bootstrap.css';
 
+import Home from './Home';
 import Skills from './Skills';
-import Header from './Header'
-import Team from './Team'
-
-class Home extends Component {
-  render() {
-    return (
-      <h1>Skill Directory Home</h1>
-    );
-  }
-}
+import Header from './Header';
+import Team from './Team';
 
 function App(props) {
   return (
@@ -26,7 +16,7 @@ function App(props) {
         <Route path="team" component={Team} />
       </Route>
     </Router>
-  );
+  )
 }
 
 export default App
