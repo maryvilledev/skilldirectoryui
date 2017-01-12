@@ -20,6 +20,8 @@ deployment:
       - ls
       - pwd
       - echo $CIRCLE_BRANCH
+      - echo "Docker Version:"
+      - docker --version
       - docker login -u "$DOCKER_USER" -p "$dockerPass" --email "$DOCKER_EMAIL"
       - docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH --rm=false .
       - docker images
