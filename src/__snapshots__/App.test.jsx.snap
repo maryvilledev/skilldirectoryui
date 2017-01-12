@@ -1,199 +1,37 @@
 exports[`<App /> matches the stored snapshot 1`] = `
-ShallowWrapper {
-  "complexSelector": ComplexSelector {
-    "buildPredicate": [Function],
-    "childrenOfNode": [Function],
-    "findWhereUnwrapped": [Function],
-  },
-  "length": 1,
-  "node": <Router
-    history={
-        Object {
-            "createHref": [Function],
-            "createKey": [Function],
-            "createLocation": [Function],
-            "createPath": [Function],
-            "getCurrentLocation": [Function],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "listen": [Function],
-            "listenBefore": [Function],
-            "push": [Function],
-            "replace": [Function],
-            "transitionTo": [Function],
-          }
+<Router
+  history={
+    Object {
+      "createHref": [Function],
+      "createKey": [Function],
+      "createLocation": [Function],
+      "createPath": [Function],
+      "getCurrentLocation": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "listen": [Function],
+      "listenBefore": [Function],
+      "push": [Function],
+      "replace": [Function],
+      "transitionTo": [Function],
     }
-    render={[Function]}>
+  }
+  render={[Function]}>
+  <Route
+    component={[Function]}
+    path="/">
+    <IndexRedirect
+      to="/home" />
     <Route
-        component={[Function]}
-        path="/">
-        <IndexRedirect
-            to="/home" />
-        <Route
-            component={[Function]}
-            path="home" />
-        <Route
-            component={[Function]}
-            path="skills" />
-        <Route
-            component={[Function]}
-            path="team" />
-    </Route>
-</Router>,
-  "nodes": Array [
-    <Router
-      history={
-            Object {
-                  "createHref": [Function],
-                  "createKey": [Function],
-                  "createLocation": [Function],
-                  "createPath": [Function],
-                  "getCurrentLocation": [Function],
-                  "go": [Function],
-                  "goBack": [Function],
-                  "goForward": [Function],
-                  "listen": [Function],
-                  "listenBefore": [Function],
-                  "push": [Function],
-                  "replace": [Function],
-                  "transitionTo": [Function],
-                }
-      }
-      render={[Function]}>
-      <Route
-            component={[Function]}
-            path="/">
-            <IndexRedirect
-                  to="/home" />
-            <Route
-                  component={[Function]}
-                  path="home" />
-            <Route
-                  component={[Function]}
-                  path="skills" />
-            <Route
-                  component={[Function]}
-                  path="team" />
-      </Route>
-</Router>,
-  ],
-  "options": Object {},
-  "renderer": ReactShallowRenderer {
-    "_instance": ShallowComponentWrapper {
-      "_calledComponentWillUnmount": false,
-      "_compositeType": 2,
-      "_context": Object {},
-      "_currentElement": <App />,
-      "_debugID": 39,
-      "_hostContainerInfo": null,
-      "_hostParent": null,
-      "_instance": StatelessComponent {
-        "_reactInternalInstance": [Circular],
-        "context": Object {},
-        "props": Object {},
-        "refs": Object {},
-        "state": null,
-        "updater": Object {
-          "enqueueCallback": [Function],
-          "enqueueCallbackInternal": [Function],
-          "enqueueElementInternal": [Function],
-          "enqueueForceUpdate": [Function],
-          "enqueueReplaceState": [Function],
-          "enqueueSetState": [Function],
-          "isMounted": [Function],
-          "validateCallback": [Function],
-        },
-      },
-      "_mountOrder": 24,
-      "_pendingCallbacks": null,
-      "_pendingElement": null,
-      "_pendingForceUpdate": false,
-      "_pendingReplaceState": false,
-      "_pendingStateQueue": null,
-      "_renderedComponent": NoopInternalComponent {
-        "_currentElement": <Router
-          history={
-                    Object {
-                              "createHref": [Function],
-                              "createKey": [Function],
-                              "createLocation": [Function],
-                              "createPath": [Function],
-                              "getCurrentLocation": [Function],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "listen": [Function],
-                              "listenBefore": [Function],
-                              "push": [Function],
-                              "replace": [Function],
-                              "transitionTo": [Function],
-                            }
-          }
-          render={[Function]}>
-          <Route
-                    component={[Function]}
-                    path="/">
-                    <IndexRedirect
-                              to="/home" />
-                    <Route
-                              component={[Function]}
-                              path="home" />
-                    <Route
-                              component={[Function]}
-                              path="skills" />
-                    <Route
-                              component={[Function]}
-                              path="team" />
-          </Route>
-</Router>,
-        "_debugID": 40,
-        "_renderedOutput": <Router
-          history={
-                    Object {
-                              "createHref": [Function],
-                              "createKey": [Function],
-                              "createLocation": [Function],
-                              "createPath": [Function],
-                              "getCurrentLocation": [Function],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "listen": [Function],
-                              "listenBefore": [Function],
-                              "push": [Function],
-                              "replace": [Function],
-                              "transitionTo": [Function],
-                            }
-          }
-          render={[Function]}>
-          <Route
-                    component={[Function]}
-                    path="/">
-                    <IndexRedirect
-                              to="/home" />
-                    <Route
-                              component={[Function]}
-                              path="home" />
-                    <Route
-                              component={[Function]}
-                              path="skills" />
-                    <Route
-                              component={[Function]}
-                              path="team" />
-          </Route>
-</Router>,
-      },
-      "_renderedNodeType": 1,
-      "_rootNodeID": 0,
-      "_topLevelWrapper": null,
-      "_updateBatchNumber": null,
-      "_warnedAboutRefsInRender": false,
-    },
-    "getRenderOutput": [Function],
-    "render": [Function],
-  },
-  "root": [Circular],
-  "unrendered": <App />,
-}
+      component={[Function]}
+      path="home" />
+    <Route
+      component={[Function]}
+      path="skills" />
+    <Route
+      component={[Function]}
+      path="team" />
+  </Route>
+</Router>
 `;

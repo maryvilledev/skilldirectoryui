@@ -11,6 +11,6 @@ describe('<Home />', () => {
 
   it('matches the stored snapshot', () => {
     const wrapper = shallow(<Home />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.get(0)).toMatchSnapshot();
   });
 });

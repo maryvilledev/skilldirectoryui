@@ -11,6 +11,6 @@ describe('<App />', () => {
  
   it('matches the stored snapshot', () => {
     const wrapper = shallow(<App />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.get(0)).toMatchSnapshot();
   });
 });

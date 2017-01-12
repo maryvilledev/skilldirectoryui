@@ -12,7 +12,7 @@ describe('<Skills />', () => {
 
     it('matches the stored snapshot', () => {
       const wrapper = shallow(<Skills />);
-      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.get(0)).toMatchSnapshot();
     });
 
     it('has a Button that opens the Modal', () => {

@@ -1,159 +1,27 @@
 exports[`<Team /> matches the stored snapshot 1`] = `
-ShallowWrapper {
-  "complexSelector": ComplexSelector {
-    "buildPredicate": [Function],
-    "childrenOfNode": [Function],
-    "findWhereUnwrapped": [Function],
-  },
-  "length": 1,
-  "node": <div>
-    <h1>
-        The Team
-    </h1>
-    <ul>
-        <li>
-            Brian
-        </li>
-        <li>
-            Andrew
-        </li>
-        <li>
-            Jordan
-        </li>
-        <li>
-            Jeff
-        </li>
-        <li>
-            Dane
-        </li>
-        <li>
-            Joel
-        </li>
-    </ul>
-</div>,
-  "nodes": Array [
-    <div>
-      <h1>
-            The Team
-      </h1>
-      <ul>
-            <li>
-                  Brian
-            </li>
-            <li>
-                  Andrew
-            </li>
-            <li>
-                  Jordan
-            </li>
-            <li>
-                  Jeff
-            </li>
-            <li>
-                  Dane
-            </li>
-            <li>
-                  Joel
-            </li>
-      </ul>
-</div>,
-  ],
-  "options": Object {},
-  "renderer": ReactShallowRenderer {
-    "_instance": ShallowComponentWrapper {
-      "_calledComponentWillUnmount": false,
-      "_compositeType": 2,
-      "_context": Object {},
-      "_currentElement": <Skills />,
-      "_debugID": 11,
-      "_hostContainerInfo": null,
-      "_hostParent": null,
-      "_instance": StatelessComponent {
-        "_reactInternalInstance": [Circular],
-        "context": Object {},
-        "props": Object {},
-        "refs": Object {},
-        "state": null,
-        "updater": Object {
-          "enqueueCallback": [Function],
-          "enqueueCallbackInternal": [Function],
-          "enqueueElementInternal": [Function],
-          "enqueueForceUpdate": [Function],
-          "enqueueReplaceState": [Function],
-          "enqueueSetState": [Function],
-          "isMounted": [Function],
-          "validateCallback": [Function],
-        },
-      },
-      "_mountOrder": 3,
-      "_pendingCallbacks": null,
-      "_pendingElement": null,
-      "_pendingForceUpdate": false,
-      "_pendingReplaceState": false,
-      "_pendingStateQueue": null,
-      "_renderedComponent": NoopInternalComponent {
-        "_currentElement": <div>
-          <h1>
-                    The Team
-          </h1>
-          <ul>
-                    <li>
-                              Brian
-                    </li>
-                    <li>
-                              Andrew
-                    </li>
-                    <li>
-                              Jordan
-                    </li>
-                    <li>
-                              Jeff
-                    </li>
-                    <li>
-                              Dane
-                    </li>
-                    <li>
-                              Joel
-                    </li>
-          </ul>
-</div>,
-        "_debugID": 12,
-        "_renderedOutput": <div>
-          <h1>
-                    The Team
-          </h1>
-          <ul>
-                    <li>
-                              Brian
-                    </li>
-                    <li>
-                              Andrew
-                    </li>
-                    <li>
-                              Jordan
-                    </li>
-                    <li>
-                              Jeff
-                    </li>
-                    <li>
-                              Dane
-                    </li>
-                    <li>
-                              Joel
-                    </li>
-          </ul>
-</div>,
-      },
-      "_renderedNodeType": 0,
-      "_rootNodeID": 0,
-      "_topLevelWrapper": null,
-      "_updateBatchNumber": null,
-      "_warnedAboutRefsInRender": false,
-    },
-    "getRenderOutput": [Function],
-    "render": [Function],
-  },
-  "root": [Circular],
-  "unrendered": <Skills />,
-}
+<div>
+  <h1>
+    The Team
+  </h1>
+  <ul>
+    <li>
+      Brian
+    </li>
+    <li>
+      Andrew
+    </li>
+    <li>
+      Jordan
+    </li>
+    <li>
+      Jeff
+    </li>
+    <li>
+      Dane
+    </li>
+    <li>
+      Joel
+    </li>
+  </ul>
+</div>
 `;

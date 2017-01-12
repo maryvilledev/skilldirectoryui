@@ -11,6 +11,6 @@ describe('<Team />', () => {
 
   it('matches the stored snapshot', () => {
     const wrapper = shallow(<Team />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.get(0)).toMatchSnapshot();
   });
 });

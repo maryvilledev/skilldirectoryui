@@ -11,6 +11,6 @@ describe('<Header />', () => {
 
   it('matches the stored snapshot', () => {
     const wrapper = shallow(<Header />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.get(0)).toMatchSnapshot();
   });
 });

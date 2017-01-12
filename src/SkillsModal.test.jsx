@@ -13,7 +13,7 @@ describe('<SkillsModal />', () => {
 
   it('matches the stored snapshot', () => {
     const wrapper = shallow(<SkillsModal />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.get(0)).toMatchSnapshot();
   });
 
   it('changes state when input to "Name:" field changes', () => {
