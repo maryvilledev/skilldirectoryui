@@ -3,9 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
 import { Row, Col }  from 'react-bootstrap';
-
-
-
 import axios from 'axios';
 import SkillForm from './SkillsModal'
 import DeleteSkillModal from './DeleteSkillModal'
@@ -37,8 +34,6 @@ class Skills extends Component {
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
   }
-
-
 
   openModal() {
     this.setState({modalIsOpen: true});
@@ -104,6 +99,7 @@ class Skills extends Component {
         this.setState({ skills });
       });
   }
+
   render() {
     const onSkillTypeChange = ev => this.onChange("skill_id", ev.id);
     return (
@@ -111,14 +107,13 @@ class Skills extends Component {
           <Row>
             <Col xs={4} md={4}>
               <form onSubmit={ev => this.onSubmit(ev)}>
-                <Select
-
-                  name="skills"
-                  labelKey="name"
-                  value={this.state.skill_type}
-                  onChange={onSkillTypeChange}
-                  options={this.state.skills}
-                />
+              <Select
+                name="skills"
+                labelKey="name"
+                value={this.state.skill_type}
+                onChange={onSkillTypeChange}
+                options={this.state.skills}
+              />
               </form>
             </Col>
             <Button bsStyle="primary" onClick={this.openModal}>Add Skill</Button>
