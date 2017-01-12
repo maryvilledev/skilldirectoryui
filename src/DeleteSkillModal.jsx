@@ -10,8 +10,8 @@ class DeleteSkillModal extends React.Component {
     return (
       <div>
         <h1>Are you sure?</h1>
-        <Button onClick={this.confirm}>Yes</Button>
-        <Button onClick={this.props.closeModal}>No</Button>
+        <Button onClick={this.confirm} name="Yes">Yes</Button>
+        <Button onClick={this.props.closeModal} name="No">No</Button>
       </div>
     );
   }

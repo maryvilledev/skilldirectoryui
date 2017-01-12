@@ -1,0 +1,27 @@
+exports[`<DeleteSkillModal /> matches the stored snapshot 1`] = `
+<div>
+  <h1>
+    Are you sure?
+  </h1>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="default"
+    disabled={false}
+    name="Yes"
+    onClick={[Function]}>
+    Yes
+  </Button>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="default"
+    disabled={false}
+    name="No"
+    onClick={undefined}>
+    No
+  </Button>
+</div>
+`;

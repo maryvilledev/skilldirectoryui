@@ -116,7 +116,12 @@ class Skills extends Component {
               />
               </form>
             </Col>
-            <Button bsStyle="primary" onClick={this.openModal}>Add Skill</Button>
+            <Button
+              name="SkillAdd"
+              bsStyle="primary"
+              onClick={this.openModal}
+              >
+            Add Skill</Button>
 
             <Modal
               isOpen={this.state.modalIsOpen}
@@ -135,6 +140,7 @@ class Skills extends Component {
           <h4>{this.state.currentSkill.skill_type}</h4>
           <div>{this.state.currentSkill.links}</div>
           <Button
+            name="SkillDelete"
             bsStyle="danger"
             onClick={this.openDeleteModal}
             disabled={this.state.currentSkill.skill_id === ""}
