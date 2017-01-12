@@ -87,15 +87,12 @@ class Skills extends Component {
     const onSkillChange = ev => this.onChange("skill_id", ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID === "" ? false : true;
-    if(this.state.currentSkill.links == null) {
-      console.log("links is not null");
-    }
-    console.log("links IS the following:");
-    console.log(this.state.currentSkill.links);
-    // links = this.state.currentSkill.links.map(link =>
-    //   <li>{link}</li>
-    // );
-    // console.log("links is this: " + links);
+    const links = this.state.currentSkill.links.map(link =>
+      <li key={link.id}>
+          {capitalizeFirstLetter(String(link.link_type)) + ': '} 
+          <a href={link.url}>{link.name}</a>
+      </li>
+    );
     return (
         <div>
           <Row>
@@ -148,11 +145,15 @@ class Skills extends Component {
           </Button>
           <h1>{this.state.currentSkill.name}</h1>
           <h4>{this.state.currentSkill.skill_type}</h4>
-          <ul>links</ul>
-
+          {isSkillSelected ? <h3>Links:</h3> : null}
+          <ul>{links}</ul>
         </div>
     );
   }
+}
+
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export default Skills
