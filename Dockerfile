@@ -1,15 +1,18 @@
-FROM node:boron
+FROM node
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /app
+WORKDIR /app
 
-# Install app dependencies
-COPY package.json /usr/src/app/
-RUN npm install --production
+ENV PATH=/app/node_modules/.bin:$PATH
 
-# Bundle app source
-COPY . /usr/src/app
+# We add package.json first so that the  docker image build
+# can use the cache as long as contents of package.json
+# hasn't changed.
+
+COPY package.json /app/
+RUN npm install --ignore-scripts --unsafe-perm --production
+
+COPY . /app
 
 EXPOSE 3000
 CMD "/bin/bash ./buildUI"
