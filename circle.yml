@@ -17,6 +17,8 @@ deployment:
   master:
     branch: [master,circleUI]
     commands:
+      - ls
+      - pwd
       - echo $CIRCLE_BRANCH
       - docker login -u "$DOCKER_USER" -p "$dockerPass" --email "$DOCKER_EMAIL"
       - docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH .
