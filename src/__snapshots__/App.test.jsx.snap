@@ -1,0 +1,37 @@
+exports[`<App /> matches the stored snapshot 1`] = `
+<Router
+  history={
+    Object {
+      "createHref": [Function],
+      "createKey": [Function],
+      "createLocation": [Function],
+      "createPath": [Function],
+      "getCurrentLocation": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "listen": [Function],
+      "listenBefore": [Function],
+      "push": [Function],
+      "replace": [Function],
+      "transitionTo": [Function],
+    }
+  }
+  render={[Function]}>
+  <Route
+    component={[Function]}
+    path="/">
+    <IndexRedirect
+      to="/home" />
+    <Route
+      component={[Function]}
+      path="home" />
+    <Route
+      component={[Function]}
+      path="skills" />
+    <Route
+      component={[Function]}
+      path="team" />
+  </Route>
+</Router>
+`;

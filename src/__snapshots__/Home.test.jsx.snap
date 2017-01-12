@@ -1,0 +1,5 @@
+exports[`<Home /> matches the stored snapshot 1`] = `
+<h1>
+  Skill Directory Home
+</h1>
+`;
