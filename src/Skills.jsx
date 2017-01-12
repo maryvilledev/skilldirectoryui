@@ -86,7 +86,16 @@ class Skills extends Component {
   render() {
     const onSkillChange = ev => this.onChange("skill_id", ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
-    const isSkillSelected = currentSkillID == "" ? false : true;
+    const isSkillSelected = currentSkillID === "" ? false : true;
+    if(this.state.currentSkill.links == null) {
+      console.log("links is not null");
+    }
+    console.log("links IS the following:");
+    console.log(this.state.currentSkill.links);
+    // links = this.state.currentSkill.links.map(link =>
+    //   <li>{link}</li>
+    // );
+    // console.log("links is this: " + links);
     return (
         <div>
           <Row>
@@ -139,7 +148,7 @@ class Skills extends Component {
           </Button>
           <h1>{this.state.currentSkill.name}</h1>
           <h4>{this.state.currentSkill.skill_type}</h4>
-          <div>{this.state.currentSkill.links}</div>
+          <ul>links</ul>
 
         </div>
     );
