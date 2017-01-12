@@ -3,9 +3,6 @@ machine:
   services:
     - docker
 
-  node:
-    version: 0.10.22
-
   environment:
     DOCKER_USER: thebho
     DOCKER_EMAIL: brian.hoehne@maryville.com
