@@ -77,5 +77,9 @@ exports[`<LinksForm /> matches the stored snapshot 1`] = `
       valueComponent={[Function]}
       valueKey="value" />
   </div>
+  <button
+    type="submit">
+    Save
+  </button>
 </form>
 `;
