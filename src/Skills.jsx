@@ -30,6 +30,7 @@ class Skills extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.deleteSkill = this.deleteSkill.bind(this);
   }
 
 
@@ -60,6 +61,26 @@ class Skills extends Component {
 
         // console.log(res.data);
       });
+  }
+
+  deleteSkill() {
+    axios.delete(api + '/skills/' + this.state.currentSkill.skill_id)
+     .then(function(res){
+       this.setState({
+         skills: this.state.skills.filter(function(skill){
+           return skill.id !== this.state.currentSkill.skill_id;
+         }.bind(this)),
+         currentSkill: {
+           skill_id: "",
+           name: "",
+           skill_type: "",
+           links: [],
+         },
+       });
+     }.bind(this))
+     .catch(err => {
+       console.log(err);
+     });
   }
 
   componentDidMount() {
@@ -105,6 +126,10 @@ class Skills extends Component {
           <h1>{this.state.currentSkill.name}</h1>
           <h4>{this.state.currentSkill.skill_type}</h4>
           <div>{this.state.currentSkill.links}</div>
+          <Button
+            bsStyle="primary"
+            onClick={this.deleteSkill}
+            disabled={this.state.currentSkill.skill_id === ""}>Delete</Button>
 
         </div>
     );
