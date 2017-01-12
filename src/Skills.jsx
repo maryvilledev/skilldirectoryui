@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
@@ -67,7 +68,7 @@ class Skills extends Component {
             skill_type: skillresults.skill_type,
             links: skillresults.links,
           }});
-
+          browserHistory.push('/skills/' + skillresults.id);
         // console.log(res.data);
       });
   }
@@ -102,10 +103,27 @@ class Skills extends Component {
 
   componentDidMount() {
     console.log(process.env)
+    const currentId = (this.props.params) ? this.props.params.id : null;
     axios.get(api + `/skills/`)
       .then(res => {
         const skills = res.data.map(obj => obj);
         this.setState({ skills });
+        if (currentId) {
+          const matching = this.state.skills
+            .filter((skill) => skill.id == currentId)[0];
+          if (matching){
+            this.setState({
+              currentSkill: {
+                skill_id: matching.id,
+                name: matching.name,
+                skill_type: matching.skill_type,
+                links: matching.links
+              }
+            });
+          } else {
+            browserHistory.push("/skills")
+          }
+        }
       });
   }
 
