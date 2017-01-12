@@ -9,7 +9,7 @@ ENV PATH=/app/node_modules/.bin:$PATH
 # can use the cache as long as contents of package.json
 # hasn't changed.
 
-COPY package.json /app/
+COPY package.json /app
 RUN npm install --ignore-scripts --unsafe-perm --production
 
 COPY . /app/
