@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
 import SkillForm from './SkillsForm'
+import LinkForm from './LinksForm'
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -15,7 +16,8 @@ class Skills extends Component {
 
     this.state = {
       skills: [],
-      modalIsOpen: false,
+      skillModalIsOpen: false,
+      linkModalIsOpen: false,
       currentSkill: {
         skill_id: "",
         name: "",
@@ -24,20 +26,35 @@ class Skills extends Component {
       }
     };
 
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.openSkillModal = this.openSkillModal.bind(this);
+    this.afterOpenSkillModal = this.afterOpenSkillModal.bind(this);
+    this.closeSkillModal = this.closeSkillModal.bind(this);
+
+    this.openLinkModal = this.openLinkModal.bind(this);
+    this.afterOpenLinkModal = this.afterOpenLinkModal.bind(this);
+    this.closeLinkModal = this.closeLinkModal.bind(this);
   }
 
-  openModal() {
-    this.setState({modalIsOpen: true});
+  openSkillModal() {
+    this.setState({skillModalIsOpen: true});
   }
 
-  afterOpenModal() {
+  afterOpenSkillModal() {
   }
 
-  closeModal() {
-    this.setState({modalIsOpen: false});
+  closeSkillModal() {
+    this.setState({skillModalIsOpen: false});
+  }
+
+  openLinkModal() {
+    this.setState({linkModalIsOpen: true});
+  }
+
+  afterOpenLinkModal() {
+  }
+
+  closeLinkModal() {
+    this.setState({linkModalIsOpen: false});
   }
 
   onChange(key, value) {
@@ -53,7 +70,6 @@ class Skills extends Component {
             skill_type: skillresults.skill_type,
             links: skillresults.links,
           }});
-
         // console.log(res.data);
       });
   }
@@ -68,7 +84,9 @@ class Skills extends Component {
   }
 
   render() {
-    const onSkillTypeChange = ev => this.onChange("skill_id", ev.id);
+    const onSkillChange = ev => this.onChange("skill_id", ev.id);
+    const currentSkillID = this.state.currentSkill.skill_id;
+    const isSkillSelected = currentSkillID == "" ? false : true;
     return (
         <div>
           <Row>
@@ -78,26 +96,47 @@ class Skills extends Component {
                 name="skills"
                 labelKey="name"
                 value={this.state.skill_type}
-                onChange={onSkillTypeChange}
+                onChange={onSkillChange}
                 options={this.state.skills}
               />
               </form>
             </Col>
-            <Button bsStyle="primary" onClick={this.openModal}>Add Skill</Button>
-
+            <Button name="add_skill"
+                    bsStyle="primary" 
+                    onClick={this.openSkillModal}>
+              Add Skill
+            </Button>
+            
             <Modal
-              isOpen={this.state.modalIsOpen}
-              onAfterOpen={this.afterOpenModal}
-              onRequestClose={this.closeModal}
+              isOpen={this.state.skillModalIsOpen}
+              onAfterOpen={this.afterOpenSkillModal}
+              onRequestClose={this.closeSkillModal}
               contentLabel="SkillModal"
             >
-              <SkillForm api={api} closeModal={this.closeModal} />
+              <SkillForm api={api} 
+                         closeModal={this.closeSkillModal} />
             </Modal>
 
+            <Modal
+              isOpen={this.state.linkModalIsOpen}
+              onAfterOpen={this.afterOpenLinkModal}
+              onRequestClose={this.closeLinkModal}
+              contentLabel="LinkModal"
+            >
+              <LinkForm api={api} 
+                        closeModal={this.closeLinkModal} 
+                        skill_id={currentSkillID}/>
+            </Modal>
             {/* <Col xs={4} md={4} /> */}
 
           </Row>
 
+          <Button name="add_link" 
+                  bsStyle="primary" 
+                  onClick={this.openLinkModal}
+                  disabled={!isSkillSelected}>
+            Add Link
+          </Button>
           <h1>{this.state.currentSkill.name}</h1>
           <h4>{this.state.currentSkill.skill_type}</h4>
           <div>{this.state.currentSkill.links}</div>
