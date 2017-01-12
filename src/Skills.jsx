@@ -8,6 +8,7 @@ import { Row, Col }  from 'react-bootstrap';
 
 import axios from 'axios';
 import SkillForm from './SkillsModal'
+import DeleteSkillModal from './DeleteSkillModal'
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -19,6 +20,7 @@ class Skills extends Component {
     this.state = {
       skills: [],
       modalIsOpen: false,
+      deleteModalIsOpen: false,
       currentSkill: {
         skill_id: "",
         name: "",
@@ -28,8 +30,11 @@ class Skills extends Component {
     };
 
     this.openModal = this.openModal.bind(this);
+    this.openDeleteModal = this.openDeleteModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.afterDeleteModal = this.afterDeleteModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
   }
 
@@ -38,11 +43,19 @@ class Skills extends Component {
   openModal() {
     this.setState({modalIsOpen: true});
   }
+  openDeleteModal(){
+    this.setState({deleteModalIsOpen: true});
+  }
   afterOpenModal() {
- }
-
+  }
+  afterDeleteModal() {
+    //STUB
+  }
   closeModal() {
     this.setState({modalIsOpen: false});
+  }
+  closeDeleteModal() {
+    this.setState({deleteModalIsOpen: false});
   }
 
   onChange(key, value) {
@@ -127,9 +140,23 @@ class Skills extends Component {
           <h4>{this.state.currentSkill.skill_type}</h4>
           <div>{this.state.currentSkill.links}</div>
           <Button
-            bsStyle="primary"
-            onClick={this.deleteSkill}
-            disabled={this.state.currentSkill.skill_id === ""}>Delete</Button>
+            bsStyle="danger"
+            onClick={this.openDeleteModal}
+            disabled={this.state.currentSkill.skill_id === ""}
+          >
+              Delete
+            </Button>
+            <Modal
+              isOpen={this.state.deleteModalIsOpen}
+              onAfterOpen={this.afterDeleteModal}
+              onRequestClose={this.closeDeleteModal}
+              contentLabel="DeleteSkillModal"
+            >
+              <DeleteSkillModal
+                doDelete={this.deleteSkill}
+                closeModal={this.closeDeleteModal}
+              />
+            </Modal>
 
         </div>
     );
