@@ -42,6 +42,7 @@ class SkillForm extends React.Component {
     })
     .then(function (response) {
       console.log(response);
+      this.props.reloadSkills();
       this.props.closeModal();
     }.bind(this))
     .catch(err => {
@@ -55,15 +56,15 @@ class SkillForm extends React.Component {
     return (
       <form onSubmit={ev => this.onSubmit(ev)}>
         <div>
-          Name: <input name="skill_name" 
-                       type="text" 
-                       value={this.state.skill_name} 
+          Name: <input name="skill_name"
+                       type="text"
+                       value={this.state.skill_name}
                        onChange={onSkillNameChange} />
         </div>
         <div>
-          Skill Type: <Select name="skill_type" 
-                              value={this.state.skill_type} 
-                              onChange={onSkillTypeChange} 
+          Skill Type: <Select name="skill_type"
+                              value={this.state.skill_type}
+                              onChange={onSkillTypeChange}
                               options={skillTypes} />
         </div>
         <button type="submit">Save</button>

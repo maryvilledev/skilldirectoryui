@@ -32,6 +32,7 @@ class Skills extends Component {
     this.afterDeleteModal = this.afterDeleteModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.reloadSkills = this.reloadSkills.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
   }
 
@@ -91,6 +92,14 @@ class Skills extends Component {
      });
   }
 
+  reloadSkills() {
+    axios.get(api + '/skills/')
+      .then(res => {
+        const skills = res.data.map(obj => obj);
+        this.setState({ skills: skills });
+      })
+  }
+
   componentDidMount() {
     console.log(process.env)
     axios.get(api + `/skills/`)
@@ -129,7 +138,11 @@ class Skills extends Component {
               onRequestClose={this.closeModal}
               contentLabel="SkillModal"
             >
-              <SkillForm api={api} closeModal={this.closeModal} />
+              <SkillForm
+                api={api}
+                closeModal={this.closeModal}
+                reloadSkills={this.reloadSkills}
+              />
             </Modal>
 
             {/* <Col xs={4} md={4} /> */}
