@@ -52,7 +52,7 @@ class LinksForm extends React.Component {
   render() {
     const onLinkNameChange = ev => this.onChange('link_name', ev.target.value);
     const onLinkURLChange = ev => this.onChange('link_url', ev.target.value);
-    const onLinkTypeChange = ev => this.onChange('link_type', ev.target.value);
+    const onLinkTypeChange = ev => this.onChange('link_type', ev.value);
     return (
       <form onSubmit={ev => this.onSubmit(ev)}>
         <div>
@@ -73,6 +73,7 @@ class LinksForm extends React.Component {
                         onChange={onLinkTypeChange}
                         options={linkTypes} />
         </div>
+        <button type="submit">Save</button>
       </form>
     )
   }
