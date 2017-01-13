@@ -62,8 +62,6 @@ class Skills extends Component {
     axios.get(api + '/skills/' + value)
       .then(res => {
         const skillresults = res.data
-        console.log(value)
-        console.log(skillresults)
         this.setState(
           {currentSkill: {
             skill_id: skillresults.id,
@@ -165,16 +163,17 @@ class Skills extends Component {
               <Select
                 name="skills"
                 labelKey="name"
-                value={this.state.skill_type}
                 onChange={onSkillChange}
+                value={this.state.currentSkill.skill_type}
+                onChange={onSkillTypeChange}
                 options={this.state.skills}
               />
             </Col>
-            <Button name="AddSkill"
-                    bsStyle="primary"
-                    onClick={this.openSkillModal}>
-              Add Skill
-            </Button>
+            <Button
+              name="SkillAdd"
+              bsStyle="primary"
+              onClick={this.openModal}
+              children="Add Skill" />
             <Modal
               isOpen={this.state.skillModalIsOpen}
               onRequestClose={this.closeSkillModal}
@@ -240,4 +239,4 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export default Skills
+export default Skills;
