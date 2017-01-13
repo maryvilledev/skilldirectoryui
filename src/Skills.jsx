@@ -165,14 +165,13 @@ class Skills extends Component {
                 labelKey="name"
                 onChange={onSkillChange}
                 value={this.state.currentSkill.skill_type}
-                onChange={onSkillTypeChange}
                 options={this.state.skills}
               />
             </Col>
             <Button
-              name="SkillAdd"
+              name="AddSkill"
               bsStyle="primary"
-              onClick={this.openModal}
+              onClick={this.openSkillModal}
               children="Add Skill" />
             <Modal
               isOpen={this.state.skillModalIsOpen}
