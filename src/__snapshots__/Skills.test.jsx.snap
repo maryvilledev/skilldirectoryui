@@ -60,7 +60,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       bsClass="btn"
       bsStyle="primary"
       disabled={false}
-      name="SkillAdd"
+      name="AddSkill"
       onClick={[Function]}>
       Add Skill
     </Button>
@@ -69,7 +69,6 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       closeTimeoutMS={0}
       contentLabel="SkillModal"
       isOpen={false}
-      onAfterOpen={[Function]}
       onRequestClose={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
@@ -79,19 +78,43 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         closeModal={[Function]}
         reloadSkills={[Function]} />
     </Modal>
+    <Modal
+      ariaHideApp={true}
+      closeTimeoutMS={0}
+      contentLabel="LinkModal"
+      isOpen={false}
+      onRequestClose={[Function]}
+      parentSelector={[Function]}
+      portalClassName="ReactModalPortal"
+      shouldCloseOnOverlayClick={true}>
+      <LinksForm
+        api="http://localhost:8080"
+        closeModal={[Function]}
+        skill_id="" />
+    </Modal>
   </Row>
   <h1 />
   <h4 />
-  <div>
+  <ul>
     
-  </div>
+  </ul>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="primary"
+    disabled={true}
+    name="AddLink"
+    onClick={[Function]}>
+    Add Link
+  </Button>
   <Button
     active={false}
     block={false}
     bsClass="btn"
     bsStyle="danger"
     disabled={true}
-    name="SkillDelete"
+    name="DeleteSkill"
     onClick={[Function]}>
     Delete
   </Button>
@@ -100,7 +123,6 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
     closeTimeoutMS={0}
     contentLabel="DeleteSkillModal"
     isOpen={false}
-    onAfterOpen={[Function]}
     onRequestClose={[Function]}
     parentSelector={[Function]}
     portalClassName="ReactModalPortal"
