@@ -79,6 +79,7 @@ class Skills extends Component {
   }
 
   onChange(key, value) {
+    console.log("Sending GET request.");
     axios.get(api + '/skills/' + value)
       .then(res => {
         const skillresults = res.data
@@ -91,11 +92,14 @@ class Skills extends Component {
             skill_type: skillresults.skill_type,
             links: skillresults.links,
           }});
-        // console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
   deleteSkill() {
+    console.log("Sending DELETE request.");
     axios.delete(api + '/skills/' + this.state.currentSkill.skill_id)
      .then(function(res){
        this.setState({
@@ -117,6 +121,7 @@ class Skills extends Component {
 
   componentDidMount() {
     console.log(process.env)
+    console.log("Sending GET request.");
     axios.get(api + `/skills/`)
       .then(res => {
         const skills = res.data.map(obj => obj);
@@ -132,8 +137,8 @@ class Skills extends Component {
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID === "" ? false : true;
     let links = null;
-    if(links != null) {
-      links = this.state.currentSkill.links.map(link =>
+    if(this.state.currentSkill.links != null) {
+     links = this.state.currentSkill.links.map(link =>
         <li key={link.id}>
             {capitalizeFirstLetter(String(link.link_type)) + ': '} 
             <a href={link.url}>{link.name}</a>
@@ -187,7 +192,6 @@ class Skills extends Component {
           <h4>{this.state.currentSkill.skill_type}</h4>
           {isSkillSelected ? <h3>Links:</h3> : null}
           <ul>{links}</ul>
-          <div>{this.state.currentSkill.links}</div>
 
           <Button name="AddLink" 
                   bsStyle="primary" 

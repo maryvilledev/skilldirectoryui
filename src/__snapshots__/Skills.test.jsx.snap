@@ -96,10 +96,9 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
   </Row>
   <h1 />
   <h4 />
-  <ul />
-  <div>
+  <ul>
     
-  </div>
+  </ul>
   <Button
     active={false}
     block={false}
