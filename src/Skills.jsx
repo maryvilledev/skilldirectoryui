@@ -121,6 +121,9 @@ class Skills extends Component {
       .then(res => {
         const skills = res.data.map(obj => obj);
         this.setState({ skills });
+      })
+      .catch(err => {
+        console.log(err)
       });
   }
 
