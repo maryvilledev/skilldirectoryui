@@ -4,8 +4,9 @@ import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
 import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
-import SkillForm from './SkillsForm'
 import LinkForm from './LinksForm'
+import SkillForm from './SkillsForm'
+import DeleteSkillModal from './DeleteSkillModal'
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -18,6 +19,7 @@ class Skills extends Component {
       skills: [],
       skillModalIsOpen: false,
       linkModalIsOpen: false,
+      deleteModalIsOpen: false,
       currentSkill: {
         skill_id: "",
         name: "",
@@ -33,6 +35,13 @@ class Skills extends Component {
     this.openLinkModal = this.openLinkModal.bind(this);
     this.afterOpenLinkModal = this.afterOpenLinkModal.bind(this);
     this.closeLinkModal = this.closeLinkModal.bind(this);
+
+    this.openDeleteModal = this.openDeleteModal.bind(this);
+    this.afterOpenDeleteModal = this.afterOpenDeleteModal.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+
+    this.deleteSkill = this.deleteSkill.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   openSkillModal() {
@@ -44,7 +53,7 @@ class Skills extends Component {
 
   closeSkillModal() {
     this.setState({skillModalIsOpen: false});
-  }
+ }
 
   openLinkModal() {
     this.setState({linkModalIsOpen: true});
@@ -55,6 +64,18 @@ class Skills extends Component {
 
   closeLinkModal() {
     this.setState({linkModalIsOpen: false});
+  }
+
+  openDeleteModal() {
+    this.setState({deleteModalIsOpen: true});
+  }
+
+  afterOpenDeleteModal() {
+    //STUB
+  }
+
+  closeDeleteModal() {
+    this.setState({deleteModalIsOpen: false});
   }
 
   onChange(key, value) {
@@ -74,6 +95,26 @@ class Skills extends Component {
       });
   }
 
+  deleteSkill() {
+    axios.delete(api + '/skills/' + this.state.currentSkill.skill_id)
+     .then(function(res){
+       this.setState({
+         skills: this.state.skills.filter(function(skill){
+           return skill.id !== this.state.currentSkill.skill_id;
+         }.bind(this)),
+         currentSkill: {
+           skill_id: "",
+           name: "",
+           skill_type: "",
+           links: [],
+         },
+       });
+     }.bind(this))
+     .catch(err => {
+       console.log(err);
+     });
+  }
+
   componentDidMount() {
     console.log(process.env)
     axios.get(api + `/skills/`)
@@ -87,12 +128,15 @@ class Skills extends Component {
     const onSkillChange = ev => this.onChange("skill_id", ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID === "" ? false : true;
-    const links = this.state.currentSkill.links.map(link =>
-      <li key={link.id}>
-          {capitalizeFirstLetter(String(link.link_type)) + ': '} 
-          <a href={link.url}>{link.name}</a>
-      </li>
-    );
+    let links = null;
+    if(links != null) {
+      links = this.state.currentSkill.links.map(link =>
+        <li key={link.id}>
+            {capitalizeFirstLetter(String(link.link_type)) + ': '} 
+            <a href={link.url}>{link.name}</a>
+        </li>
+      );
+    }
     return (
         <div>
           <Row>
@@ -107,12 +151,11 @@ class Skills extends Component {
               />
               </form>
             </Col>
-            <Button name="add_skill"
-                    bsStyle="primary" 
+            <Button name="AddSkill"
+                    bsStyle="primary"
                     onClick={this.openSkillModal}>
               Add Skill
             </Button>
-            
             <Modal
               isOpen={this.state.skillModalIsOpen}
               onAfterOpen={this.afterOpenSkillModal}
@@ -137,16 +180,36 @@ class Skills extends Component {
 
           </Row>
 
-          <Button name="add_link" 
+          <h1>{this.state.currentSkill.name}</h1>
+          <h4>{this.state.currentSkill.skill_type}</h4>
+          {isSkillSelected ? <h3>Links:</h3> : null}
+          <ul>{links}</ul>
+          <div>{this.state.currentSkill.links}</div>
+
+          <Button name="AddLink" 
                   bsStyle="primary" 
                   onClick={this.openLinkModal}
                   disabled={!isSkillSelected}>
             Add Link
           </Button>
-          <h1>{this.state.currentSkill.name}</h1>
-          <h4>{this.state.currentSkill.skill_type}</h4>
-          {isSkillSelected ? <h3>Links:</h3> : null}
-          <ul>{links}</ul>
+
+          <Button name="DeleteSkill"
+                  bsStyle="danger"
+                  onClick={this.openDeleteModal}
+                  disabled={!isSkillSelected}>
+            Delete
+          </Button>
+          <Modal
+            isOpen={this.state.deleteModalIsOpen}
+            onAfterOpen={this.afterOpenDeleteModal}
+            onRequestClose={this.closeDeleteModal}
+            contentLabel="DeleteSkillModal"
+          >
+            <DeleteSkillModal
+              doDelete={this.deleteSkill}
+              closeModal={this.closeDeleteModal}
+            />
+          </Modal>
         </div>
     );
   }

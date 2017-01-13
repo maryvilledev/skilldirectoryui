@@ -1,5 +1,9 @@
 echo $API
 
+if [ "$API" == "" ]; then
+  API="http://localhost:8080"
+fi
+
 REACT_APP_API=$API npm run build
 
 cd build && python -m SimpleHTTPServer 9000

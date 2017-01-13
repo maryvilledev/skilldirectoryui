@@ -60,7 +60,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       bsClass="btn"
       bsStyle="primary"
       disabled={false}
-      name="add_skill"
+      name="AddSkill"
       onClick={[Function]}>
       Add Skill
     </Button>
@@ -94,20 +94,45 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         skill_id="" />
     </Modal>
   </Row>
+  <h1 />
+  <h4 />
+  <ul />
+  <div>
+    
+  </div>
   <Button
     active={false}
     block={false}
     bsClass="btn"
     bsStyle="primary"
     disabled={true}
-    name="add_link"
+    name="AddLink"
     onClick={[Function]}>
     Add Link
   </Button>
-  <h1 />
-  <h4 />
-  <div>
-    
-  </div>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="danger"
+    disabled={true}
+    name="DeleteSkill"
+    onClick={[Function]}>
+    Delete
+  </Button>
+  <Modal
+    ariaHideApp={true}
+    closeTimeoutMS={0}
+    contentLabel="DeleteSkillModal"
+    isOpen={false}
+    onAfterOpen={[Function]}
+    onRequestClose={[Function]}
+    parentSelector={[Function]}
+    portalClassName="ReactModalPortal"
+    shouldCloseOnOverlayClick={true}>
+    <DeleteSkillModal
+      closeModal={[Function]}
+      doDelete={[Function]} />
+  </Modal>
 </div>
 `;

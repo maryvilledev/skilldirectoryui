@@ -1,0 +1,30 @@
+machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+
+  services:
+    - docker
+
+  environment:
+    DOCKER_USER: thebho
+    DOCKER_EMAIL: brian.hoehne@maryville.com
+    DOCKER_IMAGE: maryville/skilldirectoryui
+
+
+dependencies:
+  override:
+    - npm install --dev
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - ls
+      - pwd
+      - echo $CIRCLE_BRANCH
+      - echo "Docker Version:"
+      - docker --version
+      - docker login -u "$DOCKER_USER" -p "$dockerPass" --email "$DOCKER_EMAIL"
+      - docker build -t $DOCKER_IMAGE:$CIRCLE_BRANCH --rm=false .
+      - docker images
+      - docker push $DOCKER_IMAGE:$CIRCLE_BRANCH
