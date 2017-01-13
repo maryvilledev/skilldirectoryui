@@ -94,91 +94,108 @@ class Skills extends Component {
 
   componentDidMount() {
     console.log(process.env)
+    this.getSkills();
     const currentId = (this.props.params) ? this.props.params.id : null;
-    axios.get(api + `/skills/`)
+    if (currentId) {
+        this.loadCurrentSkill(currentId)
+    }
+  }
+
+  getSkills(){
+    axios.get(api + `/skills`)
       .then(res => {
         const skills = res.data.map(obj => obj);
         this.setState({ skills });
-        if (currentId) {
-          const matching = this.state.skills
-            .filter((skill) => skill.id == currentId)[0];
-          if (matching){
-            this.setState({
-              currentSkill: {
-                skill_id: matching.id,
-                name: matching.name,
-                skill_type: matching.skill_type,
-                links: matching.links
-              }
-            });
-          } else {
-            browserHistory.push("/skills")
-          }
-        }
       });
+  }
+
+  loadCurrentSkill(currentId){
+    axios.get(api + '/skills/' + currentId)
+      .then(res => {
+        const skillresults = res.data;
+        this.setState({
+          currentSkill: {
+            skill_id: skillresults.id,
+            name: skillresults.name,
+            skill_type: skillresults.skill_type,
+            links: skillresults.links,
+          },
+        });
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({isError: true});
+      }
+    );
   }
 
   render() {
     const onSkillTypeChange = ev => this.onChange("skill_id", ev.id);
-    return (
-        <div>
-          <Row>
-            <Col xs={4} md={4}>
-              <form onSubmit={ev => this.onSubmit(ev)}>
-              <Select
-                name="skills"
-                labelKey="name"
-                value={this.state.skill_type}
-                onChange={onSkillTypeChange}
-                options={this.state.skills}
-              />
-              </form>
-            </Col>
-            <Button
-              name="SkillAdd"
-              bsStyle="primary"
-              onClick={this.openModal}
+    if (!this.state.isError) {
+      return  (
+          <div>
+            <Row>
+              <Col xs={4} md={4}>
+                <form onSubmit={ev => this.onSubmit(ev)}>
+                <Select
+                  name="skills"
+                  labelKey="name"
+                  value={this.state.skill_type}
+                  onChange={onSkillTypeChange}
+                  options={this.state.skills}
+                />
+                </form>
+              </Col>
+              <Button
+                name="SkillAdd"
+                bsStyle="primary"
+                onClick={this.openModal}
+                >
+              Add Skill</Button>
+
+              <Modal
+                isOpen={this.state.modalIsOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={this.closeModal}
+                contentLabel="SkillModal"
               >
-            Add Skill</Button>
+                <SkillForm api={api} closeModal={this.closeModal} />
+              </Modal>
 
-            <Modal
-              isOpen={this.state.modalIsOpen}
-              onAfterOpen={this.afterOpenModal}
-              onRequestClose={this.closeModal}
-              contentLabel="SkillModal"
+              {/* <Col xs={4} md={4} /> */}
+
+            </Row>
+
+            <h1>{this.state.currentSkill.name}</h1>
+            <h4>{this.state.currentSkill.skill_type}</h4>
+            <div>{this.state.currentSkill.links}</div>
+            <Button
+              name="SkillDelete"
+              bsStyle="danger"
+              onClick={this.openDeleteModal}
+              disabled={this.state.currentSkill.skill_id === ""}
             >
-              <SkillForm api={api} closeModal={this.closeModal} />
-            </Modal>
+                Delete
+              </Button>
+              <Modal
+                isOpen={this.state.deleteModalIsOpen}
+                onAfterOpen={this.afterDeleteModal}
+                onRequestClose={this.closeDeleteModal}
+                contentLabel="DeleteSkillModal"
+              >
+                <DeleteSkillModal
+                  doDelete={this.deleteSkill}
+                  closeModal={this.closeDeleteModal}
+                />
+              </Modal>
 
-            {/* <Col xs={4} md={4} /> */}
-
-          </Row>
-
-          <h1>{this.state.currentSkill.name}</h1>
-          <h4>{this.state.currentSkill.skill_type}</h4>
-          <div>{this.state.currentSkill.links}</div>
-          <Button
-            name="SkillDelete"
-            bsStyle="danger"
-            onClick={this.openDeleteModal}
-            disabled={this.state.currentSkill.skill_id === ""}
-          >
-              Delete
-            </Button>
-            <Modal
-              isOpen={this.state.deleteModalIsOpen}
-              onAfterOpen={this.afterDeleteModal}
-              onRequestClose={this.closeDeleteModal}
-              contentLabel="DeleteSkillModal"
-            >
-              <DeleteSkillModal
-                doDelete={this.deleteSkill}
-                closeModal={this.closeDeleteModal}
-              />
-            </Modal>
-
-        </div>
-    );
+          </div>
+        );
+      } else {
+    return (
+      <h1>ERROR!</h1>
+      );
+    }
   }
 }
 
