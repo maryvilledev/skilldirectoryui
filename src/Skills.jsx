@@ -145,7 +145,9 @@ class Skills extends Component {
               contentLabel="SkillModal"
             >
               <SkillForm api={api}
-                         closeModal={this.closeSkillModal} />
+                         closeModal={this.closeSkillModal}
+                         reloadSkills={this.reloadSkills}
+                       />
             </Modal>
 
             <Modal
