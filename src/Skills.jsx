@@ -193,6 +193,7 @@ class Skills extends Component {
         );
       } else {
     return (
+      //TODO, replace with more savory alert
       <h1>ERROR!</h1>
       );
     }
