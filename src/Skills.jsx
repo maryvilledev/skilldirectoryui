@@ -171,8 +171,11 @@ class Skills extends Component {
             <Button
               name="AddSkill"
               bsStyle="primary"
-              onClick={this.openSkillModal}
-              children="Add Skill" />
+              onClick={this.openSkillModal} >
+              Add Skill
+            </Button>
+
+
             <Modal
               isOpen={this.state.skillModalIsOpen}
               onRequestClose={this.closeSkillModal}

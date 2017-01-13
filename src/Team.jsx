@@ -8,7 +8,7 @@ import Select from 'react-select';
 
 import AddTeamMemberForm from './AddTeamMemberForm.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
-import DeleteModal from './DeleteModal.jsx';
+import DeleteTeamMemberModal from './DeleteTeamMemberModal.jsx';
 
 var api = (process.env.REACT_APP_API);
 
@@ -34,6 +34,7 @@ class Team extends React.Component {
     this.onSelectChange = this.onSelectChange.bind(this);
     this.addTeamMember = this.addTeamMember.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
+    this.deleteTeamMember = this.deleteTeamMember.bind(this);
   }
 
   openAddModal() {
@@ -101,7 +102,7 @@ class Team extends React.Component {
 
   deleteTeamMember() {
     axios.delete(`${api}/teammembers/${this.state.selectedTeamMember.id}`)
-      .then(function(result) {
+      .then((result) => {
         this.setState({
           selectedTeamMember: {
             id: "",
@@ -111,7 +112,7 @@ class Team extends React.Component {
         });
         // Refetch the list of team members
         this.fetchTeamMembers();
-      }.bind(this))
+      })
       .catch((err) => {
         console.log(`Error: ${err}`);
       });
@@ -149,7 +150,6 @@ class Team extends React.Component {
         </Row>
         <TeamMemberDisplay
           selected={this.state.selectedTeamMember} />
-
         <Button
           name="TeamMemberDelete"
           bsStyle="danger"
@@ -160,8 +160,9 @@ class Team extends React.Component {
           isOpen={this.state.deleteModalIsOpen}
           onRequestClose={this.closeDeleteModal}
           contentLabel="DeleteTeamMemberModal" >
-          <DeleteModal
-            shouldDelete={this.shouldDelete}/>
+          <DeleteTeamMemberModal
+            doDelete={this.deleteTeamMember}
+            closeModal={this.closeDeleteModal} />
         </Modal>
       </div>
     );
