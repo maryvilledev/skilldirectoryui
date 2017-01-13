@@ -42,7 +42,11 @@ class LinksForm extends React.Component {
     })
     .then(function (response) {
       console.log(response);
-      this.props.closeModal();
+      if(isValidURL(this.state.link_url)) {
+        this.props.closeModal();
+      } else {
+        alert('Please enter a valid URL.');
+      }
     }.bind(this))
     .catch(err => {
       console.log('caught an error', err);
@@ -79,4 +83,15 @@ class LinksForm extends React.Component {
   }
 }
 
+/* eslint-disable no-useless-escape */
+/* http://stackoverflow.com/a/30970319 */
+function isValidURL(url) {
+    var res = url.match(/(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    if(res == null)
+        return false;
+    else
+        return true;
+}
+
 export default LinksForm
+module.exports.isValidURL = isValidURL

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LinksForm from './LinksForm';
-import { shallow } from 'enzyme';
-import { mount } from 'enzyme';
+import { isValidURL } from './LinksForm';
+import { shallow, mount } from 'enzyme';
 
 describe('<LinksForm />', () => {
   it('renders without crashing', () => {
@@ -44,4 +44,11 @@ describe('<LinksForm />', () => {
   //   wrapper.find("Select").simulate("change", event);
   //   expect(wrapper.state().link_type).toBe("New Value");
   // });
+});
+
+test('isValidURL() successfully detects valid/invalid URL forms', () => {
+  expect(isValidURL("http://www.google.com")).toBe(true);
+  expect(isValidURL("https://www.github.com")).toBe(true);
+  expect(isValidURL("www.google.com")).toBe(false);
+  expect(isValidURL("definitely-not-a-valid-url")).toBe(false);
 });
