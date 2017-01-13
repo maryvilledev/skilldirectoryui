@@ -5,8 +5,8 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const Header = ({ children }) => (
-  <Grid fluid="true">
-    <Navbar bsStyle="default" fluid="true">
+  <Grid fluid={true}>
+    <Navbar bsStyle="default" fluid={true}>
       <Navbar.Header>
         <Navbar.Brand>
           <Link to="/">Skill Directory</Link>
