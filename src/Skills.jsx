@@ -29,54 +29,29 @@ class Skills extends Component {
     };
 
     this.openSkillModal = this.openSkillModal.bind(this);
-    this.afterOpenSkillModal = this.afterOpenSkillModal.bind(this);
     this.closeSkillModal = this.closeSkillModal.bind(this);
 
     this.openLinkModal = this.openLinkModal.bind(this);
-    this.afterOpenLinkModal = this.afterOpenLinkModal.bind(this);
     this.closeLinkModal = this.closeLinkModal.bind(this);
 
     this.openDeleteModal = this.openDeleteModal.bind(this);
-    this.afterOpenDeleteModal = this.afterOpenDeleteModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
 
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
-  openSkillModal() {
-    this.setState({skillModalIsOpen: true});
-  }
+  openSkillModal() { this.setState({skillModalIsOpen: true}); }
 
-  afterOpenSkillModal() {
-  }
+  closeSkillModal() { this.setState({skillModalIsOpen: false}); }
 
-  closeSkillModal() {
-    this.setState({skillModalIsOpen: false});
- }
+  openLinkModal() { this.setState({linkModalIsOpen: true}); }
 
-  openLinkModal() {
-    this.setState({linkModalIsOpen: true});
-  }
+  closeLinkModal() { this.setState({linkModalIsOpen: false}); }
 
-  afterOpenLinkModal() {
-  }
+  openDeleteModal() { this.setState({deleteModalIsOpen: true}); }
 
-  closeLinkModal() {
-    this.setState({linkModalIsOpen: false});
-  }
-
-  openDeleteModal() {
-    this.setState({deleteModalIsOpen: true});
-  }
-
-  afterOpenDeleteModal() {
-    //STUB
-  }
-
-  closeDeleteModal() {
-    this.setState({deleteModalIsOpen: false});
-  }
+  closeDeleteModal() { this.setState({deleteModalIsOpen: false}); }
 
   onChange(key, value) {
     console.log("Sending GET request.");
@@ -166,7 +141,6 @@ class Skills extends Component {
             </Button>
             <Modal
               isOpen={this.state.skillModalIsOpen}
-              onAfterOpen={this.afterOpenSkillModal}
               onRequestClose={this.closeSkillModal}
               contentLabel="SkillModal"
             >
@@ -176,7 +150,6 @@ class Skills extends Component {
 
             <Modal
               isOpen={this.state.linkModalIsOpen}
-              onAfterOpen={this.afterOpenLinkModal}
               onRequestClose={this.closeLinkModal}
               contentLabel="LinkModal"
             >
@@ -208,7 +181,6 @@ class Skills extends Component {
           </Button>
           <Modal
             isOpen={this.state.deleteModalIsOpen}
-            onAfterOpen={this.afterOpenDeleteModal}
             onRequestClose={this.closeDeleteModal}
             contentLabel="DeleteSkillModal"
           >
