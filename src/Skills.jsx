@@ -97,16 +97,12 @@ class Skills extends Component {
       .then(res => {
         const skills = res.data.map(obj => obj);
         this.setState({ skills: skills });
-      })
+      });
   }
 
   componentDidMount() {
-    console.log(process.env)
-    axios.get(api + `/skills/`)
-      .then(res => {
-        const skills = res.data.map(obj => obj);
-        this.setState({ skills });
-      });
+    console.log(process.env);
+    this.reloadSkills();
   }
 
   render() {
