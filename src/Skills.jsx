@@ -115,7 +115,7 @@ class Skills extends Component {
     if(this.state.currentSkill.links != null) {
      links = this.state.currentSkill.links.map(link =>
         <li key={link.id}>
-            {capitalizeFirstLetter(String(link.link_type)) + ': '} 
+            {capitalizeFirstLetter(String(link.link_type)) + ': '}
             <a href={link.url}>{link.name}</a>
         </li>
       );
@@ -124,7 +124,6 @@ class Skills extends Component {
         <div>
           <Row>
             <Col xs={4} md={4}>
-              <form onSubmit={ev => this.onSubmit(ev)}>
               <Select
                 name="skills"
                 labelKey="name"
@@ -132,7 +131,6 @@ class Skills extends Component {
                 onChange={onSkillChange}
                 options={this.state.skills}
               />
-              </form>
             </Col>
             <Button name="AddSkill"
                     bsStyle="primary"
@@ -144,7 +142,7 @@ class Skills extends Component {
               onRequestClose={this.closeSkillModal}
               contentLabel="SkillModal"
             >
-              <SkillForm api={api} 
+              <SkillForm api={api}
                          closeModal={this.closeSkillModal} />
             </Modal>
 
@@ -153,8 +151,8 @@ class Skills extends Component {
               onRequestClose={this.closeLinkModal}
               contentLabel="LinkModal"
             >
-              <LinkForm api={api} 
-                        closeModal={this.closeLinkModal} 
+              <LinkForm api={api}
+                        closeModal={this.closeLinkModal}
                         skill_id={currentSkillID}/>
             </Modal>
             {/* <Col xs={4} md={4} /> */}
@@ -166,8 +164,8 @@ class Skills extends Component {
           {isSkillSelected ? <h3>Links:</h3> : null}
           <ul>{links}</ul>
 
-          <Button name="AddLink" 
-                  bsStyle="primary" 
+          <Button name="AddLink"
+                  bsStyle="primary"
                   onClick={this.openLinkModal}
                   disabled={!isSkillSelected}>
             Add Link
