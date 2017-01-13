@@ -40,6 +40,9 @@ class Skills extends Component {
 
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
+
+    this.loadSkills = this.loadSkills.bind(this);
+    this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
   }
 
   openSkillModal() { this.setState({skillModalIsOpen: true}); }
@@ -99,19 +102,19 @@ class Skills extends Component {
 
   componentDidMount() {
     console.log(process.env)
-    this.getSkills();
     const currentId = (this.props.params) ? this.props.params.id : null;
-    if (currentId) {
-        this.loadCurrentSkill(currentId)
+    if (!currentId) {
+      this.loadSkills();
+    } else {
+      this.loadCurrentSkill(currentId).then(this.loadSkills);
     }
   }
 
-  getSkills(){
+  loadSkills(){
     console.log("Sending GET request.");
-    axios.get(api + `/skills/`)
+    return axios.get(api + `/skills/`)
       .then(res => {
         const data = res.data;
-        console.log(data)
         const skills = data.map(obj => obj);
         this.setState({ skills });
       })
@@ -122,7 +125,7 @@ class Skills extends Component {
 
   loadCurrentSkill(currentId){
     console.log("Sending GET request.");
-    axios.get(api + '/skills/' + currentId)
+    return axios.get(api + '/skills/' + currentId)
       .then(res => {
         const skillresults = res.data;
         this.setState({
