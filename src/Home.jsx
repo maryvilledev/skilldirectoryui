@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 const api = (process.env.REACT_APP_API);
@@ -9,7 +9,7 @@ class Home extends React.Component {
     this.state = { 
       totalTeamMembers: null, 
       totalSkills: null,
-      recentSkillReviews: null
+      recentSkillReviews: null,
      };
   }
 
@@ -21,19 +21,32 @@ class Home extends React.Component {
       this.setState({ totalSkills: total })
     });
     getRecentSkillReviews(api, reviews => {
-      console.log(reviews);
       this.setState({ recentSkillReviews: reviews });
     }, 5);
   }
 
   render() {
+    let skillReviews = null;
+    if(this.state.recentSkillReviews != null) {
+      skillReviews = this.state.recentSkillReviews.map(skillReview =>
+        <li key={skillReview.id}>
+            <div>
+              {skillReview.team_member_name 
+               + ' reviewed the ' + 
+               skillReview.skill_name 
+               + ' skill:'}
+            </div>
+            <div>{skillReview.body}</div>
+        </li>
+      );
+    }
     return (
       <div>
         <h1>Skill Directory Home</h1>
         <h3>Team Members: <a href="#/team">{this.state.totalTeamMembers}</a></h3>
         <h3>Unique Skills: <a href="#/skills">{this.state.totalSkills}</a></h3>
-        <h3>Recent Skill Reviews: {this.state.recentSkillReviews}</h3>
-        <h3>Recent Skill Events: List Last 5 Skill Reviews"</h3>
+        {skillReviews == null ? null : <h3>Recent Skill Reviews:</h3>}
+        <ul>{skillReviews}</ul>
       </div>
     );
   }
@@ -86,18 +99,10 @@ function sortByTimestamp(a, b) {
   const aTime = new Date(a.timestamp).getTime();
   const bTime = new Date(b.timestamp).getTime();
   if(aTime < bTime)
-    return -1;
-  else if(aTime > bTime)
     return 1;
+  else if(aTime > bTime)
+    return -1;
   return 0;
 }
-
-// // Parses param date time string of the form "2017-01-13 15:17:07.000Z" into
-// // returned Date object.
-// function parseDate(datetime) {
-//   const dateTimeArr = datetime.split(' ');
-//   const dateArr = dateTimeArr[0].split('-');
-//   const timeArr = dateTimeArr[1].substring(dateTimeArr[1].indexOf('.')).split(':');
-// }
 
 export default Home

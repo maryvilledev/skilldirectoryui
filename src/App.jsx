@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { hashHistory, IndexRedirect, Route, Router } from 'react-router';
 
 import Home from './Home';
