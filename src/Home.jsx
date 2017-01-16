@@ -31,10 +31,8 @@ class Home extends React.Component {
       skillReviews = this.state.recentSkillReviews.map(skillReview =>
         <li key={skillReview.id}>
             <div>
-              {skillReview.team_member_name 
-               + ' reviewed the ' + 
-               skillReview.skill_name 
-               + ' skill:'}
+              {`${skillReview.team_member_name} reviewed the 
+                ${skillReview.skill_name} skill`}
             </div>
             <div>{skillReview.body}</div>
         </li>
