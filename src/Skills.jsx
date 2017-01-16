@@ -124,7 +124,6 @@ class Skills extends Component {
         <div>
           <Row>
             <Col xs={4} md={4}>
-              <form onSubmit={ev => this.onSubmit(ev)}>
               <Select
                 name="skills"
                 labelKey="name"
@@ -132,7 +131,6 @@ class Skills extends Component {
                 onChange={onSkillChange}
                 options={this.state.skills}
               />
-              </form>
             </Col>
             <Button name="AddSkill"
                     bsStyle="primary"
@@ -147,7 +145,7 @@ class Skills extends Component {
               <SkillForm api={api}
                          closeModal={this.closeSkillModal}
                          reloadSkills={this.reloadSkills}
-                       />
+                />
             </Modal>
 
             <Modal
