@@ -21,7 +21,7 @@ describe('<SkillsForm />', () => {
     // process.stdout.write(JSON.stringify(wrapper.state()));
     expect(wrapper.state().skill_name).toBe("");
     const event = {target: {value: "New Value"}};
-    wrapper.find({ name: "skill_name" }).simulate("change", event);
+    wrapper.find({ name: "skillName" }).simulate("change", event);
     expect(wrapper.state().skill_name).toBe("New Value");
     // process.stdout.write(JSON.stringify(wrapper.state()));
   });

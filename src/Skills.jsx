@@ -8,6 +8,7 @@ import axios from 'axios';
 import LinkForm from './LinksForm'
 import SkillForm from './SkillsForm'
 import DeleteSkillModal from './DeleteSkillModal'
+import { ModalStyle } from './Styles'
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -179,9 +180,11 @@ class Skills extends Component {
               isOpen={this.state.skillModalIsOpen}
               onRequestClose={this.closeSkillModal}
               contentLabel="SkillModal"
+              style={ModalStyle}
             >
               <SkillForm api={api}
-                         closeModal={this.closeSkillModal} />
+                         closeModal={this.closeSkillModal} 
+                        />
             </Modal>
 
             <Modal

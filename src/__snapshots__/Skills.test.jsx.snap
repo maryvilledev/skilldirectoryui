@@ -69,7 +69,19 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       onRequestClose={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}>
+      shouldCloseOnOverlayClick={true}
+      style={
+        Object {
+          "content": Object {},
+          "overlay": Object {
+            "bottom": "35%",
+            "left": "25%",
+            "position": "fixed",
+            "right": "25%",
+            "top": "15%",
+          },
+        }
+      }>
       <SkillForm
         api="http://localhost:8080"
         closeModal={[Function]} />
