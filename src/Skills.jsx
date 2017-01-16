@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
@@ -36,9 +37,13 @@ class Skills extends Component {
 
     this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
+
     this.reloadSkills = this.reloadSkills.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
+
+    this.loadSkills = this.loadSkills.bind(this);
+    this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
   }
 
   openSkillModal() { this.setState({skillModalIsOpen: true}); }
@@ -67,6 +72,8 @@ class Skills extends Component {
             skill_type: skillresults.skill_type,
             links: skillresults.links,
           }});
+          browserHistory.push('/skills/' + skillresults.id);
+        // console.log(res.data);
       })
       .catch(err => {
         console.log(err);
@@ -103,8 +110,48 @@ class Skills extends Component {
   }
 
   componentDidMount() {
-    console.log(process.env);
+    console.log(process.env)
     this.reloadSkills();
+    const currentId = (this.props.params) ? this.props.params.id : null;
+    if (!currentId) {
+      this.loadSkills();
+    } else {
+      this.loadCurrentSkill(currentId).then(this.loadSkills);
+    }
+  }
+
+  loadSkills(){
+    console.log("Sending GET request.");
+    return axios.get(api + `/skills/`)
+      .then(res => {
+        const data = res.data;
+        const skills = data.map(obj => obj);
+        this.setState({ skills });
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  }
+
+  loadCurrentSkill(currentId){
+    console.log("Sending GET request.");
+    return axios.get(api + '/skills/' + currentId)
+      .then(res => {
+        const skillresults = res.data;
+        this.setState({
+          currentSkill: {
+            skill_id: skillresults.id,
+            name: skillresults.name,
+            skill_type: skillresults.skill_type,
+            links: skillresults.links,
+          },
+        });
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({isError: true});
+      }
+    );
   }
 
   render() {
@@ -120,6 +167,7 @@ class Skills extends Component {
         </li>
       );
     }
+    if (!this.state.isError) {
     return (
         <div>
           <Row>
@@ -191,6 +239,12 @@ class Skills extends Component {
           </Modal>
         </div>
     );
+  } else {
+    return (
+      //TODO, replace with more savory alert
+      <h1>ERROR!</h1>
+    );
+    }
   }
 }
 
