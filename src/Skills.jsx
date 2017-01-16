@@ -7,7 +7,7 @@ import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
 import LinkForm from './LinksForm'
 import SkillForm from './SkillsForm'
-import DeleteSkillModal from './DeleteSkillModal'
+import DeleteModal from './DeleteModal.jsx';
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -28,6 +28,8 @@ class Skills extends Component {
         links: [],
       }
     };
+
+    this.shouldDelete = this.shouldDelete.bind(this);
 
     this.openSkillModal = this.openSkillModal.bind(this);
     this.closeSkillModal = this.closeSkillModal.bind(this);
@@ -75,6 +77,13 @@ class Skills extends Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  shouldDelete(response) {
+    if (response) {
+      this.deleteSkill();
+    }
+    this.closeDeleteModal();
   }
 
   deleteSkill() {
@@ -221,9 +230,8 @@ class Skills extends Component {
             onRequestClose={this.closeDeleteModal}
             contentLabel="DeleteSkillModal"
           >
-            <DeleteSkillModal
-              doDelete={this.deleteSkill}
-              closeModal={this.closeDeleteModal}
+            <DeleteModal
+              shouldDelete={this.shouldDelete}
             />
           </Modal>
         </div>

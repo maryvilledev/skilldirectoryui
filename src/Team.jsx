@@ -8,7 +8,7 @@ import Select from 'react-select';
 
 import AddTeamMemberForm from './AddTeamMemberForm.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
-import DeleteTeamMemberModal from './DeleteTeamMemberModal.jsx';
+import DeleteModal from './DeleteModal.jsx';
 
 var api = (process.env.REACT_APP_API);
 
@@ -93,6 +93,7 @@ class Team extends React.Component {
         console.log(`Error: ${err}`);
       });
   }
+
   shouldDelete(response) {
     if (response) {
       this.deleteTeamMember();
@@ -160,9 +161,9 @@ class Team extends React.Component {
           isOpen={this.state.deleteModalIsOpen}
           onRequestClose={this.closeDeleteModal}
           contentLabel="DeleteTeamMemberModal" >
-          <DeleteTeamMemberModal
-            doDelete={this.deleteTeamMember}
-            closeModal={this.closeDeleteModal} />
+          <DeleteModal
+            shouldDelete={this.shouldDelete}
+          />
         </Modal>
       </div>
     );

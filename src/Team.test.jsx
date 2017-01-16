@@ -29,18 +29,18 @@ describe('<Team />', () => {
     it('should be disabled if a team member is not selected', function () {
       const teamComponent = mount(<Team />);
       const button = teamComponent.find('button')
-        .findWhere(n => n.prop('name') == "TeamMemberDelete");
+        .findWhere(n => n.prop('name') == 'TeamMemberDelete');
       expect(button.prop('disabled')).toBe(true);
-      teamComponent.setState({ selectedTeamMember: { skill_id: "1234", }});
+      teamComponent.setState({ selectedTeamMember: { skill_id: '1234', }});
       expect(button.prop('disabled')).toBe(false);
     });
-    it('Can open a DeleteTeamMemberModal when a team member has been selected', () => {
+    it('Can open a DeleteModal when a team member has been selected', () => {
       const wrapper = mount(<Team />);
-      wrapper.setState({ selectedTeamMember: { id: "1" }});
+      wrapper.setState({ selectedTeamMember: { id: '1' }});
       const node = wrapper.find('Modal')
-        .findWhere(n => n.prop('contentLabel') == "DeleteTeamMemberModal");
+        .findWhere(n => n.prop('contentLabel') == 'DeleteTeamMemberModal');
       const button = wrapper.find('button')
-        .findWhere(n => n.prop('name') == "TeamMemberDelete");
+        .findWhere(n => n.prop('name') == 'TeamMemberDelete');
       expect(node.prop('isOpen')).toBe(false);
       button.simulate('click');
       expect(node.prop('isOpen')).toBe(true);

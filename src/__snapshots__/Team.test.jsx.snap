@@ -101,9 +101,8 @@ exports[`<Team /> matches the stored snapshot 1`] = `
     parentSelector={[Function]}
     portalClassName="ReactModalPortal"
     shouldCloseOnOverlayClick={true}>
-    <DeleteTeamMemberModal
-      closeModal={[Function]}
-      doDelete={[Function]} />
+    <DeleteModal
+      shouldDelete={[Function]} />
   </Modal>
 </div>
 `;
