@@ -58,7 +58,7 @@ class SkillForm extends React.Component {
               Name:
             </Col>
             <Col sm={10}>
-              <FormControl name='SkillName' onChange={onSkillNameChange}/>
+              <FormControl name='skillName' onChange={onSkillNameChange}/>
             </Col>
           </FormGroup>
           <FormGroup controlId='skillType'>
