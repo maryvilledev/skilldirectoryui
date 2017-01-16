@@ -47,7 +47,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         searchable={true}
         simpleValue={false}
         tabSelectsValue={true}
-        value={undefined}
+        value=""
         valueComponent={[Function]}
         valueKey="value" />
     </Col>
@@ -135,9 +135,8 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
     parentSelector={[Function]}
     portalClassName="ReactModalPortal"
     shouldCloseOnOverlayClick={true}>
-    <DeleteSkillModal
-      closeModal={[Function]}
-      doDelete={[Function]} />
+    <DeleteModal
+      shouldDelete={[Function]} />
   </Modal>
 </div>
 `;

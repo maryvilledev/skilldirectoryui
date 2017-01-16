@@ -7,8 +7,8 @@ import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
 import LinkForm from './LinksForm'
 import SkillForm from './SkillsForm'
-import DeleteSkillModal from './DeleteSkillModal'
 import { ModalStyle } from './Styles'
+import DeleteModal from './DeleteModal.jsx';
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -29,6 +29,8 @@ class Skills extends Component {
         links: [],
       }
     };
+
+    this.shouldDelete = this.shouldDelete.bind(this);
 
     this.openSkillModal = this.openSkillModal.bind(this);
     this.closeSkillModal = this.closeSkillModal.bind(this);
@@ -63,8 +65,6 @@ class Skills extends Component {
     axios.get(api + '/skills/' + value)
       .then(res => {
         const skillresults = res.data
-        console.log(value)
-        console.log(skillresults)
         this.setState(
           {currentSkill: {
             skill_id: skillresults.id,
@@ -78,6 +78,13 @@ class Skills extends Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  shouldDelete(response) {
+    if (response) {
+      this.deleteSkill();
+    }
+    this.closeDeleteModal();
   }
 
   deleteSkill() {
@@ -166,16 +173,19 @@ class Skills extends Component {
               <Select
                 name="skills"
                 labelKey="name"
-                value={this.state.skill_type}
                 onChange={onSkillChange}
+                value={this.state.currentSkill.skill_type}
                 options={this.state.skills}
               />
             </Col>
-            <Button name="AddSkill"
-                    bsStyle="primary"
-                    onClick={this.openSkillModal}>
+            <Button
+              name="AddSkill"
+              bsStyle="primary"
+              onClick={this.openSkillModal} >
               Add Skill
             </Button>
+
+
             <Modal
               isOpen={this.state.skillModalIsOpen}
               onRequestClose={this.closeSkillModal}
@@ -223,9 +233,8 @@ class Skills extends Component {
             onRequestClose={this.closeDeleteModal}
             contentLabel="DeleteSkillModal"
           >
-            <DeleteSkillModal
-              doDelete={this.deleteSkill}
-              closeModal={this.closeDeleteModal}
+            <DeleteModal
+              shouldDelete={this.shouldDelete}
             />
           </Modal>
         </div>
@@ -243,4 +252,4 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export default Skills
+export default Skills;

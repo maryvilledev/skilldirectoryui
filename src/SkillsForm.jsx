@@ -25,8 +25,8 @@ class SkillForm extends React.Component {
     this.setState({ [key]: value});
   }
 
-  onSubmit(env) {
-    env.preventDefault();
+  onSubmit(ev) {
+    ev.preventDefault();
     const skill_name = this.state.skill_name;
     const skill_type = this.state.skill_type;
 
