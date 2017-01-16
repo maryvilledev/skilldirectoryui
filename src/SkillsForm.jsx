@@ -15,7 +15,7 @@ class SkillForm extends React.Component {
     super(props);
     this.state = {
       skill_name: "",
-      skill_type: ""
+      skill_type: skillTypes[0].value
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -58,7 +58,7 @@ class SkillForm extends React.Component {
               Name:
             </Col>
             <Col sm={10}>
-              <FormControl name='skillName' onChange={onSkillNameChange}/>
+              <FormControl name='SkillName' onChange={onSkillNameChange}/>
             </Col>
           </FormGroup>
           <FormGroup controlId='skillType'>
