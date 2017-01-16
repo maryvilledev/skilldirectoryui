@@ -47,7 +47,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         searchable={true}
         simpleValue={false}
         tabSelectsValue={true}
-        value={undefined}
+        value=""
         valueComponent={[Function]}
         valueKey="value" />
     </Col>
