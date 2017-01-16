@@ -18,9 +18,9 @@ describe('<Skills />', () => {
   it('has a Button that opens the SkillModal', () => {
     const wrapper = mount(<Skills />);
     const skillModal = wrapper.find('Modal')
-      .findWhere(n => n.debug().includes('contentLabel="SkillModal"'));
+      .findWhere(n => n.prop('contentLabel') == 'SkillModal');
     const addSkillButton = wrapper.find('button')
-      .findWhere(n => n.debug().includes('name="AddSkill"'));
+      .findWhere(n => n.prop('name') == 'AddSkill');
     expect(skillModal.prop('isOpen')).toBe(false);
     addSkillButton.simulate('click');
     expect(skillModal.prop('isOpen')).toBe(true);
@@ -29,7 +29,7 @@ describe('<Skills />', () => {
   it('has an "Add Link" button that enables when a Skill is selected', () => {
     const wrapper = mount(<Skills />);
     const addLinkNode = wrapper.find('button').
-                findWhere(n => n.debug().includes('name="AddLink"'));
+                findWhere(n => n.prop('name') == 'AddLink');
     expect(addLinkNode.props().disabled).toBe(true);
     wrapper.setState({ currentSkill: { skill_id: "1234" }});
     expect(addLinkNode.props().disabled).toBe(false);
@@ -40,9 +40,9 @@ describe('<Skills />', () => {
     const wrapper = mount(<Skills />);
     wrapper.setState({ currentSkill: { skill_id: "1234" }});
     const linkModalNode = wrapper.find('Modal').
-                findWhere(n => n.debug().includes('contentLabel="LinkModal"'));
+                findWhere(n => n.prop('contentLabel') == 'LinkModal');
     const addLinkNode = wrapper.find('button').
-                findWhere(n => n.debug().includes('name="AddLink"'));
+                findWhere(n => n.prop('name') == 'AddLink');
 
     // Run Test
     expect(linkModalNode.prop('isOpen')).toBe(false);
@@ -53,19 +53,19 @@ describe('<Skills />', () => {
   it('has a "Delete" button that enables when a Skill is selected', () => {
     const wrapper = mount(<Skills />);
     const button = wrapper.find('button')
-      .findWhere(n => n.debug().includes('name="DeleteSkill"'));
+      .findWhere(n => n.prop('name') == "DeleteSkill");
     expect(button.prop('disabled')).toBe(true);
     wrapper.setState({ currentSkill: { skill_id: "1234", }});
     expect(button.prop('disabled')).toBe(false);
   });
 
-  it('has a Button that opens the DeleteSkillModal', () => {
+  it('has a Button that opens a DeleteModal', () => {
     const wrapper = mount(<Skills />);
     wrapper.setState({ currentSkill: { skill_id: "1" }});
     const node = wrapper.find('Modal')
-      .findWhere(n => n.debug().includes('contentLabel="DeleteSkillModal"'));
+      .findWhere((n) => n.prop('contentLabel') == 'DeleteSkillModal');
     const button = wrapper.find('button')
-      .findWhere(n => n.debug().includes('name="DeleteSkill"'));
+      .findWhere(n => n.prop('name') == 'DeleteSkill');
     expect(node.prop('isOpen')).toBe(false);
     button.simulate('click');
     expect(node.prop('isOpen')).toBe(true);
