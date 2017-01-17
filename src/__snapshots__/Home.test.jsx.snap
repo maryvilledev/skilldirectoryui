@@ -6,12 +6,12 @@ exports[`<Home /> matches the stored snapshot 1`] = `
   <h3>
     Team Members: 
     <a
-      href="#/team" />
+      href="/team" />
   </h3>
   <h3>
     Unique Skills: 
     <a
-      href="#/skills" />
+      href="/skills" />
   </h3>
   <ul />
 </div>
