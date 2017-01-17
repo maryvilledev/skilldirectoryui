@@ -1,12 +1,12 @@
 FROM node:latest
 
-RUN npm install -g pushstate-server
+ADD src src
+ADD public public
+ADD package.json package.json
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN npm install
+RUN npm run build
 
+EXPOSE 9000
 
-EXPOSE 3000
-CMD "/bin/bash ./buildUI"
-
-COPY . /usr/src/app
+CMD "node_modules/pushstate-server/bin/pushstate-server" "build"
