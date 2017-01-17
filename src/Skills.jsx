@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
@@ -6,7 +7,7 @@ import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
 import LinkForm from './LinksForm'
 import SkillForm from './SkillsForm'
-import DeleteSkillModal from './DeleteSkillModal'
+import DeleteModal from './DeleteModal.jsx';
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -37,6 +38,9 @@ class Skills extends Component {
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
+
+    this.loadSkills = this.loadSkills.bind(this);
+    this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
   }
 
   openSkillModal() { this.setState({skillModalIsOpen: true}); }
@@ -56,8 +60,6 @@ class Skills extends Component {
     axios.get(api + '/skills/' + value)
       .then(res => {
         const skillresults = res.data
-        console.log(value)
-        console.log(skillresults)
         this.setState(
           {currentSkill: {
             skill_id: skillresults.id,
@@ -65,10 +67,19 @@ class Skills extends Component {
             skill_type: skillresults.skill_type,
             links: skillresults.links,
           }});
+          browserHistory.push('/skills/' + skillresults.id);
+        // console.log(res.data);
       })
       .catch(err => {
         console.log(err);
       });
+  }
+
+  shouldDelete(response) {
+    if (response) {
+      this.deleteSkill();
+    }
+    this.closeDeleteModal();
   }
 
   deleteSkill() {
@@ -94,15 +105,46 @@ class Skills extends Component {
 
   componentDidMount() {
     console.log(process.env)
+    const currentId = (this.props.params) ? this.props.params.id : null;
+    if (!currentId) {
+      this.loadSkills();
+    } else {
+      this.loadCurrentSkill(currentId).then(this.loadSkills);
+    }
+  }
+
+  loadSkills(){
     console.log("Sending GET request.");
-    axios.get(api + `/skills/`)
+    return axios.get(api + `/skills/`)
       .then(res => {
-        const skills = res.data.map(obj => obj);
+        const data = res.data;
+        const skills = data.map(obj => obj);
         this.setState({ skills });
       })
       .catch(err => {
         console.log(err)
       });
+  }
+
+  loadCurrentSkill(currentId){
+    console.log("Sending GET request.");
+    return axios.get(api + '/skills/' + currentId)
+      .then(res => {
+        const skillresults = res.data;
+        this.setState({
+          currentSkill: {
+            skill_id: skillresults.id,
+            name: skillresults.name,
+            skill_type: skillresults.skill_type,
+            links: skillresults.links,
+          },
+        });
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({isError: true});
+      }
+    );
   }
 
   render() {
@@ -113,36 +155,38 @@ class Skills extends Component {
     if(this.state.currentSkill.links != null) {
      links = this.state.currentSkill.links.map(link =>
         <li key={link.id}>
-            {capitalizeFirstLetter(String(link.link_type)) + ': '} 
+            {capitalizeFirstLetter(String(link.link_type)) + ': '}
             <a href={link.url}>{link.name}</a>
         </li>
       );
     }
+    if (!this.state.isError) {
     return (
         <div>
           <Row>
             <Col xs={4} md={4}>
-              <form onSubmit={ev => this.onSubmit(ev)}>
               <Select
                 name="skills"
                 labelKey="name"
-                value={this.state.skill_type}
                 onChange={onSkillChange}
+                value={this.state.currentSkill.skill_type}
                 options={this.state.skills}
               />
-              </form>
             </Col>
-            <Button name="AddSkill"
-                    bsStyle="primary"
-                    onClick={this.openSkillModal}>
+            <Button
+              name="AddSkill"
+              bsStyle="primary"
+              onClick={this.openSkillModal} >
               Add Skill
             </Button>
+
+
             <Modal
               isOpen={this.state.skillModalIsOpen}
               onRequestClose={this.closeSkillModal}
               contentLabel="SkillModal"
             >
-              <SkillForm api={api} 
+              <SkillForm api={api}
                          closeModal={this.closeSkillModal} />
             </Modal>
 
@@ -151,8 +195,8 @@ class Skills extends Component {
               onRequestClose={this.closeLinkModal}
               contentLabel="LinkModal"
             >
-              <LinkForm api={api} 
-                        closeModal={this.closeLinkModal} 
+              <LinkForm api={api}
+                        closeModal={this.closeLinkModal}
                         skill_id={currentSkillID}/>
             </Modal>
             {/* <Col xs={4} md={4} /> */}
@@ -164,8 +208,8 @@ class Skills extends Component {
           {isSkillSelected ? <h3>Links:</h3> : null}
           <ul>{links}</ul>
 
-          <Button name="AddLink" 
-                  bsStyle="primary" 
+          <Button name="AddLink"
+                  bsStyle="primary"
                   onClick={this.openLinkModal}
                   disabled={!isSkillSelected}>
             Add Link
@@ -182,13 +226,18 @@ class Skills extends Component {
             onRequestClose={this.closeDeleteModal}
             contentLabel="DeleteSkillModal"
           >
-            <DeleteSkillModal
-              doDelete={this.deleteSkill}
-              closeModal={this.closeDeleteModal}
+            <DeleteModal
+              shouldDelete={this.shouldDelete}
             />
           </Modal>
         </div>
     );
+  } else {
+    return (
+      //TODO, replace with more savory alert
+      <h1>ERROR!</h1>
+    );
+    }
   }
 }
 
@@ -196,4 +245,4 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export default Skills
+export default Skills;

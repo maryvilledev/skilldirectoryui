@@ -1,27 +1,108 @@
 exports[`<Team /> matches the stored snapshot 1`] = `
 <div>
-  <h1>
-    The Team
-  </h1>
-  <ul>
-    <li>
-      Brian
-    </li>
-    <li>
-      Andrew
-    </li>
-    <li>
-      Jordan
-    </li>
-    <li>
-      Jeff
-    </li>
-    <li>
-      Dane
-    </li>
-    <li>
-      Joel
-    </li>
-  </ul>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      md={4}
+      xs={4}>
+      <Select
+        addLabelText="Add \"{label}\"?"
+        arrowRenderer={[Function]}
+        autosize={true}
+        backspaceRemoves={true}
+        backspaceToRemoveMessage="Press backspace to remove {label}"
+        clearAllText="Clear all"
+        clearValueText="Clear value"
+        clearable={true}
+        delimiter=","
+        disabled={false}
+        escapeClearsValue={true}
+        filterOptions={[Function]}
+        ignoreAccents={true}
+        ignoreCase={true}
+        inputProps={Object {}}
+        isLoading={false}
+        joinValues={false}
+        labelKey="name"
+        matchPos="any"
+        matchProp="any"
+        menuBuffer={0}
+        menuRenderer={[Function]}
+        multi={false}
+        name="teamMembers"
+        noResultsText="No results found"
+        onBlurResetsInput={true}
+        onChange={[Function]}
+        onCloseResetsInput={true}
+        openAfterFocus={false}
+        optionComponent={[Function]}
+        options={Array []}
+        pageSize={5}
+        placeholder="Select..."
+        required={false}
+        scrollMenuIntoView={true}
+        searchable={true}
+        simpleValue={false}
+        tabSelectsValue={true}
+        value=""
+        valueComponent={[Function]}
+        valueKey="value" />
+    </Col>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      name="addTeamMember"
+      onClick={[Function]}>
+      Add Team Member
+    </Button>
+    <Modal
+      ariaHideApp={true}
+      closeTimeoutMS={0}
+      contentLabel="AddTeamMemberModal"
+      isOpen={false}
+      onRequestClose={[Function]}
+      parentSelector={[Function]}
+      portalClassName="ReactModalPortal"
+      shouldCloseOnOverlayClick={true}>
+      <AddTeamMemberForm
+        onSubmit={[Function]} />
+    </Modal>
+  </Row>
+  <TeamMemberDisplay
+    selected={
+      Object {
+        "id": "",
+        "name": "",
+        "title": "",
+      }
+    } />
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="danger"
+    disabled={true}
+    name="TeamMemberDelete"
+    onClick={[Function]}>
+    Delete
+  </Button>
+  <Modal
+    ariaHideApp={true}
+    closeTimeoutMS={0}
+    contentLabel="DeleteTeamMemberModal"
+    isOpen={false}
+    onRequestClose={[Function]}
+    parentSelector={[Function]}
+    portalClassName="ReactModalPortal"
+    shouldCloseOnOverlayClick={true}>
+    <DeleteModal
+      shouldDelete={[Function]} />
+  </Modal>
 </div>
 `;

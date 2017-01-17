@@ -41,8 +41,8 @@ class Home extends React.Component {
     return (
       <div>
         <h1>Skill Directory Home</h1>
-        <h3>Team Members: <a href="#/team">{this.state.totalTeamMembers}</a></h3>
-        <h3>Unique Skills: <a href="#/skills">{this.state.totalSkills}</a></h3>
+        <h3>Team Members: <a href="/team">{this.state.totalTeamMembers}</a></h3>
+        <h3>Unique Skills: <a href="/skills">{this.state.totalSkills}</a></h3>
         {skillReviews == null ? null : <h3>Recent Skill Reviews:</h3>}
         <ul>{skillReviews}</ul>
       </div>
