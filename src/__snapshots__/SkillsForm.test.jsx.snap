@@ -1,81 +1,88 @@
 exports[`<SkillsForm /> matches the stored snapshot 1`] = `
-<form
-  onSubmit={[Function]}>
-  <div>
-    Name: 
-    <input
-      name="skill_name"
-      onChange={[Function]}
-      type="text"
-      value="" />
-  </div>
-  <div>
-    Skill Type: 
-    <Select
-      addLabelText="Add \"{label}\"?"
-      arrowRenderer={[Function]}
-      autosize={true}
-      backspaceRemoves={true}
-      backspaceToRemoveMessage="Press backspace to remove {label}"
-      clearAllText="Clear all"
-      clearValueText="Clear value"
-      clearable={true}
-      delimiter=","
-      disabled={false}
-      escapeClearsValue={true}
-      filterOptions={[Function]}
-      ignoreAccents={true}
-      ignoreCase={true}
-      inputProps={Object {}}
-      isLoading={false}
-      joinValues={false}
-      labelKey="label"
-      matchPos="any"
-      matchProp="any"
-      menuBuffer={0}
-      menuRenderer={[Function]}
-      multi={false}
-      name="skill_type"
-      noResultsText="No results found"
-      onBlurResetsInput={true}
-      onChange={[Function]}
-      onCloseResetsInput={true}
-      openAfterFocus={false}
-      optionComponent={[Function]}
-      options={
-        Array [
-          Object {
-            "label": "Compiled",
-            "value": "compiled",
-          },
-          Object {
-            "label": "Scripted",
-            "value": "scripted",
-          },
-          Object {
-            "label": "Database",
-            "value": "database",
-          },
-          Object {
-            "label": "Orchestration",
-            "value": "orchestration",
-          },
-        ]
-      }
-      pageSize={5}
-      placeholder="Select..."
-      required={false}
-      scrollMenuIntoView={true}
-      searchable={true}
-      simpleValue={false}
-      tabSelectsValue={true}
-      value=""
-      valueComponent={[Function]}
-      valueKey="value" />
-  </div>
-  <button
-    type="submit">
-    Save
-  </button>
-</form>
+<div>
+  <h1>
+    Add Skill
+  </h1>
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    onSubmit={[Function]}>
+    <FormGroup
+      bsClass="form-group"
+      controlId="skillName">
+      <Col
+        bsClass="col"
+        componentClass={[Function]}
+        sm={2}>
+        Name:
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={10}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="input"
+          name="skillName"
+          onChange={[Function]} />
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group"
+      controlId="skillType">
+      <Col
+        bsClass="col"
+        componentClass={[Function]}
+        sm={2}>
+        Type:
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={10}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="select"
+          onChange={[Function]}>
+          <option
+            value="compiled">
+            Compiled
+          </option>
+          <option
+            value="scripted">
+            Scripted
+          </option>
+          <option
+            value="database">
+            Database
+          </option>
+          <option
+            value="orchestration">
+            Orchestration
+          </option>
+        </FormControl>
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={10}
+        smOffset={2}>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="primary"
+          disabled={false}
+          type="submit">
+          Submit
+        </Button>
+      </Col>
+    </FormGroup>
+  </Form>
+</div>
 `;
