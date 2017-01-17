@@ -1,0 +1,7 @@
+.gitignore
+README.md
+circle.yml
+*/__snapshots__/*
+*.test.jsx
+./node_modules
+npm-debug.log
