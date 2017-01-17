@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package.json /tmp/package.json
-RUN cd /tmp && npm install --only=prod
+RUN cd /tmp && npm install --only=production
 RUN npm install -g pushstate-server
 
 RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
