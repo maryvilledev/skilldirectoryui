@@ -19,7 +19,7 @@ dependencies:
 
 deployment:
   master:
-    branch: [master,refactorDocker]
+    branch: master
     commands:
       - ls
       - pwd
