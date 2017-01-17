@@ -1,5 +1,7 @@
 FROM node:latest
 
+RUN npm install -g pushstate-server
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
