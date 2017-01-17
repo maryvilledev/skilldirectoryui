@@ -19,7 +19,7 @@ dependencies:
 
 deployment:
   master:
-    branch: master
+    branch: [master,issue47]
     commands:
       - ls
       - pwd
