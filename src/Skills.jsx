@@ -29,17 +29,13 @@ class Skills extends Component {
       }
     };
 
-    this.shouldDelete = this.shouldDelete.bind(this);
-
+    // Bind all the things
     this.openSkillModal = this.openSkillModal.bind(this);
     this.closeSkillModal = this.closeSkillModal.bind(this);
-
     this.openLinkModal = this.openLinkModal.bind(this);
     this.closeLinkModal = this.closeLinkModal.bind(this);
-
     this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
-
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
 
