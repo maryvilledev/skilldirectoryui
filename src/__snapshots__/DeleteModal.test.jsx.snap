@@ -1,4 +1,4 @@
-exports[`<DeleteSkillModal /> matches the stored snapshot 1`] = `
+exports[`<DeleteModal /> matches the stored snapshot 1`] = `
 <div>
   <h1>
     Are you sure?
@@ -20,7 +20,7 @@ exports[`<DeleteSkillModal /> matches the stored snapshot 1`] = `
     bsStyle="default"
     disabled={false}
     name="No"
-    onClick={undefined}>
+    onClick={[Function]}>
     No
   </Button>
 </div>
