@@ -37,6 +37,8 @@ class Skills extends Component {
     this.closeLinkModal = this.closeLinkModal.bind(this);
     this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
+
+    this.reloadSkills = this.reloadSkills.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
 
@@ -104,8 +106,17 @@ class Skills extends Component {
      });
   }
 
+  reloadSkills() {
+    axios.get(api + '/skills/')
+      .then(res => {
+        const skills = res.data.map(obj => obj);
+        this.setState({ skills: skills });
+      });
+  }
+
   componentDidMount() {
     console.log(process.env)
+    this.reloadSkills();
     const currentId = (this.props.params) ? this.props.params.id : null;
     if (!currentId) {
       this.loadSkills();
@@ -189,8 +200,9 @@ class Skills extends Component {
               style={ModalStyle}
             >
               <SkillForm api={api}
-                         closeModal={this.closeSkillModal} 
-                        />
+                         closeModal={this.closeSkillModal}
+                         reloadSkills={this.reloadSkills}
+                />
             </Modal>
 
             <Modal
