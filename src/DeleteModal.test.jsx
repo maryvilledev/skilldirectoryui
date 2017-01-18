@@ -30,8 +30,7 @@ describe('<DeleteModal />', () => {
           shouldDelete={shouldDelete}
         />
       );
-      const yesButton = node.find('Button')
-        .findWhere((button) => button.prop('name') == 'Yes');
+      const yesButton = node.find('[name="Yes"]');
       yesButton.simulate('click');
       expect(didClose).toEqual(true);
       expect(didDelete).toEqual(true);
@@ -41,8 +40,8 @@ describe('<DeleteModal />', () => {
   describe('the No button', function () {
     it('should close itself without deleting', function () {
       let didDelete = false, didClose = false;
-      const mockDelete = () => {didDelete = true; };
-      const mockClose = () => {didClose = true; };
+      const mockDelete = () => { didDelete = true; };
+      const mockClose = () => { didClose = true; };
       const shouldDelete = (response) => {
         if (response) {
           mockDelete();
@@ -54,8 +53,7 @@ describe('<DeleteModal />', () => {
           shouldDelete={shouldDelete}
         />
       );
-      const noButton = node.find('Button')
-        .findWhere((button) => button.prop('name') == 'No');
+      const noButton = node.find('[name="No"]');
       noButton.simulate('click');
       expect(didClose).toEqual(true);
       expect(didDelete).toEqual(false);
