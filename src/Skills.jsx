@@ -39,6 +39,7 @@ class Skills extends Component {
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.shouldDelete = this.shouldDelete.bind(this);
 
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
