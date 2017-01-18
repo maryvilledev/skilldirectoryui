@@ -33,6 +33,12 @@ class LinksForm extends React.Component {
     const link_url = this.state.link_url;
     const link_type = this.state.link_type;
 
+    // Check validity of URL before sending POST request
+    if(!isValidURL(link_url)) {
+      alert('Please enter a valid URL.');
+      return;
+    }
+
     // Post form data to API endpoint
     axios.post(this.props.api + '/links/', {
       name: link_name,
@@ -42,11 +48,7 @@ class LinksForm extends React.Component {
     })
     .then(function (response) {
       console.log(response);
-      if(isValidURL(this.state.link_url)) {
-        this.props.closeModal();
-      } else {
-        alert('Please enter a valid URL.');
-      }
+      this.props.closeModal();
     }.bind(this))
     .catch(err => {
       console.log('caught an error', err);
