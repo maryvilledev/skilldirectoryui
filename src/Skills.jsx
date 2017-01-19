@@ -127,15 +127,6 @@ class Skills extends Component {
       this.loadCurrentSkill(currentId).then(this.loadSkills);
   }
 
-  reloadSkills() {
-    axios.get(api + '/skills/')
-      .then(res => {
-        const skills = res.data.map(obj => obj);
-        this.setState({ skills: skills });
-      })
-      .catch(err => console.log(`Caught an error: ${err}`));
-  }
-
   loadSkills() {
     return axios.get(`${api}/skills/`)
       .then(res => {

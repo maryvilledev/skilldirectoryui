@@ -69,8 +69,21 @@ exports[`<Team /> matches the stored snapshot 1`] = `
       onRequestClose={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}>
+      shouldCloseOnOverlayClick={true}
+      style={
+        Object {
+          "content": Object {},
+          "overlay": Object {
+            "bottom": "25%",
+            "left": "25%",
+            "position": "fixed",
+            "right": "25%",
+            "top": "15%",
+          },
+        }
+      }>
       <AddTeamMemberForm
+        closeModal={[Function]}
         onSubmit={[Function]} />
     </Modal>
   </Row>
@@ -100,7 +113,19 @@ exports[`<Team /> matches the stored snapshot 1`] = `
     onRequestClose={[Function]}
     parentSelector={[Function]}
     portalClassName="ReactModalPortal"
-    shouldCloseOnOverlayClick={true}>
+    shouldCloseOnOverlayClick={true}
+    style={
+      Object {
+        "content": Object {},
+        "overlay": Object {
+          "bottom": "25%",
+          "left": "25%",
+          "position": "fixed",
+          "right": "25%",
+          "top": "15%",
+        },
+      }
+    }>
     <DeleteModal
       shouldDelete={[Function]} />
   </Modal>
