@@ -50,6 +50,30 @@ describe('<Skills />', () => {
     expect(linkModalNode.prop('isOpen')).toBe(true);
   });
 
+  it('has an "Add Review" button that enables when a Skill is selected', () => {
+    const wrapper = mount(<Skills />);
+    const addReviewBtn = wrapper.find('button').
+                findWhere(n => n.prop('name') == 'AddReview');
+    expect(addReviewBtn.props().disabled).toBe(true);
+    wrapper.setState({ currentSkill: { skill_id: "1234" }});
+    expect(addReviewBtn.props().disabled).toBe(false);
+  });
+
+  it('has an "Add Review" button that opens the SkillReviews modal', () => {
+    // Setup
+    const wrapper = mount(<Skills />);
+    wrapper.setState({ currentSkill: { skill_id: "1234" }});
+    const reviewModal = wrapper.find('Modal').
+                findWhere(n => n.prop('contentLabel') == 'ReviewModal');
+    const addReviewBtn = wrapper.find('button').
+                findWhere(n => n.prop('name') == 'AddReview');
+
+    // Run Test
+    expect(reviewModal.prop('isOpen')).toBe(false);
+    addReviewBtn.simulate('click');
+    expect(reviewModal.prop('isOpen')).toBe(true);
+  });
+
   it('has a "Delete" button that enables when a Skill is selected', () => {
     const wrapper = mount(<Skills />);
     const button = wrapper.find('button')

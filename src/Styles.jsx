@@ -4,7 +4,7 @@ export const ModalStyle = {
     top: '15%',
     left: '25%',
     right: '25%',
-    bottom: '35%',
+    bottom: '25%',
   },
   content: {}
 }
