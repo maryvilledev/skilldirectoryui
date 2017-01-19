@@ -21,7 +21,7 @@ describe('<LinksForm />', () => {
     // process.stdout.write(JSON.stringify(wrapper.state()));
     expect(wrapper.state().link_name).toBe("");
     const event = {target: {value: "New Value"}};
-    wrapper.find({ name: "link_name" }).simulate("change", event);
+    wrapper.find({ name: "linkName" }).simulate("change", event);
     expect(wrapper.state().link_name).toBe("New Value");
     // process.stdout.write(JSON.stringify(wrapper.state()));
   });
@@ -30,20 +30,18 @@ describe('<LinksForm />', () => {
     const wrapper = mount(<LinksForm />);
     expect(wrapper.state().link_url).toBe("");
     const event = {target: {value: "New Value"}};
-    wrapper.find({ name: "link_url" }).simulate("change", event);
+    wrapper.find({ name: "linkURL" }).simulate("change", event);
     expect(wrapper.state().link_url).toBe("New Value");
   });
 
-// TODO: Find different way to test this... The below test fails because
-// the "Select" element we are using from 'react-select' doesn't respond
-// as expected to the simulated "change" event.
-  // it('changes state when selected option in "Type" field changes', () => {
-  //   const wrapper = mount(<LinksForm />);
-  //   expect(wrapper.state().link_type).toBe("");
-  //   const event = {target: {value: "New Value"}};
-  //   wrapper.find("Select").simulate("change", event);
-  //   expect(wrapper.state().link_type).toBe("New Value");
-  // });
+  it('changes state when selected option in "Type" field changes', () => {
+    const wrapper = mount(<LinksForm />);
+    expect(wrapper.state().link_type).toBe("");
+    const newType = 'tutorial';
+    const event = {target: {value: newType}};
+    wrapper.find({ name: 'linkType' }).simulate("change", event);
+    expect(wrapper.state().link_type).toBe(newType);
+  });
 });
 
 test('isValidURL() successfully detects valid/invalid URL forms', () => {

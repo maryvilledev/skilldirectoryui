@@ -145,9 +145,11 @@ class Team extends React.Component {
           <Modal
             isOpen={this.state.addModalIsOpen}
             onRequestClose={this.closeAddModal}
-            contentLabel="AddTeamMemberModal" >
+            contentLabel="AddTeamMemberModal"
+            style={ModalStyle} >
             <AddTeamMemberForm
-              onSubmit={this.addTeamMember} />
+              onSubmit={this.addTeamMember}
+              closeModal={this.closeAddModal}/>
           </Modal>
         </Row>
         <TeamMemberDisplay

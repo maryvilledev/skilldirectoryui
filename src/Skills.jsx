@@ -121,7 +121,7 @@ class Skills extends Component {
     console.log(process.env)
     // Extract skill ID from URL, if one exists
     const currentId = (this.props.params) ? this.props.params.id : null;
-    if (currentId === null)
+    if (!currentId)
       this.loadSkills();
     else 
       this.loadCurrentSkill(currentId).then(this.loadSkills);
