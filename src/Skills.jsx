@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
-import 'bootstrap/dist/css/bootstrap.css';
-import Button from 'react-bootstrap/lib/Button';
-import Modal from 'react-modal';
-import { Row, Col }  from 'react-bootstrap';
-import axios from 'axios';
+import React, { Component } from 'react'
+import { browserHistory } from 'react-router'
+import 'bootstrap/dist/css/bootstrap.css'
+import Button from 'react-bootstrap/lib/Button'
+import Modal from 'react-modal'
+import { Row, Col }  from 'react-bootstrap'
+import axios from 'axios'
 import LinkForm from './LinksForm'
+import ReviewForm from './SkillReviewsForm.jsx'
 import SkillForm from './SkillsForm'
 import { ModalStyle } from './Styles'
-import DeleteModal from './DeleteModal.jsx';
+import DeleteModal from './DeleteModal.jsx'
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -21,6 +22,7 @@ class Skills extends Component {
       skills: [],
       skillModalIsOpen: false,
       linkModalIsOpen: false,
+      reviewModalIsOpen: false,
       deleteModalIsOpen: false,
       currentSkill: {
         skill_id: "",
@@ -35,6 +37,8 @@ class Skills extends Component {
     this.closeSkillModal = this.closeSkillModal.bind(this);
     this.openLinkModal = this.openLinkModal.bind(this);
     this.closeLinkModal = this.closeLinkModal.bind(this);
+    this.openReviewModal = this.openReviewModal.bind(this);
+    this.closeReviewModal = this.closeReviewModal.bind(this);
     this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
 
@@ -48,15 +52,12 @@ class Skills extends Component {
   }
 
   openSkillModal() { this.setState({skillModalIsOpen: true}); }
-
   closeSkillModal() { this.setState({skillModalIsOpen: false}); }
-
   openLinkModal() { this.setState({linkModalIsOpen: true}); }
-
   closeLinkModal() { this.setState({linkModalIsOpen: false}); }
-
+  openReviewModal() { this.setState({reviewModalIsOpen: true}); }
+  closeReviewModal() { this.setState({reviewModalIsOpen: false}); }
   openDeleteModal() { this.setState({deleteModalIsOpen: true}); }
-
   closeDeleteModal() { this.setState({deleteModalIsOpen: false}); }
 
   onChange(key, value) {
@@ -198,7 +199,6 @@ class Skills extends Component {
               Add Skill
             </Button>
 
-
             <Modal
               isOpen={this.state.skillModalIsOpen}
               onRequestClose={this.closeSkillModal}
@@ -220,7 +220,17 @@ class Skills extends Component {
                         closeModal={this.closeLinkModal}
                         skill_id={currentSkillID}/>
             </Modal>
-            {/* <Col xs={4} md={4} /> */}
+
+            <Modal
+              isOpen={this.state.reviewModalIsOpen}
+              onRequestClose={this.closeReviewModal}
+              contentLabel="ReviewModal"
+              style={ModalStyle}>
+              <ReviewForm 
+                api={api}
+                closeModal={this.closeReviewModal}
+                skill_id={currentSkillID}/>
+            </Modal>
 
           </Row>
 
@@ -236,12 +246,20 @@ class Skills extends Component {
             Add Link
           </Button>
 
+          <Button name="AddReview"
+                  bsStyle="primary"
+                  onClick={this.openReviewModal}
+                  disabled={!isSkillSelected}>
+            Add Review 
+          </Button>
+
           <Button name="DeleteSkill"
                   bsStyle="danger"
                   onClick={this.openDeleteModal}
                   disabled={!isSkillSelected}>
             Delete
           </Button>
+
           <Modal
             isOpen={this.state.deleteModalIsOpen}
             onRequestClose={this.closeDeleteModal}

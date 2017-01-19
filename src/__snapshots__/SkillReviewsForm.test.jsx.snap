@@ -1,0 +1,109 @@
+exports[`<SkillReviewsForm /> matches the stored snapshot 1`] = `
+<div>
+  <h1>
+    Add Skill Review
+  </h1>
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    onSubmit={[Function]}>
+    <FormGroup
+      bsClass="form-group"
+      controlId="teamMember">
+      <Col
+        bsClass="col"
+        componentClass={[Function]}
+        sm={4}>
+        Select a Team Member:
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={8}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="select"
+          name="teamMemberSelect"
+          onChange={[Function]}>
+          <option
+            value={null} />
+        </FormControl>
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group"
+      controlId="reviewPositive">
+      <Col
+        bsClass="col"
+        componentClass={[Function]}
+        sm={4}>
+        Is This a Positive Review?
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={8}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="select"
+          name="positiveSelect"
+          onChange={[Function]}>
+          <option
+            value={true}>
+            Yes
+          </option>
+          <option
+            value={false}>
+            No
+          </option>
+        </FormControl>
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group"
+      controlId="reviewBody">
+      <Col
+        bsClass="col"
+        componentClass={[Function]}
+        sm={2}>
+        Review:
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={10}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="textarea"
+          name="reviewBody"
+          onChange={[Function]}
+          style={
+            Object {
+              "height": 150,
+            }
+          } />
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={10}
+        smOffset={2}>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="primary"
+          disabled={false}
+          type="submit">
+          Submit
+        </Button>
+      </Col>
+    </FormGroup>
+  </Form>
+</div>
+`;

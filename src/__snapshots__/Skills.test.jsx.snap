@@ -74,7 +74,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         Object {
           "content": Object {},
           "overlay": Object {
-            "bottom": "35%",
+            "bottom": "25%",
             "left": "25%",
             "position": "fixed",
             "right": "25%",
@@ -101,6 +101,32 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         closeModal={[Function]}
         skill_id="" />
     </Modal>
+    <Modal
+      ariaHideApp={true}
+      closeTimeoutMS={0}
+      contentLabel="ReviewModal"
+      isOpen={false}
+      onRequestClose={[Function]}
+      parentSelector={[Function]}
+      portalClassName="ReactModalPortal"
+      shouldCloseOnOverlayClick={true}
+      style={
+        Object {
+          "content": Object {},
+          "overlay": Object {
+            "bottom": "25%",
+            "left": "25%",
+            "position": "fixed",
+            "right": "25%",
+            "top": "15%",
+          },
+        }
+      }>
+      <SkillReviewsForm
+        api="http://localhost:8080"
+        closeModal={[Function]}
+        skill_id="" />
+    </Modal>
   </Row>
   <h1 />
   <h4 />
@@ -116,6 +142,16 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
     name="AddLink"
     onClick={[Function]}>
     Add Link
+  </Button>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="primary"
+    disabled={true}
+    name="AddReview"
+    onClick={[Function]}>
+    Add Review
   </Button>
   <Button
     active={false}
