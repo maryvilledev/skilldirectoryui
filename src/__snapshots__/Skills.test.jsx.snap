@@ -8,51 +8,48 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       componentClass="div"
       md={4}
       xs={4}>
-      <form
-        onSubmit={[Function]}>
-        <Select
-          addLabelText="Add \"{label}\"?"
-          arrowRenderer={[Function]}
-          autosize={true}
-          backspaceRemoves={true}
-          backspaceToRemoveMessage="Press backspace to remove {label}"
-          clearAllText="Clear all"
-          clearValueText="Clear value"
-          clearable={true}
-          delimiter=","
-          disabled={false}
-          escapeClearsValue={true}
-          filterOptions={[Function]}
-          ignoreAccents={true}
-          ignoreCase={true}
-          inputProps={Object {}}
-          isLoading={false}
-          joinValues={false}
-          labelKey="name"
-          matchPos="any"
-          matchProp="any"
-          menuBuffer={0}
-          menuRenderer={[Function]}
-          multi={false}
-          name="skills"
-          noResultsText="No results found"
-          onBlurResetsInput={true}
-          onChange={[Function]}
-          onCloseResetsInput={true}
-          openAfterFocus={false}
-          optionComponent={[Function]}
-          options={Array []}
-          pageSize={5}
-          placeholder="Select..."
-          required={false}
-          scrollMenuIntoView={true}
-          searchable={true}
-          simpleValue={false}
-          tabSelectsValue={true}
-          value={undefined}
-          valueComponent={[Function]}
-          valueKey="value" />
-      </form>
+      <Select
+        addLabelText="Add \"{label}\"?"
+        arrowRenderer={[Function]}
+        autosize={true}
+        backspaceRemoves={true}
+        backspaceToRemoveMessage="Press backspace to remove {label}"
+        clearAllText="Clear all"
+        clearValueText="Clear value"
+        clearable={true}
+        delimiter=","
+        disabled={false}
+        escapeClearsValue={true}
+        filterOptions={[Function]}
+        ignoreAccents={true}
+        ignoreCase={true}
+        inputProps={Object {}}
+        isLoading={false}
+        joinValues={false}
+        labelKey="name"
+        matchPos="any"
+        matchProp="any"
+        menuBuffer={0}
+        menuRenderer={[Function]}
+        multi={false}
+        name="skills"
+        noResultsText="No results found"
+        onBlurResetsInput={true}
+        onChange={[Function]}
+        onCloseResetsInput={true}
+        openAfterFocus={false}
+        optionComponent={[Function]}
+        options={Array []}
+        pageSize={5}
+        placeholder="Select..."
+        required={false}
+        scrollMenuIntoView={true}
+        searchable={true}
+        simpleValue={false}
+        tabSelectsValue={true}
+        value=""
+        valueComponent={[Function]}
+        valueKey="value" />
     </Col>
     <Button
       active={false}
@@ -60,7 +57,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       bsClass="btn"
       bsStyle="primary"
       disabled={false}
-      name="SkillAdd"
+      name="AddSkill"
       onClick={[Function]}>
       Add Skill
     </Button>
@@ -69,28 +66,64 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       closeTimeoutMS={0}
       contentLabel="SkillModal"
       isOpen={false}
-      onAfterOpen={[Function]}
+      onRequestClose={[Function]}
+      parentSelector={[Function]}
+      portalClassName="ReactModalPortal"
+      shouldCloseOnOverlayClick={true}
+      style={
+        Object {
+          "content": Object {},
+          "overlay": Object {
+            "bottom": "35%",
+            "left": "25%",
+            "position": "fixed",
+            "right": "25%",
+            "top": "15%",
+          },
+        }
+      }>
+      <SkillForm
+        api="http://localhost:8080"
+        closeModal={[Function]}
+        reloadSkills={[Function]} />
+    </Modal>
+    <Modal
+      ariaHideApp={true}
+      closeTimeoutMS={0}
+      contentLabel="LinkModal"
+      isOpen={false}
       onRequestClose={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
       shouldCloseOnOverlayClick={true}>
-      <SkillForm
+      <LinksForm
         api="http://localhost:8080"
-        closeModal={[Function]} />
+        closeModal={[Function]}
+        skill_id="" />
     </Modal>
   </Row>
   <h1 />
   <h4 />
-  <div>
+  <ul>
     
-  </div>
+  </ul>
+  <Button
+    active={false}
+    block={false}
+    bsClass="btn"
+    bsStyle="primary"
+    disabled={true}
+    name="AddLink"
+    onClick={[Function]}>
+    Add Link
+  </Button>
   <Button
     active={false}
     block={false}
     bsClass="btn"
     bsStyle="danger"
     disabled={true}
-    name="SkillDelete"
+    name="DeleteSkill"
     onClick={[Function]}>
     Delete
   </Button>
@@ -99,14 +132,12 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
     closeTimeoutMS={0}
     contentLabel="DeleteSkillModal"
     isOpen={false}
-    onAfterOpen={[Function]}
     onRequestClose={[Function]}
     parentSelector={[Function]}
     portalClassName="ReactModalPortal"
     shouldCloseOnOverlayClick={true}>
-    <DeleteSkillModal
-      closeModal={[Function]}
-      doDelete={[Function]} />
+    <DeleteModal
+      shouldDelete={[Function]} />
   </Modal>
 </div>
 `;

@@ -2,10 +2,10 @@ exports[`<Header /> matches the stored snapshot 1`] = `
 <Grid
   bsClass="container"
   componentClass="div"
-  fluid="true">
+  fluid={true}>
   <Uncontrolled(Navbar)
     bsStyle="default"
-    fluid="true">
+    fluid={true}>
     <NavbarHeader>
       <NavbarBrand>
         <Link

@@ -1,5 +1,18 @@
 exports[`<Home /> matches the stored snapshot 1`] = `
-<h1>
-  Skill Directory Home
-</h1>
+<div>
+  <h1>
+    Skill Directory Home
+  </h1>
+  <h3>
+    Team Members: 
+    <a
+      href="/team" />
+  </h3>
+  <h3>
+    Unique Skills: 
+    <a
+      href="/skills" />
+  </h3>
+  <ul />
+</div>
 `;
