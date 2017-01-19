@@ -32,7 +32,7 @@ class Home extends React.Component {
         <li key={skillReview.id}>
             <div>
               {`${skillReview.team_member_name} reviewed the 
-                ${skillReview.skill_name} skill`}
+                ${skillReview.skill_name} skill:`}
             </div>
             <div>{skillReview.body}</div>
         </li>

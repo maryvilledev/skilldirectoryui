@@ -85,6 +85,7 @@ class SkillReviewsForm extends React.Component {
             </Col>
             <Col sm={8}>
               <FormControl
+                name='teamMemberSelect'
                 componentClass='select'
                 onChange={onTeamMemberChange}>
                 <option key={0} value={null} />
@@ -98,6 +99,7 @@ class SkillReviewsForm extends React.Component {
             </Col>
             <Col sm={8}>
               <FormControl 
+                name='positiveSelect'
                 componentClass='select' 
                 onChange={onPositiveChange}>
                 <option key={true} value={true}>Yes</option>
@@ -111,6 +113,7 @@ class SkillReviewsForm extends React.Component {
             </Col>
             <Col sm={10}>
               <FormControl
+                name='reviewBody'
                 componentClass='textarea'
                 style={{ height: 150 }}
                 onChange={onBodyChange}/>
