@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { Row, Col }  from 'react-bootstrap';
 import axios from 'axios';
 import Select from 'react-select';
+import { ModalStyle } from './Styles'
 
 import AddTeamMemberForm from './AddTeamMemberForm.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
@@ -160,7 +161,8 @@ class Team extends React.Component {
         <Modal
           isOpen={this.state.deleteModalIsOpen}
           onRequestClose={this.closeDeleteModal}
-          contentLabel="DeleteTeamMemberModal" >
+          contentLabel="DeleteTeamMemberModal"
+          style={ModalStyle} >
           <DeleteModal
             shouldDelete={this.shouldDelete}
           />
