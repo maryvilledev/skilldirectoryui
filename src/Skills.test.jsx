@@ -61,7 +61,7 @@ describe('<Skills />', () => {
       const addReviewButton = wrapper.find('[name="AddReview"]');
       expect(addReviewButton).toHaveLength(1);
     });
-    it('opens a DeleteModal when clicked', () => {
+    it('opens a SkillReviewsForm when clicked', () => {
       const wrapper = mount(<Skills />);
       wrapper.setState({ currentSkill: { skill_id: "1" }});
       const addReviewModal = wrapper.find('Modal').

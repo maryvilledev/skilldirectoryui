@@ -7,7 +7,7 @@ import { Row, Col }  from 'react-bootstrap'
 import axios from 'axios'
 import LinkForm from './LinksForm'
 import ReviewForm from './SkillReviewsForm.jsx'
-import SkillForm from './SkillsForm'
+import AddSkillForm from './AddSkillForm.jsx';
 import { ModalStyle } from './Styles'
 import DeleteModal from './DeleteModal.jsx';
 import DeleteButton from './DeleteButton.jsx';
@@ -46,7 +46,7 @@ class Skills extends Component {
     this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
 
-    this.reloadSkills = this.reloadSkills.bind(this);
+    this.addSkill = this.addSkill.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
@@ -76,7 +76,6 @@ class Skills extends Component {
             links: skillresults.links,
           }});
           browserHistory.push('/skills/' + skillresults.id);
-        // console.log(res.data);
       })
       .catch(err => {
         console.log(err);
@@ -88,6 +87,20 @@ class Skills extends Component {
       this.deleteSkill();
     }
     this.closeDeleteModal();
+  }
+
+  addSkill(skill_name, skill_type) {
+    axios.post(`${api}/skills/`, {
+      name: skill_name,
+      skill_type: skill_type,
+    })
+      .then(() => {
+        this.closeSkillModal();
+        this.loadSkills();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   deleteSkill() {
@@ -110,17 +123,7 @@ class Skills extends Component {
      });
   }
 
-  reloadSkills() {
-    axios.get(api + '/skills/')
-      .then(res => {
-        const skills = res.data.map(obj => obj);
-        this.setState({ skills: skills });
-      });
-  }
-
   componentDidMount() {
-    console.log(process.env)
-    this.reloadSkills();
     const currentId = (this.props.params) ? this.props.params.id : null;
     if (!currentId) {
       this.loadSkills();
@@ -131,13 +134,14 @@ class Skills extends Component {
 
   loadSkills(){
     return axios.get(`${api}/skills/`)
-      .then(res => {
-        const data = res.data;
-        const skills = data.map(obj => obj);
-        this.setState({ skills });
+      .then((response) => {
+        const skills = response.data.slice();
+        this.setState({
+          skills: skills
+        });
       })
-      .catch(err => {
-        console.log(err)
+      .catch((err) => {
+        console.log(err);
       });
   }
 
@@ -238,8 +242,9 @@ class Skills extends Component {
               onRequestClose={this.closeSkillModal}
               contentLabel="SkillModal"
             >
-              <SkillForm api={api}
-                         closeModal={this.closeSkillModal} />
+              <AddSkillForm
+                onSubmit={this.addSkill}
+              />
             </Modal>
             <Modal
               isOpen={this.state.linkModalIsOpen}
