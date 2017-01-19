@@ -112,35 +112,40 @@ class Skills extends Component {
       .then(res => {
         const skills = res.data.map(obj => obj);
         this.setState({ skills: skills });
-      });
+      })
+      .catch(err => console.log(`Caught an error: ${err}`));
   }
 
   componentDidMount() {
     console.log(process.env)
-    this.reloadSkills();
+    // Extract skill ID from URL, if one exists
     const currentId = (this.props.params) ? this.props.params.id : null;
-    if (!currentId) {
+    if (currentId === null)
       this.loadSkills();
-    } else {
+    else 
       this.loadCurrentSkill(currentId).then(this.loadSkills);
-    }
   }
 
-  loadSkills(){
-    console.log("Sending GET request.");
-    return axios.get(api + `/skills/`)
+  reloadSkills() {
+    axios.get(api + '/skills/')
       .then(res => {
-        const data = res.data;
-        const skills = data.map(obj => obj);
-        this.setState({ skills });
+        const skills = res.data.map(obj => obj);
+        this.setState({ skills: skills });
       })
-      .catch(err => {
-        console.log(err)
-      });
+      .catch(err => console.log(`Caught an error: ${err}`));
+  }
+
+  loadSkills() {
+    return axios.get(`${api}/skills/`)
+      .then(res => {
+        const skills = res.data.map(obj => obj);
+        this.setState({ skills });
+        // this.setState({ skills: res.data });
+      })
+      .catch(err => console.log(`Caught an err: ${err}`));
   }
 
   loadCurrentSkill(currentId){
-    console.log("Sending GET request.");
     return axios.get(api + '/skills/' + currentId)
       .then(res => {
         const skillresults = res.data;
