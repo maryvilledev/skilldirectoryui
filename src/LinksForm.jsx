@@ -1,14 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import 'react-select/dist/react-select.css';
-
-var Select = require('react-select');
-
-var linkTypes = [
-  { value: 'blog', label: 'Blog' },
-  { value: 'tutorial', label: 'Tutorial'},
-  { value: 'webpage', label: 'Webpage' }
-];
+import 'bootstrap/dist/css/bootstrap.css';
+import { Col, ControlLabel, Button,
+   Form, FormControl, FormGroup } from 'react-bootstrap'
 
 class LinksForm extends React.Component {
   constructor(props) {
@@ -28,60 +23,103 @@ class LinksForm extends React.Component {
 
   onSubmit(ev) {
     ev.preventDefault();
-    const skill_id = this.props.skill_id;
-    const link_name = this.state.link_name;
-    const link_url = this.state.link_url;
-    const link_type = this.state.link_type;
-
-    // Check validity of URL before sending POST request
-    if(!isValidURL(link_url)) {
+    // Error checking
+    if(this.state.link_name === '') {
+      alert('Please enter a Name.');
+      return;
+    }
+    if(!isValidURL(this.state.link_url)) {
       alert('Please enter a valid URL.');
+      return;
+    }
+    if(this.state.link_type === '') {
+      alert('Please enter a Type.');
       return;
     }
 
     // Post form data to API endpoint
     axios.post(this.props.api + '/links/', {
-      name: link_name,
-      url: link_url,
-      skill_id: skill_id,
-      link_type: link_type
+      name:      this.state.link_name,
+      url:       this.state.link_url,
+      skill_id:  this.props.skill_id,
+      link_type: this.state.link_type
     })
-    .then(function (response) {
-      console.log(response);
+    .then(response => {
       this.props.closeModal();
-    }.bind(this))
-    .catch(err => {
-      console.log('caught an error', err);
-    });
+    }).catch(err => console.log(`Caught an error ${err}`));
   }
 
   render() {
     const onLinkNameChange = ev => this.onChange('link_name', ev.target.value);
     const onLinkURLChange = ev => this.onChange('link_url', ev.target.value);
-    const onLinkTypeChange = ev => this.onChange('link_type', ev.value);
+    const onLinkTypeChange = ev => this.onChange('link_type', ev.target.value);
+
     return (
-      <form onSubmit={ev => this.onSubmit(ev)}>
-        <div>
-          Name: <input name='link_name'
-                       type='text'
-                       value={this.state.link_name}
-                       onChange={onLinkNameChange} />
-        </div>
-        <div>
-          URL: <input name='link_url'
-                      type='text'
-                      value={this.state.link_url}
-                      onChange={onLinkURLChange} />
-        </div>
-        <div>
-          Type: <Select name='link_type'
-                        value={this.state.link_type}
-                        onChange={onLinkTypeChange}
-                        options={linkTypes} />
-        </div>
-        <button type="submit">Save</button>
-      </form>
-    )
+      <div>
+        <h1>Add a Link</h1>
+        <Form horizontal onSubmit={this.onSubmit}>
+          <FormGroup controlId='linkName'>
+            <Col componentClass={ControlLabel} sm={2}>
+              Name:
+            </Col>
+            <Col sm={10}>
+              <FormControl
+                name='linkName'
+                componentClass='input'
+                onChange={onLinkNameChange}/>
+            </Col>
+          </FormGroup>
+          
+          <FormGroup controlId='linkURL'>
+            <Col componentClass={ControlLabel} sm={2}>
+              URL:
+            </Col>
+            <Col sm={10}>
+              <FormControl
+                name='linkURL'
+                componentClass='input'
+                onChange={onLinkURLChange}/>
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId='linkType'>
+            <Col componentClass={ControlLabel} sm={2}>
+              Type:
+            </Col>
+            <Col sm={10}>
+              <FormControl
+                name='linkType'
+                componentClass='select'
+                onChange={onLinkTypeChange}>
+                <option key={null} value={null}/>
+                <option key='blog' value='blog'>
+                  Blog
+                </option>
+                <option key='tutorial' value='tutorial'>
+                  Tutorial
+                </option>
+                <option key='webpage' value='webpage'>
+                  Webpage
+                </option>
+              </FormControl>
+            </Col>  
+          </FormGroup>
+
+          <FormGroup>
+            <Col smOffset={2} sm={2}>
+              <Button type='submit' bsStyle='primary'>
+                Submit 
+              </Button>
+            </Col>
+            <Col smOffset={2}>
+              <Button  onClick={this.props.closeModal} bsStyle='info'>
+                Cancel 
+              </Button>
+            </Col>
+          </FormGroup>
+        </Form>
+      </div>
+    );
   }
 }
 

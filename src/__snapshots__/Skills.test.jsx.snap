@@ -81,7 +81,19 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       onRequestClose={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}>
+      shouldCloseOnOverlayClick={true}
+      style={
+        Object {
+          "content": Object {},
+          "overlay": Object {
+            "bottom": "25%",
+            "left": "25%",
+            "position": "fixed",
+            "right": "25%",
+            "top": "15%",
+          },
+        }
+      }>
       <LinksForm
         api="http://localhost:8080"
         closeModal={[Function]}
@@ -122,7 +134,19 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
     onRequestClose={[Function]}
     parentSelector={[Function]}
     portalClassName="ReactModalPortal"
-    shouldCloseOnOverlayClick={true}>
+    shouldCloseOnOverlayClick={true}
+    style={
+      Object {
+        "content": Object {},
+        "overlay": Object {
+          "bottom": "25%",
+          "left": "25%",
+          "position": "fixed",
+          "right": "25%",
+          "top": "15%",
+        },
+      }
+    }>
     <DeleteModal
       shouldDelete={[Function]} />
   </Modal>

@@ -127,7 +127,8 @@ class Skills extends Component {
     const currentId = (this.props.params) ? this.props.params.id : null;
     if (!currentId) {
       this.loadSkills();
-    } else {
+    }
+    else {
       this.loadCurrentSkill(currentId).then(this.loadSkills);
     }
   }
@@ -250,6 +251,7 @@ class Skills extends Component {
               isOpen={this.state.linkModalIsOpen}
               onRequestClose={this.closeLinkModal}
               contentLabel="LinkModal"
+              style={ModalStyle}
             >
               <LinkForm api={api}
                         closeModal={this.closeLinkModal}
@@ -273,6 +275,7 @@ class Skills extends Component {
             isOpen={this.state.deleteModalIsOpen}
             onRequestClose={this.closeDeleteModal}
             contentLabel="DeleteSkillModal"
+            style={ModalStyle}
           >
             <DeleteModal
               shouldDelete={this.shouldDelete}
