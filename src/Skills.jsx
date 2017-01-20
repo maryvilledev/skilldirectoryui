@@ -125,10 +125,12 @@ class Skills extends Component {
 
   componentDidMount() {
     const currentId = (this.props.params) ? this.props.params.id : null;
-    if (!currentId)
+    if (!currentId) {
       this.loadSkills();
-    else 
+    }
+    else {
       this.loadCurrentSkill(currentId).then(this.loadSkills);
+    }
   }
 
   loadSkills(){
