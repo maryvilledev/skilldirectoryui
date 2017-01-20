@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
-import { Row, Col }  from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Select from 'react-select';
 
@@ -10,7 +10,7 @@ import AddTeamMemberForm from './AddTeamMemberForm.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
 import DeleteModal from './DeleteModal.jsx';
 
-var api = (process.env.REACT_APP_API);
+const api = (process.env.REACT_APP_API);
 
 class Team extends React.Component {
   constructor(props) {
@@ -20,10 +20,10 @@ class Team extends React.Component {
       addModalIsOpen: false,
       deleteModalIsOpen: false,
       selectedTeamMember: {
-        id: "",
-        name: "",
-        title: "",
-      }
+        id: '',
+        name: '',
+        title: '',
+      },
     };
 
     this.fetchTeamMembers = this.fetchTeamMembers.bind(this);
@@ -35,6 +35,26 @@ class Team extends React.Component {
     this.addTeamMember = this.addTeamMember.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
     this.deleteTeamMember = this.deleteTeamMember.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchTeamMembers();
+  }
+
+  onSelectChange(obj) {
+    axios.get(`${api}/teammembers/${obj.id}`)
+      .then((result) => {
+        const teamMemberData = result.data;
+        this.setState({
+          selectedTeamMember: {
+            id: teamMemberData.id,
+            name: teamMemberData.name,
+            title: teamMemberData.title,
+          },
+        });
+      }).catch((err) => {
+        console.log(`Error: ${err}`);
+      });
   }
 
   openAddModal() {
@@ -58,7 +78,7 @@ class Team extends React.Component {
       .then((result) => {
         const teamMembers = result.data.slice();
         this.setState({
-          teamMembers: teamMembers
+          teamMembers,
         });
       })
       .catch((err) => {
@@ -66,32 +86,16 @@ class Team extends React.Component {
       });
   }
 
-  onSelectChange(obj) {
-    axios.get(`${api}/teammembers/${obj.id}`)
-      .then((result) => {
-        const teamMemberData = result.data;
-        this.setState({
-          selectedTeamMember: {
-            id: teamMemberData.id,
-            name: teamMemberData.name,
-            title: teamMemberData.title,
-          }
-        });
-      }).catch((err) => {
-        console.log(`Error: ${err}`);
-      });
-  }
-
   addTeamMember(name, title) {
     axios.post(`${api}/teammembers/`, {
-      name: name,
-      title: title
+      name,
+      title,
     }).then((response) => {
-        this.closeAddModal();
-        this.fetchTeamMembers();
-      }).catch(err => {
-        console.log(`Error: ${err}`);
-      });
+      this.closeAddModal();
+      this.fetchTeamMembers();
+    }).catch((err) => {
+      console.log(`Error: ${err}`);
+    });
   }
 
   shouldDelete(response) {
@@ -106,10 +110,10 @@ class Team extends React.Component {
       .then((result) => {
         this.setState({
           selectedTeamMember: {
-            id: "",
-            name: "",
-            title: "",
-          }
+            id: '',
+            name: '',
+            title: '',
+          },
         });
         // Refetch the list of team members
         this.fetchTeamMembers();
@@ -117,10 +121,6 @@ class Team extends React.Component {
       .catch((err) => {
         console.log(`Error: ${err}`);
       });
-  }
-
-  componentDidMount() {
-    this.fetchTeamMembers();
   }
 
   render() {
@@ -133,34 +133,43 @@ class Team extends React.Component {
               labelKey="name"
               value={this.state.selectedTeamMember.name}
               options={this.state.teamMembers}
-              onChange={this.onSelectChange} />
+              onChange={this.onSelectChange}
+            />
           </Col>
           <Button
             name="addTeamMember"
             bsStyle="primary"
             onClick={this.openAddModal}
-            children="Add Team Member" />
+          >
+            Add Team Member
+          </Button>
 
           <Modal
             isOpen={this.state.addModalIsOpen}
             onRequestClose={this.closeAddModal}
-            contentLabel="AddTeamMemberModal" >
+            contentLabel="AddTeamMemberModal"
+          >
             <AddTeamMemberForm
-              onSubmit={this.addTeamMember} />
+              onSubmit={this.addTeamMember}
+            />
           </Modal>
         </Row>
         <TeamMemberDisplay
-          selected={this.state.selectedTeamMember} />
+          selected={this.state.selectedTeamMember}
+        />
         <Button
           name="TeamMemberDelete"
           bsStyle="danger"
           onClick={this.openDeleteModal}
-          disabled={this.state.selectedTeamMember.id === ""}
-          children='Delete' />
+          disabled={this.state.selectedTeamMember.id === ''}
+        >
+          Delete
+        </Button>
         <Modal
           isOpen={this.state.deleteModalIsOpen}
           onRequestClose={this.closeDeleteModal}
-          contentLabel="DeleteTeamMemberModal" >
+          contentLabel="DeleteTeamMemberModal"
+        >
           <DeleteModal
             shouldDelete={this.shouldDelete}
           />
