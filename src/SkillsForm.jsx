@@ -72,9 +72,14 @@ class SkillForm extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col smOffset={2} sm={10}>
+            <Col smOffset={2} sm={1}>
               <Button type="submit" bsStyle="primary">
                 Submit
+              </Button>
+            </Col>
+            <Col smOffset={1} sm={2}>
+              <Button onClick={this.props.closeModal} bsStyle="info">
+                Cancel
               </Button>
             </Col>
           </FormGroup>
