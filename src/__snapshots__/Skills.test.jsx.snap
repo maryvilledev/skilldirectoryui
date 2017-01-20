@@ -69,23 +69,10 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       onRequestClose={[Function]}
       parentSelector={[Function]}
       portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}
-      style={
-        Object {
-          "content": Object {},
-          "overlay": Object {
-            "bottom": "25%",
-            "left": "25%",
-            "position": "fixed",
-            "right": "25%",
-            "top": "15%",
-          },
-        }
-      }>
+      shouldCloseOnOverlayClick={true}>
       <SkillForm
         api="http://localhost:8080"
-        closeModal={[Function]}
-        reloadSkills={[Function]} />
+        closeModal={[Function]} />
     </Modal>
     <Modal
       ariaHideApp={true}
@@ -128,41 +115,6 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         skill_id="" />
     </Modal>
   </Row>
-  <h1 />
-  <h4 />
-  <ul>
-    
-  </ul>
-  <Button
-    active={false}
-    block={false}
-    bsClass="btn"
-    bsStyle="primary"
-    disabled={true}
-    name="AddLink"
-    onClick={[Function]}>
-    Add Link
-  </Button>
-  <Button
-    active={false}
-    block={false}
-    bsClass="btn"
-    bsStyle="primary"
-    disabled={true}
-    name="AddReview"
-    onClick={[Function]}>
-    Add Review
-  </Button>
-  <Button
-    active={false}
-    block={false}
-    bsClass="btn"
-    bsStyle="danger"
-    disabled={true}
-    name="DeleteSkill"
-    onClick={[Function]}>
-    Delete
-  </Button>
   <Modal
     ariaHideApp={true}
     closeTimeoutMS={0}

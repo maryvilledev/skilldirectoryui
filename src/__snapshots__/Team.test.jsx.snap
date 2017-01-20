@@ -74,24 +74,6 @@ exports[`<Team /> matches the stored snapshot 1`] = `
         onSubmit={[Function]} />
     </Modal>
   </Row>
-  <TeamMemberDisplay
-    selected={
-      Object {
-        "id": "",
-        "name": "",
-        "title": "",
-      }
-    } />
-  <Button
-    active={false}
-    block={false}
-    bsClass="btn"
-    bsStyle="danger"
-    disabled={true}
-    name="TeamMemberDelete"
-    onClick={[Function]}>
-    Delete
-  </Button>
   <Modal
     ariaHideApp={true}
     closeTimeoutMS={0}
