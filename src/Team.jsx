@@ -8,8 +8,10 @@ import Select from 'react-select';
 import { ModalStyle } from './Styles'
 
 import AddTeamMemberForm from './AddTeamMemberForm.jsx';
+import SelectedItem from './SelectedItem.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
 import DeleteModal from './DeleteModal.jsx';
+import DeleteButton from './DeleteButton.jsx';
 
 var api = (process.env.REACT_APP_API);
 
@@ -125,6 +127,19 @@ class Team extends React.Component {
   }
 
   render() {
+    let selectedItem = null;
+    if (this.state.selectedTeamMember.id) {
+      selectedItem = (
+        <SelectedItem
+          typeName="TeamMember"
+          deleteCallback={this.openDeleteModal}
+        >
+          <TeamMemberDisplay
+            selected={this.state.selectedTeamMember}
+          />
+        </SelectedItem>
+      );
+    }
     return (
       <div>
         <Row>
@@ -152,14 +167,7 @@ class Team extends React.Component {
               closeModal={this.closeAddModal}/>
           </Modal>
         </Row>
-        <TeamMemberDisplay
-          selected={this.state.selectedTeamMember} />
-        <Button
-          name="TeamMemberDelete"
-          bsStyle="danger"
-          onClick={this.openDeleteModal}
-          disabled={this.state.selectedTeamMember.id === ""}
-          children='Delete' />
+        {selectedItem}
         <Modal
           isOpen={this.state.deleteModalIsOpen}
           onRequestClose={this.closeDeleteModal}
