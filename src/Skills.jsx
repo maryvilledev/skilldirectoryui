@@ -7,9 +7,10 @@ import { Row, Col }  from 'react-bootstrap'
 import axios from 'axios'
 import LinkForm from './LinksForm'
 import ReviewForm from './SkillReviewsForm.jsx'
-import SkillForm from './SkillsForm'
+import AddSkillForm from './AddSkillForm.jsx';
 import { ModalStyle } from './Styles'
-import DeleteModal from './DeleteModal.jsx'
+import DeleteModal from './DeleteModal.jsx';
+import SelectedItem from './SelectedItem.jsx';
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -33,6 +34,8 @@ class Skills extends Component {
     };
 
     // Bind all the things
+    this.shouldDelete = this.shouldDelete.bind(this);
+    this.makeLinks = this.makeLinks.bind(this);
     this.openSkillModal = this.openSkillModal.bind(this);
     this.closeSkillModal = this.closeSkillModal.bind(this);
     this.openLinkModal = this.openLinkModal.bind(this);
@@ -42,7 +45,7 @@ class Skills extends Component {
     this.openDeleteModal = this.openDeleteModal.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
 
-    this.reloadSkills = this.reloadSkills.bind(this);
+    this.addSkill = this.addSkill.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
@@ -61,8 +64,7 @@ class Skills extends Component {
   closeDeleteModal() { this.setState({deleteModalIsOpen: false}); }
 
   onChange(key, value) {
-    console.log("Sending GET request.");
-    axios.get(api + '/skills/' + value)
+    axios.get(`${api}/skills/${value}`)
       .then(res => {
         const skillresults = res.data
         this.setState(
@@ -73,7 +75,6 @@ class Skills extends Component {
             links: skillresults.links,
           }});
           browserHistory.push('/skills/' + skillresults.id);
-        // console.log(res.data);
       })
       .catch(err => {
         console.log(err);
@@ -87,9 +88,22 @@ class Skills extends Component {
     this.closeDeleteModal();
   }
 
+  addSkill(skill_name, skill_type) {
+    axios.post(`${api}/skills/`, {
+      name: skill_name,
+      skill_type: skill_type,
+    })
+      .then(() => {
+        this.closeSkillModal();
+        this.loadSkills();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   deleteSkill() {
-    console.log("Sending DELETE request.");
-    axios.delete(api + '/skills/' + this.state.currentSkill.skill_id)
+    axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
      .then(function(res){
        this.setState({
          skills: this.state.skills.filter(function(skill){
@@ -108,41 +122,31 @@ class Skills extends Component {
      });
   }
 
-  reloadSkills() {
-    axios.get(api + '/skills/')
-      .then(res => {
-        const skills = res.data.map(obj => obj);
-        this.setState({ skills: skills });
-      });
-  }
-
   componentDidMount() {
-    console.log(process.env)
-    this.reloadSkills();
     const currentId = (this.props.params) ? this.props.params.id : null;
     if (!currentId) {
       this.loadSkills();
-    } else {
+    }
+    else {
       this.loadCurrentSkill(currentId).then(this.loadSkills);
     }
   }
 
   loadSkills(){
-    console.log("Sending GET request.");
-    return axios.get(api + `/skills/`)
-      .then(res => {
-        const data = res.data;
-        const skills = data.map(obj => obj);
-        this.setState({ skills });
+    return axios.get(`${api}/skills/`)
+      .then((response) => {
+        const skills = response.data.slice();
+        this.setState({
+          skills: skills
+        });
       })
-      .catch(err => {
-        console.log(err)
+      .catch((err) => {
+        console.log(err);
       });
   }
 
   loadCurrentSkill(currentId){
-    console.log("Sending GET request.");
-    return axios.get(api + '/skills/' + currentId)
+    return axios.get(`${api}/skills/${currentId}`)
       .then(res => {
         const skillresults = res.data;
         this.setState({
@@ -161,21 +165,61 @@ class Skills extends Component {
     );
   }
 
+  makeLinks() {
+    const links = this.state.currentSkill.links;
+    if (links && links.length) {
+      const linkElements = links.map((link) => {
+        return (
+          <li key={link.id}>
+            { `${capitalizeFirstLetter(String(link.link_type))}: ` }
+            <a href={link.url}>{link.name}</a>
+          </li>
+        );
+      });
+      return (
+        <div>
+          <h3>Links:</h3>
+          <ul>
+            {linkElements}
+          </ul>
+        </div>
+      );
+    }
+    return null;
+  }
+
   render() {
     const onSkillChange = ev => this.onChange("skill_id", ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
-    const isSkillSelected = currentSkillID === "" ? false : true;
-    let links = null;
-    if(this.state.currentSkill.links != null) {
-     links = this.state.currentSkill.links.map(link =>
-        <li key={link.id}>
-            {capitalizeFirstLetter(String(link.link_type)) + ': '}
-            <a href={link.url}>{link.name}</a>
-        </li>
+    const isSkillSelected = currentSkillID !== "";
+    let display = null;
+    if (isSkillSelected) {
+      display = (
+        <SelectedItem
+          typeName="Skill"
+          deleteCallback={this.openDeleteModal}
+        >
+          <h1>{this.state.currentSkill.name}</h1>
+          <h4>{this.state.currentSkill.skill_type}</h4>
+          {this.makeLinks()}
+          <Button
+            name="AddLink"
+            bsStyle="primary"
+            onClick={this.openLinkModal}
+          >
+            Add Link
+          </Button>
+          <Button
+            name="AddReview"
+            bsStyle="primary"
+            onClick={this.openReviewModal}>
+            Add Review
+          </Button>
+        </SelectedItem>
       );
     }
     if (!this.state.isError) {
-    return (
+      return (
         <div>
           <Row>
             <Col xs={4} md={4}>
@@ -193,84 +237,56 @@ class Skills extends Component {
               onClick={this.openSkillModal} >
               Add Skill
             </Button>
-
             <Modal
               isOpen={this.state.skillModalIsOpen}
               onRequestClose={this.closeSkillModal}
               contentLabel="SkillModal"
-              style={ModalStyle}
             >
-              <SkillForm api={api}
-                         closeModal={this.closeSkillModal}
-                         reloadSkills={this.reloadSkills}
-                />
+              <AddSkillForm
+                onSubmit={this.addSkill}
+              />
             </Modal>
-
             <Modal
               isOpen={this.state.linkModalIsOpen}
               onRequestClose={this.closeLinkModal}
               contentLabel="LinkModal"
+              style={ModalStyle}
             >
               <LinkForm api={api}
                         closeModal={this.closeLinkModal}
                         skill_id={currentSkillID}/>
             </Modal>
-
             <Modal
               isOpen={this.state.reviewModalIsOpen}
               onRequestClose={this.closeReviewModal}
               contentLabel="ReviewModal"
               style={ModalStyle}>
-              <ReviewForm 
+              <ReviewForm
                 api={api}
                 closeModal={this.closeReviewModal}
                 skill_id={currentSkillID}/>
             </Modal>
-
           </Row>
 
-          <h1>{this.state.currentSkill.name}</h1>
-          <h4>{this.state.currentSkill.skill_type}</h4>
-          {isSkillSelected ? <h3>Links:</h3> : null}
-          <ul>{links}</ul>
-
-          <Button name="AddLink"
-                  bsStyle="primary"
-                  onClick={this.openLinkModal}
-                  disabled={!isSkillSelected}>
-            Add Link
-          </Button>
-
-          <Button name="AddReview"
-                  bsStyle="primary"
-                  onClick={this.openReviewModal}
-                  disabled={!isSkillSelected}>
-            Add Review 
-          </Button>
-
-          <Button name="DeleteSkill"
-                  bsStyle="danger"
-                  onClick={this.openDeleteModal}
-                  disabled={!isSkillSelected}>
-            Delete
-          </Button>
+          {display}
 
           <Modal
             isOpen={this.state.deleteModalIsOpen}
             onRequestClose={this.closeDeleteModal}
             contentLabel="DeleteSkillModal"
+            style={ModalStyle}
           >
             <DeleteModal
               shouldDelete={this.shouldDelete}
             />
           </Modal>
         </div>
-    );
-  } else {
-    return (
-      //TODO, replace with more savory alert
-      <h1>ERROR!</h1>
-    );
+      );
+    } else {
+      return (
+        //TODO, replace with more savory alert
+        <h1>ERROR!</h1>
+      );
     }
   }
 }

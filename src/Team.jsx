@@ -5,8 +5,10 @@ import Modal from 'react-modal';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Select from 'react-select';
+import { ModalStyle } from './Styles'
 
 import AddTeamMemberForm from './AddTeamMemberForm.jsx';
+import SelectedItem from './SelectedItem.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
 import DeleteModal from './DeleteModal.jsx';
 
@@ -124,6 +126,19 @@ class Team extends React.Component {
   }
 
   render() {
+    let selectedItem = null;
+    if (this.state.selectedTeamMember.id) {
+      selectedItem = (
+        <SelectedItem
+          typeName="TeamMember"
+          deleteCallback={this.openDeleteModal}
+        >
+          <TeamMemberDisplay
+            selected={this.state.selectedTeamMember}
+          />
+        </SelectedItem>
+      );
+    }
     return (
       <div>
         <Row>
@@ -148,27 +163,20 @@ class Team extends React.Component {
             isOpen={this.state.addModalIsOpen}
             onRequestClose={this.closeAddModal}
             contentLabel="AddTeamMemberModal"
+            style={ModalStyle}
           >
             <AddTeamMemberForm
+              closeModal={this.closeAddModal}
               onSubmit={this.addTeamMember}
             />
           </Modal>
         </Row>
-        <TeamMemberDisplay
-          selected={this.state.selectedTeamMember}
-        />
-        <Button
-          name="TeamMemberDelete"
-          bsStyle="danger"
-          onClick={this.openDeleteModal}
-          disabled={this.state.selectedTeamMember.id === ''}
-        >
-          Delete
-        </Button>
+        {selectedItem}
         <Modal
           isOpen={this.state.deleteModalIsOpen}
           onRequestClose={this.closeDeleteModal}
           contentLabel="DeleteTeamMemberModal"
+          style={ModalStyle}
         >
           <DeleteModal
             shouldDelete={this.shouldDelete}

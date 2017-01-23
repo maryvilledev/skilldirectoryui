@@ -19,79 +19,81 @@ describe('<Skills />', () => {
     const wrapper = mount(<Skills />);
     const skillModal = wrapper.find('Modal')
       .findWhere(n => n.prop('contentLabel') == 'SkillModal');
-    const addSkillButton = wrapper.find('button')
-      .findWhere(n => n.prop('name') == 'AddSkill');
+    const addSkillButton = wrapper.find('[name="AddSkill"]');
     expect(skillModal.prop('isOpen')).toBe(false);
     addSkillButton.simulate('click');
     expect(skillModal.prop('isOpen')).toBe(true);
   });
 
-  it('has an "Add Link" button that enables when a Skill is selected', () => {
-    const wrapper = mount(<Skills />);
-    const addLinkNode = wrapper.find('button').
-                findWhere(n => n.prop('name') == 'AddLink');
-    expect(addLinkNode.props().disabled).toBe(true);
-    wrapper.setState({ currentSkill: { skill_id: "1234" }});
-    expect(addLinkNode.props().disabled).toBe(false);
+  describe('the add link button', () => {
+    it('does not appear when no skill is selected', () => {
+      const wrapper = shallow(<Skills />);
+      const addLinkButton = wrapper.find('[name="AddLink"]');
+      expect(addLinkButton).toHaveLength(0);
+    });
+    it('appears when a skill is selected', () => {
+      const wrapper = shallow(<Skills />);
+      wrapper.setState({ currentSkill: { skill_id: "1" }});
+      const addLinkButton = wrapper.find('[name="AddLink"]');
+      expect(addLinkButton).toHaveLength(1);
+    });
+    it('opens a LinkModal when clicked', () => {
+      const wrapper = mount(<Skills />);
+      wrapper.setState({ currentSkill: { skill_id: "1" }});
+      const linkModal = wrapper.find('Modal').
+                  findWhere(n => n.prop('contentLabel') == 'LinkModal');
+      const addLinkButton = wrapper.find('[name="AddLink"]');
+      expect(linkModal.prop('isOpen')).toBe(false);
+      addLinkButton.simulate('click');
+      expect(linkModal.prop('isOpen')).toBe(true);
+    });
   });
 
-  it('has a Button that opens the LinkModal', () => {
-    // Setup
-    const wrapper = mount(<Skills />);
-    wrapper.setState({ currentSkill: { skill_id: "1234" }});
-    const linkModalNode = wrapper.find('Modal').
-                findWhere(n => n.prop('contentLabel') == 'LinkModal');
-    const addLinkNode = wrapper.find('button').
-                findWhere(n => n.prop('name') == 'AddLink');
-
-    // Run Test
-    expect(linkModalNode.prop('isOpen')).toBe(false);
-    addLinkNode.simulate('click');
-    expect(linkModalNode.prop('isOpen')).toBe(true);
+  describe('the add review button', () => {
+    it('does not appear when no skill is selected', () => {
+      const wrapper = mount(<Skills />);
+      const addReviewButton = wrapper.find('[name="AddReview"]');
+      expect(addReviewButton).toHaveLength(0);
+    });
+    it('appears when a skill is selected', () => {
+      const wrapper = mount(<Skills />);
+      wrapper.setState({ currentSkill: { skill_id: "1" }});
+      const addReviewButton = wrapper.find('[name="AddReview"]');
+      expect(addReviewButton).toHaveLength(1);
+    });
+    it('opens a SkillReviewsForm when clicked', () => {
+      const wrapper = mount(<Skills />);
+      wrapper.setState({ currentSkill: { skill_id: "1" }});
+      const addReviewModal = wrapper.find('Modal').
+                  findWhere(n => n.prop('contentLabel') == 'ReviewModal');
+      const addReviewButton = wrapper.find('[name="AddReview"]');
+      expect(addReviewModal.prop('isOpen')).toBe(false);
+      addReviewButton.simulate('click');
+      expect(addReviewModal.prop('isOpen')).toBe(true);
+    });
   });
 
-  it('has an "Add Review" button that enables when a Skill is selected', () => {
-    const wrapper = mount(<Skills />);
-    const addReviewBtn = wrapper.find('button').
-                findWhere(n => n.prop('name') == 'AddReview');
-    expect(addReviewBtn.props().disabled).toBe(true);
-    wrapper.setState({ currentSkill: { skill_id: "1234" }});
-    expect(addReviewBtn.props().disabled).toBe(false);
-  });
-
-  it('has an "Add Review" button that opens the SkillReviews modal', () => {
-    // Setup
-    const wrapper = mount(<Skills />);
-    wrapper.setState({ currentSkill: { skill_id: "1234" }});
-    const reviewModal = wrapper.find('Modal').
-                findWhere(n => n.prop('contentLabel') == 'ReviewModal');
-    const addReviewBtn = wrapper.find('button').
-                findWhere(n => n.prop('name') == 'AddReview');
-
-    // Run Test
-    expect(reviewModal.prop('isOpen')).toBe(false);
-    addReviewBtn.simulate('click');
-    expect(reviewModal.prop('isOpen')).toBe(true);
-  });
-
-  it('has a "Delete" button that enables when a Skill is selected', () => {
-    const wrapper = mount(<Skills />);
-    const button = wrapper.find('button')
-      .findWhere(n => n.prop('name') == "DeleteSkill");
-    expect(button.prop('disabled')).toBe(true);
-    wrapper.setState({ currentSkill: { skill_id: "1234", }});
-    expect(button.prop('disabled')).toBe(false);
-  });
-
-  it('has a Button that opens a DeleteModal', () => {
-    const wrapper = mount(<Skills />);
-    wrapper.setState({ currentSkill: { skill_id: "1" }});
-    const node = wrapper.find('Modal')
-      .findWhere((n) => n.prop('contentLabel') == 'DeleteSkillModal');
-    const button = wrapper.find('button')
-      .findWhere(n => n.prop('name') == 'DeleteSkill');
-    expect(node.prop('isOpen')).toBe(false);
-    button.simulate('click');
-    expect(node.prop('isOpen')).toBe(true);
+  describe('the delete button', () => {
+    it('does not appear when no skill is selected', () => {
+      const wrapper = mount(<Skills />);
+      const deleteButton = wrapper.find('[name="DeleteSkill"]');
+      expect(deleteButton).toHaveLength(0);
+    });
+    it('appears when a skill is selected', () => {
+      const wrapper = mount(<Skills />);
+      wrapper.setState({ currentSkill: { skill_id: "1" }});
+      const deleteButton = wrapper.find('[name="DeleteSkill"]');
+      expect(deleteButton).toHaveLength(1);
+    });
+    it('opens a DeleteModal when clicked', () => {
+      const wrapper = mount(<Skills />);
+      wrapper.setState({ currentSkill: { skill_id: "1" }});
+      const deleteModal = wrapper.find('Modal').
+                  findWhere(n => n.prop('contentLabel') == 'DeleteSkillModal');
+      const deleteButton = wrapper.find('[name="DeleteSkill"]');
+      expect(deleteModal.prop('isOpen')).toBe(false);
+      deleteButton.simulate('click');
+      expect(deleteModal.prop('isOpen')).toBe(true);
+    });
   });
 });

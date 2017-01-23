@@ -1,4 +1,4 @@
-exports[`<SkillsForm /> matches the stored snapshot 1`] = `
+exports[`<AddSkillForm /> matches the stored snapshot 1`] = `
 <div>
   <h1>
     Add Skill
@@ -70,7 +70,7 @@ exports[`<SkillsForm /> matches the stored snapshot 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        sm={10}
+        sm={1}
         smOffset={2}>
         <Button
           active={false}
@@ -80,6 +80,21 @@ exports[`<SkillsForm /> matches the stored snapshot 1`] = `
           disabled={false}
           type="submit">
           Submit
+        </Button>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={2}
+        smOffset={1}>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="info"
+          disabled={false}
+          onClick={undefined}>
+          Cancel
         </Button>
       </Col>
     </FormGroup>
