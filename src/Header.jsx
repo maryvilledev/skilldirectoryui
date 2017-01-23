@@ -14,10 +14,10 @@ const Header = ({ children }) => (
       </Navbar.Header>
         <Nav>
           <NavItem eventKey={1}>
-            <Link to="skills">Skills</Link>
+            <Link to="/skills">Skills</Link>
           </NavItem>
           <NavItem eventKey={2}>
-            <Link to="team">Team</Link>
+            <Link to="/team">Team</Link>
           </NavItem>
         </Nav>
       <Nav pullRight>
