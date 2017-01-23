@@ -210,7 +210,8 @@ class Skills extends Component {
     let reviews = null;
     if (this.state.reviews){
       reviews = this.state.reviews.map(review => {
-        return (<Panel header={review.team_member_name} key={review.id}>{review.body}</Panel>);
+        let header = review.team_member_name + " on " + new Date(review.timestamp).toDateString();
+        return (<Panel header={header} key={review.id}>{review.body}</Panel>);
       });
     }
     const reviewList = (
