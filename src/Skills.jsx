@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import 'bootstrap/dist/css/bootstrap.css'
-import { Button, Panel } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import Modal from 'react-modal'
 import { Row, Col }  from 'react-bootstrap'
 import axios from 'axios'
@@ -11,6 +11,7 @@ import AddSkillForm from './AddSkillForm.jsx';
 import { ModalStyle } from './Styles'
 import DeleteModal from './DeleteModal.jsx';
 import SelectedItem from './SelectedItem.jsx';
+import ReviewPanel from './ReviewPanel.jsx';
 
 var Select = require('react-select');
 var api = (process.env.REACT_APP_API);
@@ -210,8 +211,13 @@ class Skills extends Component {
     let reviews = null;
     if (this.state.reviews){
       reviews = this.state.reviews.map(review => {
-        let header = review.team_member_name + " on " + new Date(review.timestamp).toDateString();
-        return (<Panel header={header} key={review.id}>{review.body}</Panel>);
+        return <ReviewPanel
+          timestamp = {review.timestamp}
+          good = {review.positive}
+          reviewer = {review.team_member_name}
+          >
+            {review.body}
+          </ReviewPanel>
       });
     }
     const reviewList = (
