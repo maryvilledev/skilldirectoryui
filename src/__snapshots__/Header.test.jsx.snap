@@ -16,6 +16,7 @@ exports[`<Header /> matches the stored snapshot 1`] = `
         </Link>
       </NavbarBrand>
     </NavbarHeader>
+    //Make sure all these paths are absolute (starting with a \'/\') so the //route will be handled properly
     <Nav
       bsClass="nav"
       justified={false}
