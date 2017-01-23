@@ -51,11 +51,11 @@ exports[`<SkillReviewsForm /> matches the stored snapshot 1`] = `
           name="positiveSelect"
           onChange={[Function]}>
           <option
-            value={true}>
+            value="true">
             Yes
           </option>
           <option
-            value={false}>
+            value="false">
             No
           </option>
         </FormControl>
