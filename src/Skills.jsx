@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import 'bootstrap/dist/css/bootstrap.css'
-import Button from 'react-bootstrap/lib/Button'
+import { Button, Panel } from 'react-bootstrap'
 import Modal from 'react-modal'
 import { Row, Col }  from 'react-bootstrap'
 import axios from 'axios'
@@ -52,6 +52,7 @@ class Skills extends Component {
 
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
+    this.loadReviews = this.loadReviews.bind(this);
   }
 
   openSkillModal() { this.setState({skillModalIsOpen: true}); }
@@ -78,7 +79,7 @@ class Skills extends Component {
       })
       .catch(err => {
         console.log(err);
-      });
+      }).then(this.loadReviews);
   }
 
   shouldDelete(response) {
@@ -128,7 +129,7 @@ class Skills extends Component {
       this.loadSkills();
     }
     else {
-      this.loadCurrentSkill(currentId).then(this.loadSkills);
+      this.loadCurrentSkill(currentId).then(this.loadSkills).then(this.loadReviews);
     }
   }
 
@@ -188,36 +189,64 @@ class Skills extends Component {
     return null;
   }
 
+  loadReviews() {
+    const currentId = this.state.currentSkill.skill_id;
+    return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
+      .then(res => {
+        const results = res.data;
+        this.setState({
+          reviews: results
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
     const onSkillChange = ev => this.onChange("skill_id", ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
+    let reviews = null;
+    if (this.state.reviews){
+      reviews = this.state.reviews.map(review => {
+        let header = review.team_member_name + " on " + new Date(review.timestamp).toDateString();
+        return (<Panel header={header} key={review.id}>{review.body}</Panel>);
+      });
+    }
+    const reviewList = (
+      <div>{reviews}</div>
+    );
     let display = null;
     if (isSkillSelected) {
       display = (
-        <SelectedItem
-          typeName="Skill"
-          deleteCallback={this.openDeleteModal}
-        >
-          <h1>{this.state.currentSkill.name}</h1>
-          <h4>{this.state.currentSkill.skill_type}</h4>
-          {this.makeLinks()}
-          <Button
-            name="AddLink"
-            bsStyle="primary"
-            onClick={this.openLinkModal}
+        <div>
+          <SelectedItem
+            typeName="Skill"
+            deleteCallback={this.openDeleteModal}
           >
-            Add Link
-          </Button>
-          <Button
-            name="AddReview"
-            bsStyle="primary"
-            onClick={this.openReviewModal}>
-            Add Review
-          </Button>
-        </SelectedItem>
+            <h1>{this.state.currentSkill.name}</h1>
+            <h4>{this.state.currentSkill.skill_type}</h4>
+            {this.makeLinks()}
+            <Button
+              name="AddLink"
+              bsStyle="primary"
+              onClick={this.openLinkModal}
+            >
+              Add Link
+            </Button>
+            <Button
+              name="AddReview"
+              bsStyle="primary"
+              onClick={this.openReviewModal}>
+              Add Review
+            </Button>
+          </SelectedItem>
+          {reviewList}
+        </div>
       );
     }
+
     if (!this.state.isError) {
       return (
         <div>
