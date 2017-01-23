@@ -1,19 +1,20 @@
-import React, { Component } from 'react'
-import { browserHistory } from 'react-router'
-import 'bootstrap/dist/css/bootstrap.css'
-import Button from 'react-bootstrap/lib/Button'
-import Modal from 'react-modal'
-import { Row, Col }  from 'react-bootstrap'
-import axios from 'axios'
-import LinkForm from './LinksForm'
-import ReviewForm from './SkillReviewsForm.jsx'
-import AddSkillForm from './AddSkillForm.jsx';
-import { ModalStyle } from './Styles'
-import DeleteModal from './DeleteModal.jsx';
-import SelectedItem from './SelectedItem.jsx';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.css';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { Row, Col } from 'react-bootstrap';
+import Button from 'react-bootstrap/lib/Button';
+import Modal from 'react-modal';
+import Select from 'react-select';
 
-var Select = require('react-select');
-var api = (process.env.REACT_APP_API);
+import AddSkillForm from './AddSkillForm.jsx';
+import DeleteModal from './DeleteModal.jsx';
+import LinkForm from './LinksForm'
+import SelectedItem from './SelectedItem.jsx';
+import ReviewForm from './SkillReviewsForm.jsx'
+import { ModalStyle } from './Styles'
+
+const api = (process.env.REACT_APP_API);
 
 class Skills extends Component {
   constructor(props) {
@@ -26,11 +27,11 @@ class Skills extends Component {
       reviewModalIsOpen: false,
       deleteModalIsOpen: false,
       currentSkill: {
-        skill_id: "",
-        name: "",
-        skill_type: "",
+        skill_id: '',
+        name: '',
+        skill_type: '',
         links: [],
-      }
+      },
     };
 
     // Bind all the things
@@ -63,20 +64,30 @@ class Skills extends Component {
   openDeleteModal() { this.setState({deleteModalIsOpen: true}); }
   closeDeleteModal() { this.setState({deleteModalIsOpen: false}); }
 
+  componentDidMount() {
+    const currentId = (this.props.params) ? this.props.params.id : null;
+    if (!currentId) {
+      this.loadSkills();
+    } else {
+      this.loadCurrentSkill(currentId).then(this.loadSkills);
+    }
+  }
+
   onChange(key, value) {
     axios.get(`${api}/skills/${value}`)
-      .then(res => {
-        const skillresults = res.data
-        this.setState(
-          {currentSkill: {
-            skill_id: skillresults.id,
-            name: skillresults.name,
-            skill_type: skillresults.skill_type,
-            links: skillresults.links,
-          }});
-          browserHistory.push('/skills/' + skillresults.id);
+      .then((response) => {
+        const skill = response.data;
+        this.setState({
+          currentSkill: {
+            skill_id: skill.id,
+            name: skill.name,
+            skill_type: skill.skill_type,
+            links: skill.links,
+          },
+        });
+        browserHistory.push(`/skills/${skill.id}`);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -88,10 +99,10 @@ class Skills extends Component {
     this.closeDeleteModal();
   }
 
-  addSkill(skill_name, skill_type) {
+  addSkill(skillName, skillType) {
     axios.post(`${api}/skills/`, {
-      name: skill_name,
-      skill_type: skill_type,
+      name: skillName,
+      skill_type: skillType,
     })
       .then(() => {
         this.closeSkillModal();
@@ -104,35 +115,25 @@ class Skills extends Component {
 
   deleteSkill() {
     axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
-     .then(function(res){
+     .then((response) => {
        this.setState({
-         skills: this.state.skills.filter(function(skill){
+         skills: this.state.skills.filter((skill) => {
            return skill.id !== this.state.currentSkill.skill_id;
-         }.bind(this)),
+         }),
          currentSkill: {
-           skill_id: "",
-           name: "",
-           skill_type: "",
+           skill_id: '',
+           name: '',
+           skill_type: '',
            links: [],
          },
        });
-     }.bind(this))
-     .catch(err => {
+     })
+     .catch((err) => {
        console.log(err);
      });
   }
 
-  componentDidMount() {
-    const currentId = (this.props.params) ? this.props.params.id : null;
-    if (!currentId) {
-      this.loadSkills();
-    }
-    else {
-      this.loadCurrentSkill(currentId).then(this.loadSkills);
-    }
-  }
-
-  loadSkills(){
+  loadSkills() {
     return axios.get(`${api}/skills/`)
       .then((response) => {
         const skills = response.data.slice();
@@ -145,9 +146,9 @@ class Skills extends Component {
       });
   }
 
-  loadCurrentSkill(currentId){
+  loadCurrentSkill(currentId) {
     return axios.get(`${api}/skills/${currentId}`)
-      .then(res => {
+      .then((res) => {
         const skillresults = res.data;
         this.setState({
           currentSkill: {
@@ -158,11 +159,10 @@ class Skills extends Component {
           },
         });
       })
-      .catch(err => {
-        console.log(err)
-        this.setState({isError: true});
-      }
-    );
+      .catch((err) => {
+        console.log(err);
+        this.setState({ isError: true });
+      });
   }
 
   makeLinks() {
@@ -189,9 +189,9 @@ class Skills extends Component {
   }
 
   render() {
-    const onSkillChange = ev => this.onChange("skill_id", ev.id);
+    const onSkillChange = ev => this.onChange('skill_id', ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
-    const isSkillSelected = currentSkillID !== "";
+    const isSkillSelected = currentSkillID !== '';
     let display = null;
     if (isSkillSelected) {
       display = (
@@ -212,7 +212,8 @@ class Skills extends Component {
           <Button
             name="AddReview"
             bsStyle="primary"
-            onClick={this.openReviewModal}>
+            onClick={this.openReviewModal}
+          >
             Add Review
           </Button>
         </SelectedItem>
@@ -234,7 +235,8 @@ class Skills extends Component {
             <Button
               name="AddSkill"
               bsStyle="primary"
-              onClick={this.openSkillModal} >
+              onClick={this.openSkillModal}
+            >
               Add Skill
             </Button>
             <Modal
@@ -252,19 +254,23 @@ class Skills extends Component {
               contentLabel="LinkModal"
               style={ModalStyle}
             >
-              <LinkForm api={api}
-                        closeModal={this.closeLinkModal}
-                        skill_id={currentSkillID}/>
+              <LinkForm
+                api={api}
+                closeModal={this.closeLinkModal}
+                skill_id={currentSkillID}
+              />
             </Modal>
             <Modal
               isOpen={this.state.reviewModalIsOpen}
               onRequestClose={this.closeReviewModal}
               contentLabel="ReviewModal"
-              style={ModalStyle}>
+              style={ModalStyle}
+            >
               <ReviewForm
                 api={api}
                 closeModal={this.closeReviewModal}
-                skill_id={currentSkillID}/>
+                skill_id={currentSkillID}
+              />
             </Modal>
           </Row>
 
