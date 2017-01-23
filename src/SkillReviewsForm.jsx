@@ -151,6 +151,9 @@ class SkillReviewsForm extends React.Component {
               <Button type="submit" bsStyle="primary">
                 Submit
               </Button>
+              <Button sm={2} onClick={this.props.closeModal} bsStyle='info'>
+                Cancel
+              </Button>
             </Col>
           </FormGroup>
         </Form>

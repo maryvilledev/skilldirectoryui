@@ -102,6 +102,16 @@ exports[`<SkillReviewsForm /> matches the stored snapshot 1`] = `
           type="submit">
           Submit
         </Button>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="info"
+          disabled={false}
+          onClick={undefined}
+          sm={2}>
+          Cancel
+        </Button>
       </Col>
     </FormGroup>
   </Form>
