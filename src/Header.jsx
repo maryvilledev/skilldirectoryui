@@ -12,6 +12,8 @@ const Header = ({ children }) => (
           <Link to="/">Skill Directory</Link>
         </Navbar.Brand>
       </Navbar.Header>
+      //Make sure all these paths are absolute (starting with a '/') so the
+      //route will be handled properly
         <Nav>
           <NavItem eventKey={1}>
             <Link to="/skills">Skills</Link>
