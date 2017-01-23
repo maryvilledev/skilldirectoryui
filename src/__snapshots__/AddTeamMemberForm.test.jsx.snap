@@ -1,0 +1,86 @@
+exports[`<AddTeamMemberForm /> matches the stored snapshot 1`] = `
+<div>
+  <h1>
+    Add a Team Member
+  </h1>
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    onSubmit={[Function]}>
+    <FormGroup
+      bsClass="form-group"
+      controlId="teamMemberName">
+      <Col
+        bsClass="col"
+        componentClass={[Function]}
+        sm={2}>
+        Name:
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={10}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="input"
+          name="teamMemberName"
+          onChange={[Function]} />
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group"
+      controlId="teamMemberTitle">
+      <Col
+        bsClass="col"
+        componentClass={[Function]}
+        sm={2}>
+        Title:
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={10}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="input"
+          name="teamMemberTitle"
+          onChange={[Function]} />
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={2}
+        smOffset={2}>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="primary"
+          disabled={false}
+          type="submit">
+          Submit
+        </Button>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        smOffset={2}>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="info"
+          disabled={false}
+          onClick={undefined}>
+          Cancel
+        </Button>
+      </Col>
+    </FormGroup>
+  </Form>
+</div>
+`;

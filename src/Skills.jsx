@@ -10,7 +10,6 @@ import ReviewForm from './SkillReviewsForm.jsx'
 import AddSkillForm from './AddSkillForm.jsx';
 import { ModalStyle } from './Styles'
 import DeleteModal from './DeleteModal.jsx';
-import DeleteButton from './DeleteButton.jsx';
 import SelectedItem from './SelectedItem.jsx';
 
 var Select = require('react-select');
