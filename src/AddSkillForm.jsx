@@ -39,11 +39,11 @@ class AddSkillForm extends React.Component {
   }
 
   onNameChange(ev) {
-    this.onChange("skill_name")(ev.target.value);
+    this.onChange('skill_name')(ev.target.value);
   }
 
   onTypeChange(ev) {
-    this.onChange("skill_type")(ev.target.value);
+    this.onChange('skill_type')(ev.target.value);
   }
 
   onSubmit(ev) {
