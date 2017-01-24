@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LinksForm from './LinksForm';
-import { isValidURL } from './LinksForm';
+import LinksForm, { isValidURL } from './AddSkillLinkForm.jsx';
 import { shallow, mount } from 'enzyme';
 
 describe('<LinksForm />', () => {

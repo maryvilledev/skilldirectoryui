@@ -120,7 +120,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
           },
         }
       }>
-      <SkillReviewsForm
+      <AddSkillReviewForm
         api="http://localhost:8080"
         closeModal={[Function]}
         skill_id="" />

@@ -9,9 +9,9 @@ import Select from 'react-select';
 
 import AddSkillForm from './AddSkillForm.jsx';
 import DeleteModal from './DeleteModal.jsx';
-import LinkForm from './LinksForm'
+import LinkForm from './AddSkillLinkForm.jsx'
 import SelectedItem from './SelectedItem.jsx';
-import ReviewForm from './SkillReviewsForm.jsx'
+import ReviewForm from './AddSkillReviewForm.jsx'
 import { ModalStyle } from './Styles'
 
 const api = (process.env.REACT_APP_API);
@@ -22,6 +22,8 @@ class Skills extends Component {
 
     this.state = {
       skills: [],
+      isModalDisplayed: false,
+      displayedModalType: '',
       skillModalIsOpen: false,
       linkModalIsOpen: false,
       reviewModalIsOpen: false,
@@ -35,6 +37,10 @@ class Skills extends Component {
     };
 
     // Bind all the things
+
+    // this.openNewModal = this.openNewModal.bind(this);
+    // this.closeModal = this.closeModal.bind(this);
+
     this.shouldDelete = this.shouldDelete.bind(this);
     this.makeLinks = this.makeLinks.bind(this);
     this.openSkillModal = this.openSkillModal.bind(this);
@@ -90,6 +96,22 @@ class Skills extends Component {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  openNewModalType(modalType) {
+    return () => {
+      this.setState({
+        displayedModalType: modalType,
+        isModalDisplayed: true,
+      });
+    };
+  }
+
+  closeModal() {
+    this.setState({
+      displayedModalType: '',
+      isModalDisplayed: false,
+    });
   }
 
   shouldDelete(response) {
