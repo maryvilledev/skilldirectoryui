@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import { Panel, Row, Col } from 'react-bootstrap'
 
 const ReviewPanel = ({review}) => {
-  if(!review) return <div></div>;
+  if(!review) return <div />;
   const time = review.timestamp;
   const good = review.positive;
   const reviewer = review.team_member_name;
