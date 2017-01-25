@@ -61,55 +61,11 @@ exports[`<Team /> matches the stored snapshot 1`] = `
       onClick={[Function]}>
       Add Team Member
     </Button>
-    <Modal
-      ariaHideApp={true}
-      closeTimeoutMS={0}
-      contentLabel="AddTeamMemberModal"
-      isOpen={false}
-      onRequestClose={[Function]}
-      parentSelector={[Function]}
-      portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}
-      style={
-        Object {
-          "content": Object {},
-          "overlay": Object {
-            "bottom": "25%",
-            "left": "25%",
-            "position": "fixed",
-            "right": "25%",
-            "top": "15%",
-          },
-        }
-      }>
-      <AddTeamMemberForm
-        closeModal={[Function]}
-        onSubmit={[Function]} />
-    </Modal>
+    <TeamModalContainer
+      closeModalCallback={[Function]}
+      displayedModalType=""
+      formProps={Object {}}
+      isModalDisplayed={false} />
   </Row>
-  <Modal
-    ariaHideApp={true}
-    closeTimeoutMS={0}
-    contentLabel="DeleteTeamMemberModal"
-    isOpen={false}
-    onRequestClose={[Function]}
-    parentSelector={[Function]}
-    portalClassName="ReactModalPortal"
-    shouldCloseOnOverlayClick={true}
-    style={
-      Object {
-        "content": Object {},
-        "overlay": Object {
-          "bottom": "25%",
-          "left": "25%",
-          "position": "fixed",
-          "right": "25%",
-          "top": "15%",
-        },
-      }
-    }>
-    <DeleteModal
-      shouldDelete={[Function]} />
-  </Modal>
 </div>
 `;
