@@ -12,12 +12,16 @@ const Header = ({ children }) => (
           <Link to="/">Skill Directory</Link>
         </Navbar.Brand>
       </Navbar.Header>
+      {
+      //Make sure all these paths are absolute (starting with a '/') so the
+      //route will be handled properly
+      }
         <Nav>
           <NavItem eventKey={1}>
-            <Link to="skills">Skills</Link>
+            <Link to="/skills">Skills</Link>
           </NavItem>
           <NavItem eventKey={2}>
-            <Link to="team">Team</Link>
+            <Link to="/team">Team</Link>
           </NavItem>
         </Nav>
       <Nav pullRight>

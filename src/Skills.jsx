@@ -3,9 +3,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { Row, Col } from 'react-bootstrap';
-import Button from 'react-bootstrap/lib/Button';
+import { Button } from 'react-bootstrap';
 import Select from 'react-select';
 
+import ReviewPanel from './ReviewPanel.jsx';
 import SelectedItem from './SelectedItem.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
 
@@ -40,6 +41,7 @@ class Skills extends Component {
     this.shouldDelete = this.shouldDelete.bind(this);
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
+    this.loadReviews = this.loadReviews.bind(this);
   }
 
   componentDidMount() {
@@ -47,7 +49,7 @@ class Skills extends Component {
     if (!currentId) {
       this.loadSkills();
     } else {
-      this.loadCurrentSkill(currentId).then(this.loadSkills);
+      this.loadCurrentSkill(currentId).then(this.loadSkills).then(this.loadReviews);
     }
   }
 
@@ -67,7 +69,7 @@ class Skills extends Component {
       })
       .catch((err) => {
         console.log(err);
-      });
+      }).then(this.loadReviews);
   }
 
   getFormProps(modalType) {
@@ -219,37 +221,63 @@ class Skills extends Component {
     return null;
   }
 
+  loadReviews() {
+    const currentId = this.state.currentSkill.skill_id;
+    return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
+      .then(res => {
+        const results = res.data;
+        this.setState({
+          reviews: results
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
     const onSkillChange = ev => this.onChange('skill_id', ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
-    const isSkillSelected = currentSkillID !== '';
+    const isSkillSelected = currentSkillID !== "";
+    let reviews = null;
+    if (this.state.reviews){
+      reviews = this.state.reviews.map(review => {
+        return <ReviewPanel review={review} key={review.timestamp}/>
+      });
+    }
+    const reviewList = (
+      <div>{reviews}</div>
+    );
     let display = null;
     if (isSkillSelected) {
       display = (
-        <SelectedItem
-          typeName="Skill"
-          deleteCallback={this.openNewModalType('DeleteSkill')}
-        >
-          <h1>{this.state.currentSkill.name}</h1>
-          <h4>{this.state.currentSkill.skill_type}</h4>
-          {this.makeLinks()}
-          <Button
-            name="AddLink"
-            bsStyle="primary"
-            onClick={this.openNewModalType('AddLink')}
+        <div>
+          <SelectedItem
+            typeName="Skill"
+            deleteCallback={this.openNewModalType('DeleteSkill')}
           >
-            Add Link
-          </Button>
-          <Button
-            name="AddReview"
-            bsStyle="primary"
-            onClick={this.openNewModalType('AddReview')}
-          >
-            Add Review
-          </Button>
-        </SelectedItem>
+            <h1>{this.state.currentSkill.name}</h1>
+            <h4>{this.state.currentSkill.skill_type}</h4>
+            {this.makeLinks()}
+            <Button
+              name="AddLink"
+              bsStyle="primary"
+              onClick={this.openNewModalType('AddLink')}
+            >
+              Add Link
+            </Button>
+            <Button
+              name="AddReview"
+              bsStyle="primary"
+              onClick={this.openNewModalType('AddReview')}>
+              Add Review
+            </Button>
+          </SelectedItem>
+          {reviewList}
+        </div>
       );
     }
+
     if (!this.state.isError) {
       return (
         <div>
