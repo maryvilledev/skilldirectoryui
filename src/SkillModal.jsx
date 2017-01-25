@@ -31,11 +31,18 @@ const SkillModal = ({ closeModalCallback, displayedModalType, isModalDisplayed, 
   );
 };
 
+SkillModal.defaultProps = {
+  closeModalCallback: () => {},
+  displayedModalType: '',
+  formProps: {},
+  isModalDisplayed: false,
+};
+
 SkillModal.propTypes = {
-  closeModalCallback: PropTypes.func.isRequired,
-  displayedModalType: PropTypes.string.isRequired,
-  formProps: PropTypes.object.isRequired,
-  isModalDisplayed: PropTypes.bool.isRequired,
+  closeModalCallback: PropTypes.func,
+  displayedModalType: PropTypes.string,
+  formProps: PropTypes.object,
+  isModalDisplayed: PropTypes.bool,
 };
 
 export default SkillModal;
