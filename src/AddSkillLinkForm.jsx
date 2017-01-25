@@ -36,7 +36,6 @@ class LinksForm extends React.Component {
       alert('Please enter a Type.');
       return;
     }
-
     // Post form data to API endpoint
     axios.post(this.props.api + '/links/', {
       name:      this.state.link_name,
@@ -69,7 +68,7 @@ class LinksForm extends React.Component {
                 onChange={onLinkNameChange}/>
             </Col>
           </FormGroup>
-          
+
           <FormGroup controlId='linkURL'>
             <Col componentClass={ControlLabel} sm={2}>
               URL:
@@ -102,18 +101,18 @@ class LinksForm extends React.Component {
                   Webpage
                 </option>
               </FormControl>
-            </Col>  
+            </Col>
           </FormGroup>
 
           <FormGroup>
             <Col smOffset={2} sm={2}>
               <Button type='submit' bsStyle='primary'>
-                Submit 
+                Submit
               </Button>
             </Col>
             <Col smOffset={2}>
               <Button  onClick={this.props.closeModal} bsStyle='info'>
-                Cancel 
+                Cancel
               </Button>
             </Col>
           </FormGroup>

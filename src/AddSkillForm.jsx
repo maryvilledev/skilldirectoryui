@@ -84,7 +84,7 @@ class AddSkillForm extends React.Component {
               </Button>
             </Col>
             <Col smOffset={1} sm={2}>
-              <Button onClick={this.props.closeModal} bsStyle="info">
+              <Button onClick={this.props.onCancel} bsStyle="info">
                 Cancel
               </Button>
             </Col>
@@ -96,7 +96,8 @@ class AddSkillForm extends React.Component {
 }
 
 AddSkillForm.propTypes = {
-  onSubmit: PropTypes.func,
+  onCancel: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
-export default AddSkillForm
+export default AddSkillForm;

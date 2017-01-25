@@ -4,15 +4,10 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/lib/Button';
-import Modal from 'react-modal';
 import Select from 'react-select';
 
-import AddSkillForm from './AddSkillForm.jsx';
-import DeleteModal from './DeleteModal.jsx';
-import LinkForm from './AddSkillLinkForm.jsx'
 import SelectedItem from './SelectedItem.jsx';
-import ReviewForm from './AddSkillReviewForm.jsx'
-import { ModalStyle } from './Styles'
+import SkillModal from './SkillModal.jsx';
 
 const api = (process.env.REACT_APP_API);
 
@@ -24,10 +19,6 @@ class Skills extends Component {
       skills: [],
       isModalDisplayed: false,
       displayedModalType: '',
-      skillModalIsOpen: false,
-      linkModalIsOpen: false,
-      reviewModalIsOpen: false,
-      deleteModalIsOpen: false,
       currentSkill: {
         skill_id: '',
         name: '',
@@ -38,37 +29,18 @@ class Skills extends Component {
 
     // Bind all the things
 
-    // this.openNewModal = this.openNewModal.bind(this);
-    // this.closeModal = this.closeModal.bind(this);
-
+    this.openNewModalType = this.openNewModalType.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
     this.makeLinks = this.makeLinks.bind(this);
-    this.openSkillModal = this.openSkillModal.bind(this);
-    this.closeSkillModal = this.closeSkillModal.bind(this);
-    this.openLinkModal = this.openLinkModal.bind(this);
-    this.closeLinkModal = this.closeLinkModal.bind(this);
-    this.openReviewModal = this.openReviewModal.bind(this);
-    this.closeReviewModal = this.closeReviewModal.bind(this);
-    this.openDeleteModal = this.openDeleteModal.bind(this);
-    this.closeDeleteModal = this.closeDeleteModal.bind(this);
-
+    this.getFormProps = this.getFormProps.bind(this);
     this.addSkill = this.addSkill.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
-
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
   }
-
-  openSkillModal() { this.setState({skillModalIsOpen: true}); }
-  closeSkillModal() { this.setState({skillModalIsOpen: false}); }
-  openLinkModal() { this.setState({linkModalIsOpen: true}); }
-  closeLinkModal() { this.setState({linkModalIsOpen: false}); }
-  openReviewModal() { this.setState({reviewModalIsOpen: true}); }
-  closeReviewModal() { this.setState({reviewModalIsOpen: false}); }
-  openDeleteModal() { this.setState({deleteModalIsOpen: true}); }
-  closeDeleteModal() { this.setState({deleteModalIsOpen: false}); }
 
   componentDidMount() {
     const currentId = (this.props.params) ? this.props.params.id : null;
@@ -98,6 +70,43 @@ class Skills extends Component {
       });
   }
 
+  getFormProps(modalType) {
+    // If a modal is being rendered in <SkillModal />, we need to pass in the
+    // props for by the form.
+    switch (modalType) {
+      case 'AddLink': {
+        return {
+          api,
+          closeModal: this.closeModal,
+          skill_id: this.state.currentSkill.skill_id,
+        };
+      }
+      case 'AddSkill': {
+        return {
+          onCancel: this.closeModal,
+          onSubmit: this.addSkill,
+        };
+      }
+      case 'AddReview': {
+        return {
+          api,
+          closeModal: this.closeModal,
+          skill_id: this.state.currentSkill.skill_id,
+        };
+      }
+      case 'DeleteSkill': {
+        return {
+          shouldDelete: this.shouldDelete,
+        };
+      }
+      default: {
+        // if there is no modal to render, or if an invalid type has been
+        // requested, return an empty object
+        return {};
+      }
+    }
+  }
+
   openNewModalType(modalType) {
     return () => {
       this.setState({
@@ -118,7 +127,7 @@ class Skills extends Component {
     if (response) {
       this.deleteSkill();
     }
-    this.closeDeleteModal();
+    this.closeModal();
   }
 
   addSkill(skillName, skillType) {
@@ -127,7 +136,7 @@ class Skills extends Component {
       skill_type: skillType,
     })
       .then(() => {
-        this.closeSkillModal();
+        this.closeModal();
         this.loadSkills();
       })
       .catch((err) => {
@@ -160,7 +169,7 @@ class Skills extends Component {
       .then((response) => {
         const skills = response.data.slice();
         this.setState({
-          skills: skills
+          skills,
         });
       })
       .catch((err) => {
@@ -219,7 +228,7 @@ class Skills extends Component {
       display = (
         <SelectedItem
           typeName="Skill"
-          deleteCallback={this.openDeleteModal}
+          deleteCallback={this.openNewModalType('DeleteSkill')}
         >
           <h1>{this.state.currentSkill.name}</h1>
           <h4>{this.state.currentSkill.skill_type}</h4>
@@ -227,14 +236,14 @@ class Skills extends Component {
           <Button
             name="AddLink"
             bsStyle="primary"
-            onClick={this.openLinkModal}
+            onClick={this.openNewModalType('AddLink')}
           >
             Add Link
           </Button>
           <Button
             name="AddReview"
             bsStyle="primary"
-            onClick={this.openReviewModal}
+            onClick={this.openNewModalType('AddReview')}
           >
             Add Review
           </Button>
@@ -257,57 +266,18 @@ class Skills extends Component {
             <Button
               name="AddSkill"
               bsStyle="primary"
-              onClick={this.openSkillModal}
+              onClick={this.openNewModalType('AddSkill')}
             >
               Add Skill
             </Button>
-            <Modal
-              isOpen={this.state.skillModalIsOpen}
-              onRequestClose={this.closeSkillModal}
-              contentLabel="SkillModal"
-            >
-              <AddSkillForm
-                onSubmit={this.addSkill}
-              />
-            </Modal>
-            <Modal
-              isOpen={this.state.linkModalIsOpen}
-              onRequestClose={this.closeLinkModal}
-              contentLabel="LinkModal"
-              style={ModalStyle}
-            >
-              <LinkForm
-                api={api}
-                closeModal={this.closeLinkModal}
-                skill_id={currentSkillID}
-              />
-            </Modal>
-            <Modal
-              isOpen={this.state.reviewModalIsOpen}
-              onRequestClose={this.closeReviewModal}
-              contentLabel="ReviewModal"
-              style={ModalStyle}
-            >
-              <ReviewForm
-                api={api}
-                closeModal={this.closeReviewModal}
-                skill_id={currentSkillID}
-              />
-            </Modal>
-          </Row>
-
-          {display}
-
-          <Modal
-            isOpen={this.state.deleteModalIsOpen}
-            onRequestClose={this.closeDeleteModal}
-            contentLabel="DeleteSkillModal"
-            style={ModalStyle}
-          >
-            <DeleteModal
-              shouldDelete={this.shouldDelete}
+            <SkillModal
+              closeModalCallback={this.closeModal}
+              displayedModalType={this.state.displayedModalType}
+              formProps={this.getFormProps(this.state.displayedModalType)}
+              isModalDisplayed={this.state.isModalDisplayed}
             />
-          </Modal>
+          </Row>
+          {display}
         </div>
       );
     } else {
