@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
-import Modal from 'react-modal';
 
 import AddTeamMemberForm from './AddTeamMemberForm.jsx';
 import DeleteModal from './DeleteModal.jsx';
-import { ModalStyle } from './Styles.jsx';
+import ModalContainer from './ModalContainer.jsx';
 
 // Object to map displayedModalType to a component
 const teamModalTypes = {
@@ -16,14 +15,13 @@ const TeamModalContainer = ({ closeModalCallback, displayedModalType, formProps,
   const modalComponent = (ModalToDisplay ?
     <ModalToDisplay {...formProps} /> : null);
   return (
-    <Modal
-      isOpen={isModalDisplayed}
-      onRequestClose={closeModalCallback}
+    <ModalContainer
+      closeModalCallback={closeModalCallback}
       contentLabel="TeamModalContainer"
-      style={ModalStyle}
+      isModalDisplayed={isModalDisplayed}
     >
       {modalComponent}
-    </Modal>
+    </ModalContainer>
   );
 };
 
