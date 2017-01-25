@@ -15,7 +15,7 @@ const skillModalTypes = {
   DeleteSkill: DeleteModal,
 };
 
-const SkillModal = ({ closeModalCallback, displayedModalType, isModalDisplayed, formProps }) => {
+const SkillModalContainer = ({ closeModalCallback, displayedModalType, isModalDisplayed, formProps }) => {
   const ModalToDisplay = skillModalTypes[displayedModalType];
   const modalComponent = (ModalToDisplay ?
     <ModalToDisplay {...formProps} /> : null);
@@ -23,7 +23,7 @@ const SkillModal = ({ closeModalCallback, displayedModalType, isModalDisplayed, 
     <Modal
       isOpen={isModalDisplayed}
       onRequestClose={closeModalCallback}
-      contentLabel="SkillModal"
+      contentLabel="SkillModalContainer"
       style={ModalStyle}
     >
       {modalComponent}
@@ -31,18 +31,18 @@ const SkillModal = ({ closeModalCallback, displayedModalType, isModalDisplayed, 
   );
 };
 
-SkillModal.defaultProps = {
+SkillModalContainer.defaultProps = {
   closeModalCallback: () => {},
   displayedModalType: '',
   formProps: {},
   isModalDisplayed: false,
 };
 
-SkillModal.propTypes = {
+SkillModalContainer.propTypes = {
   closeModalCallback: PropTypes.func,
   displayedModalType: PropTypes.string,
   formProps: PropTypes.object,
   isModalDisplayed: PropTypes.bool,
 };
 
-export default SkillModal;
+export default SkillModalContainer;

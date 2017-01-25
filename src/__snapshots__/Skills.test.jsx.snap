@@ -61,7 +61,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       onClick={[Function]}>
       Add Skill
     </Button>
-    <SkillModal
+    <SkillModalContainer
       closeModalCallback={[Function]}
       displayedModalType=""
       formProps={Object {}}

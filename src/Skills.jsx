@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/lib/Button';
 import Select from 'react-select';
 
 import SelectedItem from './SelectedItem.jsx';
-import SkillModal from './SkillModal.jsx';
+import SkillModalContainer from './SkillModalContainer.jsx';
 
 const api = (process.env.REACT_APP_API);
 
@@ -270,7 +270,7 @@ class Skills extends Component {
             >
               Add Skill
             </Button>
-            <SkillModal
+            <SkillModalContainer
               closeModalCallback={this.closeModal}
               displayedModalType={this.state.displayedModalType}
               formProps={this.getFormProps(this.state.displayedModalType)}

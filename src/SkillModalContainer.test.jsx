@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import SkillModal from './SkillModal.jsx';
+import SkillModalContainer from './SkillModalContainer.jsx';
 
-describe('<SkillModal />', () => {
+describe('<SkillModalContainer />', () => {
   it('should be empty by default', () => {
-    const skillModalWrapper = mount(<SkillModal />);
+    const skillModalWrapper = mount(<SkillModalContainer />);
     expect(skillModalWrapper.prop('displayedModalType')).toBe('');
     expect(skillModalWrapper.prop('isModalDisplayed')).toBe(false);
   });
