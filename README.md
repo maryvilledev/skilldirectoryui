@@ -2,7 +2,7 @@
 # Skilldirectory UI
 Skilldirectory UI is a React frontend for the [Skilldirectory REST API](https://github.com/maryvilledev/skilldirectory). It allows users to add and view skills, team members, links, and reviews - as well as register skills under team members.
 
-![Skilldirectory UI Demo GIF](http://i.giphy.com/l0ExcOOIp6RKTVA5i.gif)
+![Skilldirectory UI Demo GIF](https://media.giphy.com/media/l0ExcOOIp6RKTVA5i/source.gif)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app), and uses the [React Bootstrap](https://react-bootstrap.github.io/) theme.
 
