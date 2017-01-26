@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AddSkillReviewForm from './AddSkillReviewForm';
 import { shallow, mount } from 'enzyme';
+
+import AddSkillReviewForm from './AddSkillReviewForm';
 
 describe('<AddSkillReviewForm />', () => {
   it('renders without crashing', () => {
