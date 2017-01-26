@@ -1,16 +1,13 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
-import Modal from 'react-modal';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Select from 'react-select';
-import { ModalStyle } from './Styles'
 
-import AddTeamMemberForm from './AddTeamMemberForm.jsx';
 import SelectedItem from './SelectedItem.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
-import DeleteModal from './DeleteModal.jsx';
+import TeamModalContainer from './TeamModalContainer.jsx';
 
 const api = (process.env.REACT_APP_API);
 
@@ -19,8 +16,8 @@ class Team extends React.Component {
     super(props);
     this.state = {
       teamMembers: [],
-      addModalIsOpen: false,
-      deleteModalIsOpen: false,
+      isModalDisplayed: false,
+      displayedModalType: '',
       selectedTeamMember: {
         id: '',
         name: '',
@@ -28,11 +25,10 @@ class Team extends React.Component {
       },
     };
 
+    this.openNewModalType = this.openNewModalType.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+
     this.fetchTeamMembers = this.fetchTeamMembers.bind(this);
-    this.openAddModal = this.openAddModal.bind(this);
-    this.closeAddModal = this.closeAddModal.bind(this);
-    this.openDeleteModal = this.openDeleteModal.bind(this);
-    this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.onSelectChange = this.onSelectChange.bind(this);
     this.addTeamMember = this.addTeamMember.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
@@ -59,20 +55,20 @@ class Team extends React.Component {
       });
   }
 
-  openAddModal() {
-    this.setState({ addModalIsOpen: true });
+  openNewModalType(modalType) {
+    return () => {
+      this.setState({
+        displayedModalType: modalType,
+        isModalDisplayed: true,
+      });
+    };
   }
 
-  closeAddModal() {
-    this.setState({ addModalIsOpen: false });
-  }
-
-  openDeleteModal() {
-    this.setState({ deleteModalIsOpen: true });
-  }
-
-  closeDeleteModal() {
-    this.setState({ deleteModalIsOpen: false });
+  closeModal() {
+    this.setState({
+      displayedModalType: '',
+      isModalDisplayed: false,
+    });
   }
 
   fetchTeamMembers() {
@@ -93,7 +89,7 @@ class Team extends React.Component {
       name,
       title,
     }).then((response) => {
-      this.closeAddModal();
+      this.closeModal();
       this.fetchTeamMembers();
     }).catch((err) => {
       console.log(`Error: ${err}`);
@@ -104,7 +100,7 @@ class Team extends React.Component {
     if (response) {
       this.deleteTeamMember();
     }
-    this.closeDeleteModal();
+    this.closeModal();
   }
 
   deleteTeamMember() {
@@ -124,6 +120,28 @@ class Team extends React.Component {
         console.log(`Error: ${err}`);
       });
   }
+  getFormProps(modalType) {
+    // If a modal is being rendered in <SkillModal />, we need to pass in the
+    // props for by the form.
+    switch (modalType) {
+      case 'AddTeamMember': {
+        return {
+          closeModal: this.closeModal,
+          onSubmit: this.addTeamMember,
+        };
+      }
+      case 'DeleteTeamMember': {
+        return {
+          shouldDelete: this.shouldDelete,
+        };
+      }
+      default: {
+        // if there is no modal to render, or if an invalid type has been
+        // requested, return an empty object
+        return {};
+      }
+    }
+  }
 
   render() {
     let selectedItem = null;
@@ -131,7 +149,7 @@ class Team extends React.Component {
       selectedItem = (
         <SelectedItem
           typeName="TeamMember"
-          deleteCallback={this.openDeleteModal}
+          deleteCallback={this.openNewModalType('DeleteTeamMember')}
         >
           <TeamMemberDisplay
             selected={this.state.selectedTeamMember}
@@ -154,34 +172,19 @@ class Team extends React.Component {
           <Button
             name="addTeamMember"
             bsStyle="primary"
-            onClick={this.openAddModal}
+            onClick={this.openNewModalType('AddTeamMember')}
           >
             Add Team Member
           </Button>
 
-          <Modal
-            isOpen={this.state.addModalIsOpen}
-            onRequestClose={this.closeAddModal}
-            contentLabel="AddTeamMemberModal"
-            style={ModalStyle}
-          >
-            <AddTeamMemberForm
-              closeModal={this.closeAddModal}
-              onSubmit={this.addTeamMember}
-            />
-          </Modal>
+          <TeamModalContainer
+            closeModalCallback={this.closeModal}
+            displayedModalType={this.state.displayedModalType}
+            formProps={this.getFormProps(this.state.displayedModalType)}
+            isModalDisplayed={this.state.isModalDisplayed}
+          />
         </Row>
         {selectedItem}
-        <Modal
-          isOpen={this.state.deleteModalIsOpen}
-          onRequestClose={this.closeDeleteModal}
-          contentLabel="DeleteTeamMemberModal"
-          style={ModalStyle}
-        >
-          <DeleteModal
-            shouldDelete={this.shouldDelete}
-          />
-        </Modal>
       </div>
     );
   }

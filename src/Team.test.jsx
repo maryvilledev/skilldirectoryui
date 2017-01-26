@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { shallow, mount } from 'enzyme';
+
 import Team from './Team.jsx';
+import TeamModalContainer from './TeamModalContainer.jsx';
 
 describe('<Team />', () => {
   it('renders without crashing', () => {
@@ -14,14 +16,22 @@ describe('<Team />', () => {
     expect(wrapper.get(0)).toMatchSnapshot();
   });
 
-  it('has a Button that opens the AddTeamMemberModal', () => {
-    const wrapper = mount(<Team />);
-    const addTeamMemberModal = wrapper.find('Modal')
-      .findWhere(n => n.prop('contentLabel') == 'AddTeamMemberModal');
-    const addTeamMemberButton = wrapper.find('[name="addTeamMember"]');
-    expect(addTeamMemberModal.prop('isOpen')).toBe(false);
-    addTeamMemberButton.simulate('click');
-    expect(addTeamMemberModal.prop('isOpen')).toBe(true);
+  describe('the Add Team Member button', () => {
+    it('should always appear', () => {
+      const wrapper = mount(<Team />);
+      const addTeamMemberButton = wrapper.find('[name="addTeamMember"]');
+      expect(addTeamMemberButton).toHaveLength(1);
+    });
+    it('should open an AddTeamMemberModal when clicked', () => {
+      const wrapper = mount(<Team />);
+      const teamModalContainer = wrapper.find(TeamModalContainer);
+      const addTeamMemberButton = wrapper.find('[name="addTeamMember"]');
+      expect(teamModalContainer.prop('isModalDisplayed')).toBe(false);
+      expect(teamModalContainer.prop('displayedModalType')).toBe('');
+      addTeamMemberButton.simulate('click');
+      expect(teamModalContainer.prop('isModalDisplayed')).toBe(true);
+      expect(teamModalContainer.prop('displayedModalType')).toBe('AddTeamMember');
+    });
   });
 
   describe('the delete button', () => {
@@ -32,19 +42,20 @@ describe('<Team />', () => {
     });
     it('appears when a team member is selected', () => {
       const wrapper = mount(<Team />);
-      wrapper.setState({ selectedTeamMember: { id: "1" }});
+      wrapper.setState({ selectedTeamMember: { id: '1' } });
       const deleteButton = wrapper.find('[name="DeleteTeamMember"]');
       expect(deleteButton).toHaveLength(1);
     });
     it('opens a DeleteModal when clicked', () => {
       const wrapper = mount(<Team />);
-      wrapper.setState({ selectedTeamMember: { id: "1" }});
-      const deleteModal = wrapper.find('Modal').
-                  findWhere(n => n.prop('contentLabel') == 'DeleteTeamMemberModal');
+      wrapper.setState({ selectedTeamMember: { id: '1' } });
+      const teamModalContainer = wrapper.find(TeamModalContainer);
       const deleteButton = wrapper.find('[name="DeleteTeamMember"]');
-      expect(deleteModal.prop('isOpen')).toBe(false);
+      expect(teamModalContainer.prop('isModalDisplayed')).toBe(false);
+      expect(teamModalContainer.prop('displayedModalType')).toBe('');
       deleteButton.simulate('click');
-      expect(deleteModal.prop('isOpen')).toBe(true);
+      expect(teamModalContainer.prop('isModalDisplayed')).toBe(true);
+      expect(teamModalContainer.prop('displayedModalType')).toBe('DeleteTeamMember');
     });
   });
 });

@@ -8,7 +8,7 @@ describe('<App />', () => {
     const div = document.createElement('div');
     ReactDOM.render(<App />, div);
   });
- 
+
   it('matches the stored snapshot', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.get(0)).toMatchSnapshot();

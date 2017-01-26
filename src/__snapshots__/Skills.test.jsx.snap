@@ -61,94 +61,11 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       onClick={[Function]}>
       Add Skill
     </Button>
-    <Modal
-      ariaHideApp={true}
-      closeTimeoutMS={0}
-      contentLabel="SkillModal"
-      isOpen={false}
-      onRequestClose={[Function]}
-      parentSelector={[Function]}
-      portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}>
-      <AddSkillForm
-        onSubmit={[Function]} />
-    </Modal>
-    <Modal
-      ariaHideApp={true}
-      closeTimeoutMS={0}
-      contentLabel="LinkModal"
-      isOpen={false}
-      onRequestClose={[Function]}
-      parentSelector={[Function]}
-      portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}
-      style={
-        Object {
-          "content": Object {},
-          "overlay": Object {
-            "bottom": "25%",
-            "left": "25%",
-            "position": "fixed",
-            "right": "25%",
-            "top": "15%",
-          },
-        }
-      }>
-      <LinksForm
-        api="http://localhost:8080"
-        closeModal={[Function]}
-        skill_id="" />
-    </Modal>
-    <Modal
-      ariaHideApp={true}
-      closeTimeoutMS={0}
-      contentLabel="ReviewModal"
-      isOpen={false}
-      onRequestClose={[Function]}
-      parentSelector={[Function]}
-      portalClassName="ReactModalPortal"
-      shouldCloseOnOverlayClick={true}
-      style={
-        Object {
-          "content": Object {},
-          "overlay": Object {
-            "bottom": "25%",
-            "left": "25%",
-            "position": "fixed",
-            "right": "25%",
-            "top": "15%",
-          },
-        }
-      }>
-      <SkillReviewsForm
-        api="http://localhost:8080"
-        closeModal={[Function]}
-        skill_id="" />
-    </Modal>
+    <SkillModalContainer
+      closeModalCallback={[Function]}
+      displayedModalType=""
+      formProps={Object {}}
+      isModalDisplayed={false} />
   </Row>
-  <Modal
-    ariaHideApp={true}
-    closeTimeoutMS={0}
-    contentLabel="DeleteSkillModal"
-    isOpen={false}
-    onRequestClose={[Function]}
-    parentSelector={[Function]}
-    portalClassName="ReactModalPortal"
-    shouldCloseOnOverlayClick={true}
-    style={
-      Object {
-        "content": Object {},
-        "overlay": Object {
-          "bottom": "25%",
-          "left": "25%",
-          "position": "fixed",
-          "right": "25%",
-          "top": "15%",
-        },
-      }
-    }>
-    <DeleteModal
-      shouldDelete={[Function]} />
-  </Modal>
 </div>
 `;

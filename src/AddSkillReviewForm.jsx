@@ -7,7 +7,7 @@ import { Button,
   FormControl,
 FormGroup } from 'react-bootstrap';
 
-class SkillReviewsForm extends React.Component {
+class AddSkillReviewForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -162,10 +162,10 @@ class SkillReviewsForm extends React.Component {
   }
 }
 
-SkillReviewsForm.propTypes = {
+AddSkillReviewForm.propTypes = {
   api: PropTypes.string.isRequired,
   skill_id: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
 
-export default SkillReviewsForm;
+export default AddSkillReviewForm;
