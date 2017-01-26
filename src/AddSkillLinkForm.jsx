@@ -1,5 +1,4 @@
-import React from 'react';
-import axios from 'axios';
+import React, { PropTypes } from 'react';
 import 'react-select/dist/react-select.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Col, ControlLabel, Button,
@@ -21,7 +20,7 @@ const validateInput = (inputs) => {
     alert('Please enter a valid URL.');
     return false;
   }
-  if (inputs.linkType) {
+  if (!inputs.linkType) {
     alert('Please enter a type.');
     return false;
   }
@@ -37,39 +36,43 @@ class AddSkillLinkForm extends React.Component {
       linkType: '',
     };
     this.onChange = this.onChange.bind(this);
+    this.onLinkNameChange = this.onLinkNameChange.bind(this);
+    this.onLinkURLChange = this.onLinkURLChange.bind(this);
+    this.onLinkTypeChange = this.onLinkTypeChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(key, value) {
-    this.setState({ [key]: value });
+  onChange(key) {
+    return (value) => {
+      this.setState({
+        [key]: value,
+      });
+    };
+  }
+
+  onLinkNameChange(ev) {
+    this.onChange('linkName')(ev.target.value);
+  }
+
+  onLinkURLChange(ev) {
+    this.onChange('linkUrl')(ev.target.value);
+  }
+
+  onLinkTypeChange(ev) {
+    this.onChange('linkType')(ev.target.value);
   }
 
   onSubmit(ev) {
     ev.preventDefault();
-    // Error checking
-    if (!validateInput(this.state)) {
+    const newLinkData = this.state;
+    // Ensure that valid data was entered
+    if (!validateInput(newLinkData)) {
       return;
     }
-    // Post form data to API endpoint
-    axios.post(`${this.props.api}/links/`, {
-      name:      this.state.linkName,
-      url:       this.state.linkUrl,
-      skill_id:  this.props.skill_id,
-      linkType: this.state.linkType
-    })
-    .then(() => {
-      this.props.closeModal();
-    })
-    .catch((err) => {
-      console.log(err)
-    });
+    this.props.onSubmit(newLinkData);
   }
 
   render() {
-    const onLinkNameChange = ev => this.onChange('linkName', ev.target.value);
-    const onLinkURLChange = ev => this.onChange('linkUrl', ev.target.value);
-    const onLinkTypeChange = ev => this.onChange('linkType', ev.target.value);
-
     return (
       <div>
         <h1>Add a Link</h1>
@@ -82,7 +85,7 @@ class AddSkillLinkForm extends React.Component {
               <FormControl
                 name="linkName"
                 componentClass="input"
-                onChange={onLinkNameChange}
+                onChange={this.onLinkNameChange}
               />
             </Col>
           </FormGroup>
@@ -95,7 +98,7 @@ class AddSkillLinkForm extends React.Component {
               <FormControl
                 name="linkURL"
                 componentClass="input"
-                onChange={onLinkURLChange}
+                onChange={this.onLinkURLChange}
               />
             </Col>
           </FormGroup>
@@ -108,7 +111,7 @@ class AddSkillLinkForm extends React.Component {
               <FormControl
                 name="linkType"
                 componentClass="select"
-                onChange={onLinkTypeChange}
+                onChange={this.onLinkTypeChange}
               >
                 <option key={null} value={null} />
                 <option key="blog" value="blog">
@@ -131,7 +134,7 @@ class AddSkillLinkForm extends React.Component {
               </Button>
             </Col>
             <Col smOffset={2}>
-              <Button onClick={this.props.closeModal} bsStyle="info">
+              <Button onClick={this.props.onCancel} bsStyle="info">
                 Cancel
               </Button>
             </Col>
@@ -141,5 +144,10 @@ class AddSkillLinkForm extends React.Component {
     );
   }
 }
+
+AddSkillLinkForm.propTypes = {
+  onCancel: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default AddSkillLinkForm;

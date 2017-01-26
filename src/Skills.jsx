@@ -35,7 +35,10 @@ class Skills extends Component {
     this.shouldDelete = this.shouldDelete.bind(this);
     this.makeLinks = this.makeLinks.bind(this);
     this.getFormProps = this.getFormProps.bind(this);
+
     this.addSkill = this.addSkill.bind(this);
+    this.addSkillLink = this.addSkillLink.bind(this);
+
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
@@ -78,9 +81,8 @@ class Skills extends Component {
     switch (modalType) {
       case 'AddLink': {
         return {
-          api,
-          closeModal: this.closeModal,
-          skill_id: this.state.currentSkill.skill_id,
+          onCancel: this.closeModal,
+          onSubmit: this.addSkillLink,
         };
       }
       case 'AddSkill': {
@@ -144,6 +146,22 @@ class Skills extends Component {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  addSkillLink(newLinkData) {
+    const postData = {
+      link_type: newLinkData.linkType,
+      name: newLinkData.linkName,
+      skill_id: this.state.currentSkill.skill_id,
+      url: newLinkData.linkUrl,
+    };
+    axios.post(`${api}/links/`, postData)
+    .then((response) => {
+      this.closeModal();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   deleteSkill() {
