@@ -31,7 +31,7 @@ exports[`<App /> matches the stored snapshot 1`] = `
       path="skills(/:id)" />
     <Route
       component={[Function]}
-      path="team" />
+      path="team(/:id)" />
   </Route>
 </Router>
 `;
