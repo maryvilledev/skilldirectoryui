@@ -17,11 +17,11 @@ describe('<AddSkillReviewForm />', () => {
 
   it('changes state when input to "Team Member" field changes', () => {
     const wrapper = mount(<AddSkillReviewForm />);
-    expect(wrapper.state().team_member_id).toBe('');
+    expect(wrapper.state().teamMemberId).toBe('');
     const newID = '1234';
     const event = { target: { value: newID } };
     wrapper.find({ name: 'teamMemberSelect' }).simulate('change', event);
-    expect(wrapper.state().team_member_id).toBe(newID);
+    expect(wrapper.state().teamMemberId).toBe(newID);
   });
 
   it('changes state when input to "Positive Review" field changes', () => {

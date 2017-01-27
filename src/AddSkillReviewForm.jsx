@@ -7,12 +7,24 @@ import { Button,
   FormControl,
 FormGroup } from 'react-bootstrap';
 
+const validateInput = (userInput) => {
+  if (userInput.body === '') {
+    alert('Cannot submit empty review.');
+    return false;
+  }
+  if (userInput.teamMemberId === '') {
+    alert('Please select a Team Member.');
+    return false;
+  }
+  return true;
+};
+
 class AddSkillReviewForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       teamMembers: null,
-      team_member_id: '',
+      teamMemberId: '',
       positive: true,
       body: '',
     };
@@ -55,49 +67,32 @@ class AddSkillReviewForm extends React.Component {
   }
 
   onTeamMemberChange(ev) {
-    this.onChange('team_member_id')(ev.target.value);
+    this.onChange('teamMemberId')(ev.target.value);
   }
 
   onSubmit(ev) {
     ev.preventDefault();
     // Error Checking
-    if (this.state.body === '') {
-      alert('Cannot submit empty review.');
+    if (!validateInput(this.state)) {
       return;
     }
-    if (this.state.team_member_id === '') {
-      alert('Please select a Team Member.');
-      return;
-    }
-
-    // Post form data to API endpoint
-    axios.post(`${this.props.api}/skillreviews/`, {
-      skill_id:        this.props.skill_id,
-      team_member_id:  this.state.team_member_id,
-      body:            this.state.body,
-      positive:        this.state.positive
-    })
-    .then(response => {
-      console.log(response);
-      this.props.closeModal();
-    })
-    .catch(err => {
-      console.log(`Error POSTing skill review: ${err}`);
-      alert('Failed to submit review - Sorry ;(');
-    });
+    // Call the onSubmit callback to let Skills handle submitting the review
+    this.props.onSubmit(this.state);
   }
 
   render() {
     let teamMembers = null;
     if (this.state.teamMembers != null) {
-      teamMembers = this.state.teamMembers.map(teamMember =>
-        <option
-          key={teamMember.id}
-          value={teamMember.id}
-        >
-          {teamMember.name}
-        </option>
-      );
+      teamMembers = this.state.teamMembers.map((teamMember) => {
+        return (
+          <option
+            key={teamMember.id}
+            value={teamMember.id}
+          >
+            {teamMember.name}
+          </option>
+        );
+      });
     }
     return (
       <div>
@@ -151,7 +146,7 @@ class AddSkillReviewForm extends React.Component {
               <Button type="submit" bsStyle="primary">
                 Submit
               </Button>
-              <Button sm={2} onClick={this.props.closeModal} bsStyle='info'>
+              <Button onClick={this.props.onCancel} bsStyle="info">
                 Cancel
               </Button>
             </Col>
@@ -164,8 +159,8 @@ class AddSkillReviewForm extends React.Component {
 
 AddSkillReviewForm.propTypes = {
   api: PropTypes.string.isRequired,
-  skill_id: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default AddSkillReviewForm;

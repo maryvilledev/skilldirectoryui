@@ -2,8 +2,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import { Row, Col } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import Select from 'react-select';
 
 import ReviewPanel from './ReviewPanel.jsx';
@@ -38,6 +37,7 @@ class Skills extends Component {
 
     this.addSkill = this.addSkill.bind(this);
     this.addSkillLink = this.addSkillLink.bind(this);
+    this.addSkillReview = this.addSkillReview.bind(this);
 
     this.deleteSkill = this.deleteSkill.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -94,8 +94,8 @@ class Skills extends Component {
       case 'AddReview': {
         return {
           api,
-          closeModal: this.closeModal,
-          skill_id: this.state.currentSkill.skill_id,
+          onCancel: this.closeModal,
+          onSubmit: this.addSkillReview,
         };
       }
       case 'DeleteSkill': {
@@ -164,6 +164,23 @@ class Skills extends Component {
     })
   }
 
+  addSkillReview(newReviewData) {
+    const postData = {
+      skill_id: this.state.currentSkill.skill_id,
+      team_member_id: newReviewData.teamMemberId,
+      body: newReviewData.body,
+      positive: newReviewData.positive,
+    };
+    // Post form data to API endpoint
+    axios.post(`${api}/skillreviews/`, postData)
+    .then((response) => {
+      this.closeModal();
+    })
+    .catch((err) => {
+      console.log(`Error POSTing skill review: ${err}`);
+    });
+  }
+
   deleteSkill() {
     axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
      .then((response) => {
@@ -200,13 +217,13 @@ class Skills extends Component {
   loadCurrentSkill(currentId) {
     return axios.get(`${api}/skills/${currentId}`)
       .then((res) => {
-        const skillresults = res.data;
+        const skillResults = res.data;
         this.setState({
           currentSkill: {
-            skill_id: skillresults.id,
-            name: skillresults.name,
-            skill_type: skillresults.skill_type,
-            links: skillresults.links,
+            skill_id: skillResults.id,
+            name: skillResults.name,
+            skill_type: skillResults.skill_type,
+            links: skillResults.links,
           },
         });
       })
