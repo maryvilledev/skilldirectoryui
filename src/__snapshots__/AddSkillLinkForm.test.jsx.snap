@@ -1,4 +1,4 @@
-exports[`<LinksForm /> matches the stored snapshot 1`] = `
+exports[`<AddSkillLinkForm /> matches the stored snapshot 1`] = `
 <div>
   <h1>
     Add a Link
