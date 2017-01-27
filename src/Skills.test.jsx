@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { mount, shallow } from 'enzyme';
 
+import SkillLinksDisplay from './SkillLinksDisplay.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
 import Skills from './Skills';
 
@@ -118,6 +119,47 @@ describe('<Skills />', () => {
       deleteButton.simulate('click');
       expect(skillModalWrapper.prop('isModalDisplayed')).toBe(true);
       expect(skillModalWrapper.prop('displayedModalType')).toBe('DeleteSkill');
+    });
+  });
+
+  describe('the links displayer', () => {
+    it('should not display any links if it has none', () => {
+      const wrapper = mount(<Skills />);
+      wrapper.setState({
+        currentSkill: {
+          skill_id: '1',
+          links: [],
+        },
+      });
+      const skillLinksDisplayer = wrapper.find(SkillLinksDisplay);
+      expect(skillLinksDisplayer.children()).toHaveLength(0);
+    });
+    it('should display a selected skills links', () => {
+      const wrapper = mount(<Skills />);
+      const links = [
+        {
+          id: '1',
+          link_type: 'blog',
+          name: 'foo',
+          skill_id: '1234',
+          url: 'https://www.google.com',
+        },
+        {
+          id: '2',
+          link_type: 'tutorial',
+          name: 'foo',
+          skill_id: '4312',
+          url: 'https://www.reddit.com',
+        },
+      ];
+      wrapper.setState({
+        currentSkill: {
+          skill_id: '1',
+          links,
+        },
+      });
+      const skillLinksDisplayer = wrapper.find(SkillLinksDisplay);
+      expect(skillLinksDisplayer.children()).toHaveLength(links.length);
     });
   });
 });
