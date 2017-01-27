@@ -8,6 +8,7 @@ import Select from 'react-select';
 
 import ReviewPanel from './ReviewPanel.jsx';
 import SelectedItem from './SelectedItem.jsx';
+import SkillLinksDisplay from './SkillLinksDisplay.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
 
 const api = (process.env.REACT_APP_API);
@@ -33,7 +34,6 @@ class Skills extends Component {
     this.openNewModalType = this.openNewModalType.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
-    this.makeLinks = this.makeLinks.bind(this);
     this.getFormProps = this.getFormProps.bind(this);
     this.addSkill = this.addSkill.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
@@ -198,29 +198,6 @@ class Skills extends Component {
       });
   }
 
-  makeLinks() {
-    const links = this.state.currentSkill.links;
-    if (links && links.length) {
-      const linkElements = links.map((link) => {
-        return (
-          <li key={link.id}>
-            { `${capitalizeFirstLetter(String(link.link_type))}: ` }
-            <a href={link.url}>{link.name}</a>
-          </li>
-        );
-      });
-      return (
-        <div>
-          <h3>Links:</h3>
-          <ul>
-            {linkElements}
-          </ul>
-        </div>
-      );
-    }
-    return null;
-  }
-
   loadReviews() {
     const currentId = this.state.currentSkill.skill_id;
     return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
@@ -240,7 +217,7 @@ class Skills extends Component {
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
     let reviews = null;
-    if (this.state.reviews){
+    if (this.state.reviews) {
       reviews = this.state.reviews.map(review => {
         return <ReviewPanel review={review} key={review.timestamp}/>
       });
@@ -258,7 +235,9 @@ class Skills extends Component {
           >
             <h1>{this.state.currentSkill.name}</h1>
             <h4>{this.state.currentSkill.skill_type}</h4>
-            {this.makeLinks()}
+            <SkillLinksDisplay
+              links={this.state.links}
+            />
             <Button
               name="AddLink"
               bsStyle="primary"
@@ -315,10 +294,6 @@ class Skills extends Component {
       );
     }
   }
-}
-
-function capitalizeFirstLetter(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export default Skills;
