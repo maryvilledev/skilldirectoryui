@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 import Select from 'react-select';
 
 import SelectedItem from './SelectedItem.jsx';
@@ -50,9 +51,36 @@ class Team extends React.Component {
             title: teamMemberData.title,
           },
         });
-      }).catch((err) => {
+      })
+      .then(() => {
+        browserHistory.push(`/team/${this.state.selectedTeamMember.id}`);
+      })
+      .catch((err) => {
         console.log(`Error: ${err}`);
       });
+  }
+
+  getFormProps(modalType) {
+    // If a modal is being rendered in <SkillModal />, we need to pass in the
+    // props for by the form.
+    switch (modalType) {
+      case 'AddTeamMember': {
+        return {
+          closeModal: this.closeModal,
+          onSubmit: this.addTeamMember,
+        };
+      }
+      case 'DeleteTeamMember': {
+        return {
+          shouldDelete: this.shouldDelete,
+        };
+      }
+      default: {
+        // if there is no modal to render, or if an invalid type has been
+        // requested, return an empty object
+        return {};
+      }
+    }
   }
 
   openNewModalType(modalType) {
@@ -105,7 +133,7 @@ class Team extends React.Component {
 
   deleteTeamMember() {
     axios.delete(`${api}/teammembers/${this.state.selectedTeamMember.id}`)
-      .then((result) => {
+      .then(() => {
         this.setState({
           selectedTeamMember: {
             id: '',
@@ -116,31 +144,12 @@ class Team extends React.Component {
         // Refetch the list of team members
         this.fetchTeamMembers();
       })
+      .then(() => {
+        browserHistory.replace('/team/');
+      })
       .catch((err) => {
         console.log(`Error: ${err}`);
       });
-  }
-  getFormProps(modalType) {
-    // If a modal is being rendered in <SkillModal />, we need to pass in the
-    // props for by the form.
-    switch (modalType) {
-      case 'AddTeamMember': {
-        return {
-          closeModal: this.closeModal,
-          onSubmit: this.addTeamMember,
-        };
-      }
-      case 'DeleteTeamMember': {
-        return {
-          shouldDelete: this.shouldDelete,
-        };
-      }
-      default: {
-        // if there is no modal to render, or if an invalid type has been
-        // requested, return an empty object
-        return {};
-      }
-    }
   }
 
   render() {
