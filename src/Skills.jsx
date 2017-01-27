@@ -29,11 +29,11 @@ class Skills extends Component {
     };
 
     // Bind all the things
-
     this.openNewModalType = this.openNewModalType.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
     this.makeLinks = this.makeLinks.bind(this);
+    this.makeIcon = this.makeIcon.bind(this);
     this.getFormProps = this.getFormProps.bind(this);
     this.addSkill = this.addSkill.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
@@ -42,6 +42,7 @@ class Skills extends Component {
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
     this.loadReviews = this.loadReviews.bind(this);
+    this.onIconSelected = this.onIconSelected.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +64,7 @@ class Skills extends Component {
             name: skill.name,
             skill_type: skill.skill_type,
             links: skill.links,
+            icon: skill.icon,
           },
         });
         browserHistory.push(`/skills/${skill.id}`);
@@ -189,6 +191,7 @@ class Skills extends Component {
             name: skillresults.name,
             skill_type: skillresults.skill_type,
             links: skillresults.links,
+            icon: skillresults.icon,
           },
         });
       })
@@ -221,6 +224,20 @@ class Skills extends Component {
     return null;
   }
 
+  makeIcon() {
+    const icon = this.state.currentSkill.icon;
+    if (icon && icon.url !== '') {
+      return (
+        <img 
+          src={icon.url}
+          alt="Skill Icon" 
+          width="200" 
+          style={{ "margin-top": "30px" }} />
+      );
+    }
+    return null;
+  }
+
   loadReviews() {
     const currentId = this.state.currentSkill.skill_id;
     return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
@@ -235,10 +252,23 @@ class Skills extends Component {
       });
   }
 
+  onIconSelected(ev) {
+    // Setup form data for multipart POST request
+    const formData = new FormData();
+    formData.append('skill_id', this.state.currentSkill.skill_id)
+    formData.append('icon', ev.target.files[0])
+
+    // Send request to API
+    axios.post(`${api}/skillicons`, formData)
+    .then(res => location.reload())
+    .catch(err => console.log(`Caught an Error: ${err}`));
+  }
+
   render() {
     const onSkillChange = ev => this.onChange('skill_id', ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
+    const icon = this.makeIcon();
     let reviews = null;
     if (this.state.reviews){
       reviews = this.state.reviews.map(review => {
@@ -256,23 +286,37 @@ class Skills extends Component {
             typeName="Skill"
             deleteCallback={this.openNewModalType('DeleteSkill')}
           >
-            <h1>{this.state.currentSkill.name}</h1>
-            <h4>{this.state.currentSkill.skill_type}</h4>
-            {this.makeLinks()}
+            <Row>
+              <Col md={2} xs={2}>
+                <h1>{this.state.currentSkill.name}</h1>
+                <h4>{this.state.currentSkill.skill_type}</h4>
+                {this.makeLinks()}
+              </Col>
+              <Col lgOffset={3} mdOffset={3}>
+              <div>
+                {icon}
+                {icon === null ? <h4>Add Icon:</h4> : <h4>Change Icon:</h4>}
+                <input
+                  type="file"
+                  multiple size="1"
+                  onChange={this.onIconSelected} />
+                  </div>
+              </Col>
+            </Row>
             <Button
               name="AddLink"
               bsStyle="primary"
               onClick={this.openNewModalType('AddLink')}
             >
               Add Link
-            </Button>
+            </Button>            
             <Button
               name="AddReview"
               bsStyle="primary"
               onClick={this.openNewModalType('AddReview')}>
-              Add Review
-            </Button>
-          </SelectedItem>
+              Add Review            
+            </Button>          
+         </SelectedItem>
           {reviewList}
         </div>
       );
