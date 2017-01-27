@@ -19,7 +19,7 @@ This will cause the project to start, and will open a new tab in your default br
 to have the [backend](https://github.com/maryvilledev/skilldirectory) running on http://localhost:8080. If you are
 having trouble getting the frontend (this project) to display data from the backend, the first thing you should
 check is that you actually have data in the backend, and didn't clean it out (e.g. by using the `--dropdata` file
-for `./make`).
+for `./devstack.sh`).
 
 **Note that this project only contains the frontend.** It is not very functional unless the [Skilldirectory REST API](https://github.com/maryvilledev/skilldirectory) is also running and available (and the associated Cassandra backend) on `localhost:8080`.
 
