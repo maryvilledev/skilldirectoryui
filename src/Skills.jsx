@@ -274,7 +274,7 @@ class Skills extends Component {
             <h1>{this.state.currentSkill.name}</h1>
             <h4>{this.state.currentSkill.skill_type}</h4>
             <SkillLinksDisplay
-              links={this.state.links}
+              links={this.state.currentSkill.links}
             />
             <Button
               name="AddLink"
