@@ -196,6 +196,9 @@ class Skills extends Component {
          },
        });
      })
+     .then(() => {
+       browserHistory.push('/skills/');
+     })
      .catch((err) => {
        console.log(err);
      });
