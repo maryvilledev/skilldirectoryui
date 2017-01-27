@@ -145,7 +145,7 @@ class Team extends React.Component {
         this.fetchTeamMembers();
       })
       .then(() => {
-        browserHistory.replace('/team/');
+        browserHistory.push('/team/');
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
