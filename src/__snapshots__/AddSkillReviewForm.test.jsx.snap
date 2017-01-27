@@ -108,8 +108,7 @@ exports[`<AddSkillReviewForm /> matches the stored snapshot 1`] = `
           bsClass="btn"
           bsStyle="info"
           disabled={false}
-          onClick={undefined}
-          sm={2}>
+          onClick={undefined}>
           Cancel
         </Button>
       </Col>
