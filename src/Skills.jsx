@@ -30,10 +30,10 @@ class Skills extends Component {
     };
 
     // Bind all the things
-
     this.openNewModalType = this.openNewModalType.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
+    this.makeIcon = this.makeIcon.bind(this);
     this.getFormProps = this.getFormProps.bind(this);
 
     this.addSkill = this.addSkill.bind(this);
@@ -46,6 +46,7 @@ class Skills extends Component {
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
     this.loadReviews = this.loadReviews.bind(this);
     this.onSkillChange = this.onSkillChange.bind(this);
+    this.onIconSelected = this.onIconSelected.bind(this);
   }
 
   componentDidMount() {
@@ -197,6 +198,7 @@ class Skills extends Component {
             name: skillResults.name,
             skill_type: skillResults.skill_type,
             links: skillResults.links,
+            icon: skillResults.icon,
           },
         });
       })
@@ -205,6 +207,20 @@ class Skills extends Component {
         console.log(err);
         this.setState({ isError: true });
       });
+  }
+
+  makeIcon() {
+    const icon = this.state.currentSkill.icon;
+    if (icon && icon.url !== '') {
+      return (
+        <img
+          src={icon.url}
+          alt="Skill Icon"
+          width="200"
+          style={{ "margin-top": "30px" }} />
+      );
+    }
+    return null;
   }
 
   loadReviews() {
@@ -250,9 +266,22 @@ class Skills extends Component {
      });
   }
 
+  onIconSelected(ev) {
+    // Setup form data for multipart POST request
+    const formData = new FormData();
+    formData.append('skill_id', this.state.currentSkill.skill_id)
+    formData.append('icon', ev.target.files[0])
+
+    // Send request to API
+    axios.post(`${api}/skillicons`, formData)
+    .then(res => location.reload())
+    .catch(err => console.log(`Caught an Error: ${err}`));
+  }
+
   render() {
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
+    const icon = this.makeIcon();
     let reviews = null;
     if (this.state.reviews) {
       reviews = this.state.reviews.map(review => {
@@ -270,11 +299,25 @@ class Skills extends Component {
             typeName="Skill"
             deleteCallback={this.openNewModalType('DeleteSkill')}
           >
-            <h1>{this.state.currentSkill.name}</h1>
-            <h4>{this.state.currentSkill.skill_type}</h4>
-            <SkillLinksDisplay
-              links={this.state.currentSkill.links}
-            />
+            <Row>
+              <Col md={2} xs={2}>
+                <h1>{this.state.currentSkill.name}</h1>
+                <h4>{this.state.currentSkill.skill_type}</h4>
+                <SkillLinksDisplay
+                  links={this.state.currentSkill.links}
+                />
+              </Col>
+              <Col lgOffset={3} mdOffset={3}>
+              <div>
+                {icon}
+                {icon === null ? <h4>Add Icon:</h4> : <h4>Change Icon:</h4>}
+                <input
+                  type="file"
+                  multiple size="1"
+                  onChange={this.onIconSelected} />
+                  </div>
+              </Col>
+            </Row>
             <Button
               name="AddLink"
               bsStyle="primary"
@@ -288,7 +331,7 @@ class Skills extends Component {
               onClick={this.openNewModalType('AddReview')}>
               Add Review
             </Button>
-          </SelectedItem>
+         </SelectedItem>
           {reviewList}
         </div>
       );
