@@ -1,6 +1,6 @@
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { Row, Col, Button } from 'react-bootstrap';
 import Select from 'react-select';
@@ -26,6 +26,7 @@ class Skills extends Component {
         skill_type: '',
         links: [],
       },
+      reviews: [],
     };
 
     // Bind all the things
@@ -40,41 +41,37 @@ class Skills extends Component {
     this.addSkillReview = this.addSkillReview.bind(this);
 
     this.deleteSkill = this.deleteSkill.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
     this.loadReviews = this.loadReviews.bind(this);
+    this.onSkillChange = this.onSkillChange.bind(this);
     this.onIconSelected = this.onIconSelected.bind(this);
   }
 
   componentDidMount() {
-    const currentId = (this.props.params) ? this.props.params.id : null;
-    if (!currentId) {
-      this.loadSkills();
-    } else {
-      this.loadCurrentSkill(currentId).then(this.loadSkills).then(this.loadReviews);
-    }
+    // // Fetch all skills
+    this.loadSkills()
+    .then(() => {
+      // Load the current skill only if there was an id param (in the URL)
+      if (this.props.params && this.props.params.id) {
+        this.loadCurrentSkill(this.props.params.id);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
-  onChange(key, value) {
-    axios.get(`${api}/skills/${value}`)
-      .then((response) => {
-        const skill = response.data;
-        this.setState({
-          currentSkill: {
-            skill_id: skill.id,
-            name: skill.name,
-            skill_type: skill.skill_type,
-            links: skill.links,
-            icon: skill.icon,
-          },
-        });
-        browserHistory.push(`/skills/${skill.id}`);
-      })
+  onSkillChange(ev) {
+    // Get the ID of the selected skill
+    const skillId = ev.id;
+    // Load the current skill's info and then route the user
+    return this.loadCurrentSkill(skillId)
+      .then(browserHistory.push(`/skills/${skillId}`))
       .catch((err) => {
         console.log(err);
-      }).then(this.loadReviews);
+      });
   }
 
   getFormProps(modalType) {
@@ -129,25 +126,18 @@ class Skills extends Component {
     });
   }
 
-  shouldDelete(response) {
-    if (response) {
-      this.deleteSkill();
-    }
-    this.closeModal();
-  }
-
   addSkill(skillName, skillType) {
-    axios.post(`${api}/skills/`, {
+    return axios.post(`${api}/skills/`, {
       name: skillName,
       skill_type: skillType,
     })
-      .then(() => {
-        this.closeModal();
-        this.loadSkills();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .then(this.closeModal)
+    .then(() => {
+      this.loadSkills();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   addSkillLink(newLinkData) {
@@ -158,12 +148,13 @@ class Skills extends Component {
       url: newLinkData.linkUrl,
     };
     axios.post(`${api}/links/`, postData)
-    .then((response) => {
-      this.closeModal();
+    .then(this.closeModal)
+    .then(() => {
+      this.loadCurrentSkill(this.state.currentSkill.skill_id);
     })
     .catch((err) => {
       console.log(err);
-    })
+    });
   }
 
   addSkillReview(newReviewData) {
@@ -174,36 +165,14 @@ class Skills extends Component {
       positive: newReviewData.positive,
     };
     // Post form data to API endpoint
-    axios.post(`${api}/skillreviews/`, postData)
-    .then((response) => {
-      this.closeModal();
+    return axios.post(`${api}/skillreviews/`, postData)
+    .then(this.closeModal)
+    .then(() => {
+      this.loadReviews();
     })
     .catch((err) => {
-      console.log(`Error POSTing skill review: ${err}`);
+      console.log(err);
     });
-  }
-
-  deleteSkill() {
-    axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
-     .then((response) => {
-       this.setState({
-         skills: this.state.skills.filter((skill) => {
-           return skill.id !== this.state.currentSkill.skill_id;
-         }),
-         currentSkill: {
-           skill_id: '',
-           name: '',
-           skill_type: '',
-           links: [],
-         },
-       });
-     })
-     .then(() => {
-       browserHistory.push('/skills/');
-     })
-     .catch((err) => {
-       console.log(err);
-     });
   }
 
   loadSkills() {
@@ -233,6 +202,7 @@ class Skills extends Component {
           },
         });
       })
+      .then(this.loadReviews)
       .catch((err) => {
         console.log(err);
         this.setState({ isError: true });
@@ -243,10 +213,10 @@ class Skills extends Component {
     const icon = this.state.currentSkill.icon;
     if (icon && icon.url !== '') {
       return (
-        <img 
+        <img
           src={icon.url}
-          alt="Skill Icon" 
-          width="200" 
+          alt="Skill Icon"
+          width="200"
           style={{ "margin-top": "30px" }} />
       );
     }
@@ -256,15 +226,44 @@ class Skills extends Component {
   loadReviews() {
     const currentId = this.state.currentSkill.skill_id;
     return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
-      .then(res => {
-        const results = res.data;
+      .then((response) => {
+        const reviews = response.data;
         this.setState({
-          reviews: results
-        })
+          reviews,
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
+  }
+
+  shouldDelete(response) {
+    if (response) {
+      this.deleteSkill();
+    }
+    this.closeModal();
+  }
+
+  deleteSkill() {
+    axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
+     .then(() => {
+       this.setState({
+         currentSkill: {
+           skill_id: '',
+           name: '',
+           skill_type: '',
+           links: [],
+         },
+         reviews: [],
+       });
+     })
+     .then(this.loadSkills)
+     .then(() => {
+       browserHistory.push('/skills/');
+     })
+     .catch((err) => {
+       console.log(err);
+     });
   }
 
   onIconSelected(ev) {
@@ -280,7 +279,6 @@ class Skills extends Component {
   }
 
   render() {
-    const onSkillChange = ev => this.onChange('skill_id', ev.id);
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
     const icon = this.makeIcon();
@@ -326,13 +324,13 @@ class Skills extends Component {
               onClick={this.openNewModalType('AddLink')}
             >
               Add Link
-            </Button>            
+            </Button>
             <Button
               name="AddReview"
               bsStyle="primary"
               onClick={this.openNewModalType('AddReview')}>
-              Add Review            
-            </Button>          
+              Add Review
+            </Button>
          </SelectedItem>
           {reviewList}
         </div>
@@ -347,7 +345,7 @@ class Skills extends Component {
               <Select
                 name="skills"
                 labelKey="name"
-                onChange={onSkillChange}
+                onChange={this.onSkillChange}
                 value={this.state.currentSkill.skill_type}
                 options={this.state.skills}
               />
@@ -377,5 +375,11 @@ class Skills extends Component {
     }
   }
 }
+
+Skills.propTypes = {
+  params: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
+};
 
 export default Skills;
