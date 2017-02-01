@@ -41,13 +41,10 @@ class Skills extends Component {
     this.addSkillReview = this.addSkillReview.bind(this);
 
     this.deleteSkill = this.deleteSkill.bind(this);
-<<<<<<< HEAD
     this.deleteReview = this.deleteReview.bind(this);
     this.shouldDeleteReview = this.shouldDeleteReview.bind(this);
     this.onChange = this.onChange.bind(this);
-=======
     this.shouldDelete = this.shouldDelete.bind(this);
->>>>>>> master
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
     this.loadReviews = this.loadReviews.bind(this);
