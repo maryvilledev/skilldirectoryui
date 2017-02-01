@@ -12,6 +12,7 @@ const skillModalTypes = {
   AddSkill: AddSkillForm,
   AddReview: AddSkillReviewForm,
   DeleteSkill: DeleteModal,
+  DeleteReview: DeleteModal,
 };
 
 const SkillModalContainer = ({ closeModalCallback, displayedModalType, isModalDisplayed, formProps }) => {

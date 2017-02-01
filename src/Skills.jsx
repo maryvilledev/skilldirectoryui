@@ -31,7 +31,7 @@ class Skills extends Component {
     // Bind all the things
     this.openNewModalType = this.openNewModalType.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.shouldDelete = this.shouldDelete.bind(this);
+    this.shouldDeleteSkill = this.shouldDeleteSkill.bind(this);
     this.makeIcon = this.makeIcon.bind(this);
     this.getFormProps = this.getFormProps.bind(this);
 
@@ -40,8 +40,9 @@ class Skills extends Component {
     this.addSkillReview = this.addSkillReview.bind(this);
 
     this.deleteSkill = this.deleteSkill.bind(this);
+    this.deleteReview = this.deleteReview.bind(this);
+    this.shouldDeleteReview = this.shouldDeleteReview.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.shouldDelete = this.shouldDelete.bind(this);
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
     this.loadReviews = this.loadReviews.bind(this);
@@ -102,7 +103,12 @@ class Skills extends Component {
       }
       case 'DeleteSkill': {
         return {
-          shouldDelete: this.shouldDelete,
+          shouldDelete: this.shouldDeleteSkill,
+        };
+      }
+      case 'DeleteReview': {
+        return {
+          shouldDelete: this.shouldDeleteReview,
         };
       }
       default: {
@@ -129,9 +135,16 @@ class Skills extends Component {
     });
   }
 
-  shouldDelete(response) {
+  shouldDeleteSkill(response) {
     if (response) {
       this.deleteSkill();
+    }
+    this.closeModal();
+  }
+
+  shouldDeleteReview(response) {
+    if (response) {
+      this.deleteReview();
     }
     this.closeModal();
   }
@@ -206,6 +219,29 @@ class Skills extends Component {
      });
   }
 
+    deleteReview(skillReviewID) {
+      axios.delete(`${api}/skillreviews/${skillReviewID}`)
+        .then((response) => {
+          this.setState({
+            reviews: this.state.reviews.filter((review) => {
+              return review.id !== this.state.reviews.skillReviewID;
+            }),
+            currentId: {
+              skill_id: '',
+              team_member_id: '',
+              body: '',
+              positive: '',
+           },
+         });
+       })
+       .then(() => {
+         browserHistory.push('/skills/');
+       })
+       .catch((err) => {
+         console.log(err);
+       });
+    }
+
   loadSkills() {
     return axios.get(`${api}/skills/`)
       .then((response) => {
@@ -243,10 +279,10 @@ class Skills extends Component {
     const icon = this.state.currentSkill.icon;
     if (icon && icon.url !== '') {
       return (
-        <img 
+        <img
           src={icon.url}
-          alt="Skill Icon" 
-          width="200" 
+          alt="Skill Icon"
+          width="200"
           style={{ "margin-top": "30px" }} />
       );
     }
@@ -255,7 +291,7 @@ class Skills extends Component {
 
   loadReviews() {
     const currentId = this.state.currentSkill.skill_id;
-    return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
+    return axios.get(`${api}/?skill_id=${currentId}`)
       .then(res => {
         const results = res.data;
         this.setState({
@@ -266,6 +302,7 @@ class Skills extends Component {
         console.log(err);
       });
   }
+
 
   onIconSelected(ev) {
     // Setup form data for multipart POST request
@@ -287,7 +324,13 @@ class Skills extends Component {
     let reviews = null;
     if (this.state.reviews) {
       reviews = this.state.reviews.map(review => {
-        return <ReviewPanel review={review} key={review.timestamp}/>
+        return (
+          <ReviewPanel
+            review={review}
+            key={review.timestamp}
+            onClick={this.openNewModalType('DeleteReview')}
+          />
+        );
       });
     }
     const reviewList = (
@@ -326,13 +369,13 @@ class Skills extends Component {
               onClick={this.openNewModalType('AddLink')}
             >
               Add Link
-            </Button>            
+            </Button>
             <Button
               name="AddReview"
               bsStyle="primary"
               onClick={this.openNewModalType('AddReview')}>
-              Add Review            
-            </Button>          
+              Add Review
+            </Button>
          </SelectedItem>
           {reviewList}
         </div>

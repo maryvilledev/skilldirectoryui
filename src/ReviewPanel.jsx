@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
 import { Panel, Row, Col } from 'react-bootstrap'
+import DeleteButton from './DeleteButton.jsx'
 
-const ReviewPanel = ({review}) => {
+const ReviewPanel = ({review, onClick}) => {
   if(!review) return <div />;
   const time = review.timestamp;
   const good = review.positive;
@@ -24,12 +25,14 @@ const ReviewPanel = ({review}) => {
       <Row>
         <Col sm={1}>{flags}</Col>
         <Col>{body}</Col>
+        <DeleteButton onClick={onClick}/>
       </Row>
     </Panel>
   )
 }
 
 ReviewPanel.propTypes = {
+  onClick: PropTypes.func.isRequired,
   review: PropTypes.object.isRequired
 }
 
