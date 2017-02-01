@@ -25,7 +25,7 @@ const ReviewPanel = ({review, onClick}) => {
       <Row>
         <Col sm={1}>{flags}</Col>
         <Col>{body}</Col>
-        <DeleteButton onClick={onClick}/>
+        <DeleteButton onClick={onClick} name={'reviewDelete'}/>
       </Row>
     </Panel>
   )

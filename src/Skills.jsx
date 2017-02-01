@@ -43,13 +43,14 @@ class Skills extends Component {
     this.deleteSkill = this.deleteSkill.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
     this.shouldDeleteReview = this.shouldDeleteReview.bind(this);
-    this.onChange = this.onChange.bind(this);
+    //this.onChange = this.onChange.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
     this.loadReviews = this.loadReviews.bind(this);
     this.onSkillChange = this.onSkillChange.bind(this);
     this.onIconSelected = this.onIconSelected.bind(this);
+    this.reviewDelete = this.reviewDelete.bind(this);
   }
 
   componentDidMount() {
@@ -197,29 +198,6 @@ class Skills extends Component {
     });
   }
 
-  deleteSkill() {
-    axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
-     .then((response) => {
-       this.setState({
-         skills: this.state.skills.filter((skill) => {
-           return skill.id !== this.state.currentSkill.skill_id;
-         }),
-         currentSkill: {
-           skill_id: '',
-           name: '',
-           skill_type: '',
-           links: [],
-         },
-       });
-     })
-     .then(() => {
-       browserHistory.push('/skills/');
-     })
-     .catch((err) => {
-       console.log(err);
-     });
-  }
-
     deleteReview(skillReviewID) {
       axios.delete(`${api}/skillreviews/${skillReviewID}`)
         .then((response) => {
@@ -345,7 +323,10 @@ class Skills extends Component {
     .then(res => location.reload())
     .catch(err => console.log(`Caught an Error: ${err}`));
   }
-
+  reviewDelete(review){
+    console.log(review)
+    this.openNewModalType('DeleteReview')
+  }
   render() {
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
@@ -357,7 +338,7 @@ class Skills extends Component {
           <ReviewPanel
             review={review}
             key={review.timestamp}
-            onClick={this.openNewModalType('DeleteReview')}
+            onClick={review => this.reviewDelete(review)}
           />
         );
       });
