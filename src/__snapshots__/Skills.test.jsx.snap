@@ -9,14 +9,16 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       md={4}
       xs={4}>
       <Select
-        addLabelText="Add \"{label}\"?"
+        addLabelText="Add "{label}"?"
         arrowRenderer={[Function]}
         autosize={true}
         backspaceRemoves={true}
         backspaceToRemoveMessage="Press backspace to remove {label}"
         clearAllText="Clear all"
+        clearRenderer={[Function]}
         clearValueText="Clear value"
         clearable={true}
+        deleteRemoves={true}
         delimiter=","
         disabled={false}
         escapeClearsValue={true}
@@ -51,16 +53,18 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
         valueComponent={[Function]}
         valueKey="value" />
     </Col>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={false}
-      name="AddSkill"
-      onClick={[Function]}>
-      Add Skill
-    </Button>
+    <WithLogin>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="primary"
+        disabled={false}
+        name="AddSkill"
+        onClick={[Function]}>
+        Add Skill
+      </Button>
+    </WithLogin>
     <SkillModalContainer
       closeModalCallback={[Function]}
       displayedModalType=""

@@ -32,6 +32,9 @@ exports[`<App /> matches the stored snapshot 1`] = `
     <Route
       component={[Function]}
       path="team(/:id)" />
+    <Route
+      component={[Function]}
+      path="login" />
   </Route>
 </Router>
 `;

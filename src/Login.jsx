@@ -28,7 +28,7 @@ class Login extends React.Component {
     super(props);
     this.state = {
       login: cookie.load('login') || '',
-      password: cookie.load('password') || '',
+      password: '',
       failedValidation: false,
     };
     this.onChange = this.onChange.bind(this);
@@ -67,9 +67,9 @@ class Login extends React.Component {
       password: this.state.password
     })
     .then((response) => {
-      const { login, password } = response.data;
+      const { login, display_name } = response.data;
       cookie.save('login', login);
-      cookie.save('password', password);
+      cookie.save('display_name', display_name);
       cookie.save('isLoggedIn', true);
     })
     .then(() => {

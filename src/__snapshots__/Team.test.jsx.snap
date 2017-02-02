@@ -15,8 +15,10 @@ exports[`<Team /> matches the stored snapshot 1`] = `
         backspaceRemoves={true}
         backspaceToRemoveMessage="Press backspace to remove {label}"
         clearAllText="Clear all"
+        clearRenderer={[Function]}
         clearValueText="Clear value"
         clearable={true}
+        deleteRemoves={true}
         delimiter=","
         disabled={false}
         escapeClearsValue={true}
@@ -51,16 +53,18 @@ exports[`<Team /> matches the stored snapshot 1`] = `
         valueComponent={[Function]}
         valueKey="value" />
     </Col>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={false}
-      name="addTeamMember"
-      onClick={[Function]}>
-      Add Team Member
-    </Button>
+    <WithLogin>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="primary"
+        disabled={false}
+        name="addTeamMember"
+        onClick={[Function]}>
+        Add Team Member
+      </Button>
+    </WithLogin>
     <TeamModalContainer
       closeModalCallback={[Function]}
       displayedModalType=""
