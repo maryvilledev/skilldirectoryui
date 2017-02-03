@@ -9,6 +9,7 @@ import ReviewPanel from './ReviewPanel.jsx';
 import SelectedItem from './SelectedItem.jsx';
 import SkillLinksDisplay from './SkillLinksDisplay.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
+import WithLogin from './WithLogin.jsx';
 
 const api = (process.env.REACT_APP_API);
 
@@ -308,29 +309,35 @@ class Skills extends Component {
                 />
               </Col>
               <Col lgOffset={3} mdOffset={3}>
-              <div>
-                {icon}
-                {icon === null ? <h4>Add Icon:</h4> : <h4>Change Icon:</h4>}
-                <input
-                  type="file"
-                  multiple size="1"
-                  onChange={this.onIconSelected} />
-                  </div>
+                <div>
+                  {icon}
+                  <WithLogin>
+                    {icon === null ? <h4>Add Icon:</h4> : <h4>Change Icon:</h4>}
+                    <input
+                      type="file"
+                      multiple size="1"
+                      onChange={this.onIconSelected} />
+                  </WithLogin>
+                </div>
               </Col>
             </Row>
-            <Button
-              name="AddLink"
-              bsStyle="primary"
-              onClick={this.openNewModalType('AddLink')}
-            >
-              Add Link
-            </Button>
-            <Button
-              name="AddReview"
-              bsStyle="primary"
-              onClick={this.openNewModalType('AddReview')}>
-              Add Review
-            </Button>
+            <WithLogin>
+              <Button
+                name="AddLink"
+                bsStyle="primary"
+                onClick={this.openNewModalType('AddLink')}
+              >
+                Add Link
+              </Button>
+            </WithLogin>
+            <WithLogin>
+              <Button
+                name="AddReview"
+                bsStyle="primary"
+                onClick={this.openNewModalType('AddReview')}>
+                Add Review
+              </Button>
+            </WithLogin>
          </SelectedItem>
           {reviewList}
         </div>
@@ -350,13 +357,15 @@ class Skills extends Component {
                 options={this.state.skills}
               />
             </Col>
-            <Button
-              name="AddSkill"
-              bsStyle="primary"
-              onClick={this.openNewModalType('AddSkill')}
-            >
-              Add Skill
-            </Button>
+            <WithLogin>
+              <Button
+                name="AddSkill"
+                bsStyle="primary"
+                onClick={this.openNewModalType('AddSkill')}
+              >
+                Add Skill
+              </Button>
+            </WithLogin>
             <SkillModalContainer
               closeModalCallback={this.closeModal}
               displayedModalType={this.state.displayedModalType}

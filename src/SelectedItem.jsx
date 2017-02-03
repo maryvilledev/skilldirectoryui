@@ -1,13 +1,17 @@
-import DeleteButton from './DeleteButton.jsx';
 import React, { PropTypes } from 'react';
+
+import DeleteButton from './DeleteButton.jsx';
+import WithLogin from './WithLogin.jsx';
 
 const ItemDisplayer = ({children, deleteCallback, typeName}) => (
   <div>
     {children}
-    <DeleteButton
-      name={`Delete${typeName}`}
-      onClick={deleteCallback}
-    />
+    <WithLogin>
+      <DeleteButton
+        name={`Delete${typeName}`}
+        onClick={deleteCallback}
+      />
+    </WithLogin>
   </div>
 );
 

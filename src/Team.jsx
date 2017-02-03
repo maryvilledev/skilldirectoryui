@@ -9,6 +9,7 @@ import Select from 'react-select';
 import SelectedItem from './SelectedItem.jsx';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
 import TeamModalContainer from './TeamModalContainer.jsx';
+import WithLogin from './WithLogin.jsx';
 
 const api = (process.env.REACT_APP_API);
 
@@ -178,13 +179,15 @@ class Team extends React.Component {
               onChange={this.onSelectChange}
             />
           </Col>
-          <Button
-            name="addTeamMember"
-            bsStyle="primary"
-            onClick={this.openNewModalType('AddTeamMember')}
-          >
-            Add Team Member
-          </Button>
+          <WithLogin>
+            <Button
+              name="addTeamMember"
+              bsStyle="primary"
+              onClick={this.openNewModalType('AddTeamMember')}
+            >
+              Add Team Member
+            </Button>
+          </WithLogin>
 
           <TeamModalContainer
             closeModalCallback={this.closeModal}
