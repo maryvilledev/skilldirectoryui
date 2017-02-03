@@ -78,12 +78,7 @@ exports[`<AddSkillReviewForm /> matches the stored snapshot 1`] = `
           bsClass="form-control"
           componentClass="textarea"
           name="reviewBody"
-          onChange={[Function]}
-          style={
-            Object {
-              "height": 150,
-            }
-          } />
+          onChange={[Function]} />
       </Col>
     </FormGroup>
     <FormGroup
@@ -91,26 +86,28 @@ exports[`<AddSkillReviewForm /> matches the stored snapshot 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        sm={10}
         smOffset={2}>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="primary"
-          disabled={false}
-          type="submit">
-          Submit
-        </Button>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="info"
-          disabled={false}
-          onClick={undefined}>
-          Cancel
-        </Button>
+        <ButtonToolbar
+          bsClass="btn-toolbar">
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="primary"
+            disabled={false}
+            type="submit">
+            Submit
+          </Button>
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="info"
+            disabled={false}
+            onClick={undefined}>
+            Cancel
+          </Button>
+        </ButtonToolbar>
       </Col>
     </FormGroup>
   </Form>

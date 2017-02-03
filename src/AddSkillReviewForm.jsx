@@ -5,7 +5,8 @@ import { Button,
   ControlLabel,
   Form,
   FormControl,
-FormGroup } from 'react-bootstrap';
+  FormGroup,
+  ButtonToolbar } from 'react-bootstrap';
 
 const validateInput = (userInput) => {
   if (userInput.body === '') {
@@ -136,19 +137,20 @@ class AddSkillReviewForm extends React.Component {
               <FormControl
                 name="reviewBody"
                 componentClass="textarea"
-                style={{ height: 150 }}
                 onChange={this.onBodyChange}
               />
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col smOffset={2} sm={10}>
-              <Button type="submit" bsStyle="primary">
-                Submit
-              </Button>
-              <Button onClick={this.props.onCancel} bsStyle="info">
-                Cancel
-              </Button>
+            <Col smOffset={2}>
+              <ButtonToolbar>
+                <Button type="submit" bsStyle="primary">
+                  Submit
+                </Button>
+                <Button onClick={this.props.onCancel} bsStyle="info">
+                  Cancel
+                </Button>
+              </ButtonToolbar>
             </Col>
           </FormGroup>
         </Form>
