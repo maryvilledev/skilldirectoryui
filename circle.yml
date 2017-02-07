@@ -21,7 +21,6 @@ deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
-      - if [[ $CIRCLE_BRANCH != "master" ]]; then echo $CIRCLE_BRANCH; fi
       - docker login -u "$DOCKER_USER" -p "$dockerPass" --email "$DOCKER_EMAIL"
       - docker build -t $DOCKER_IMAGE:$CIRCLE_TAG --rm=false .
       - docker push $DOCKER_IMAGE:$CIRCLE_TAG
