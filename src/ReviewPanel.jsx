@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import { Panel, Row, Col } from 'react-bootstrap'
+import { Row, Panel, Col } from 'react-bootstrap'
 
 const ReviewPanel = ({review}) => {
   if(!review) return <div />;
@@ -20,12 +20,14 @@ const ReviewPanel = ({review}) => {
   const body=review.body;
 
   return (
-    <Panel header={header}>
-      <Row>
-        <Col sm={1}>{flags}</Col>
-        <Col>{body}</Col>
-      </Row>
-    </Panel>
+    <Row>
+      <Col mdOffset={2}>
+        <Panel header={header}>
+          <Col sm={1}>{flags}</Col>
+          <Col>{body}</Col>
+        </Panel>
+      </Col>
+    </Row>
   )
 }
 
