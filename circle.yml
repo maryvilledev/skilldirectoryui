@@ -18,7 +18,7 @@ dependencies:
     - npm install
 
 deployment:
-  release:
+  master:
     branch: testTag
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
@@ -26,7 +26,7 @@ deployment:
       - docker build -t $DOCKER_IMAGE:$CIRCLE_TAG --rm=false .
       - docker tag $DOCKER_IMAGE:$CIRCLE_TAG
       - docker push $DOCKER_IMAGE:$CIRCLE_TAG
-  master:
+  staging:
     branch: master
     commands:
       - docker login -u "$DOCKER_USER" -p "$dockerPass" --email "$DOCKER_EMAIL"
