@@ -217,7 +217,7 @@ class Skills extends Component {
         <img
           src={icon.url}
           alt="Skill Icon"
-          width="100"
+          width="200"
           style={{ "margin-top": "30px" }} />
       );
     }
@@ -296,59 +296,53 @@ class Skills extends Component {
     if (isSkillSelected) {
       display = (
         <div>
-          {icon}
           <SelectedItem
             typeName="Skill"
             deleteCallback={this.openNewModalType('DeleteSkill')}
           >
             <Row>
-              <div>
-
-                <WithLogin>
-                  {icon === null ? <h3></h3> : <h4></h4>}
-                  <input
-                    type="file"
-                    multiple size="1"
-                    onChange={this.onIconSelected} />
-                </WithLogin>
-              </div>
-                <h3>{this.state.currentSkill.name}</h3>
-                <h5>{this.state.currentSkill.skill_type}</h5>
+              <Col md={2} xs={2}>
+                <h1>{this.state.currentSkill.name}</h1>
+                <h4>{this.state.currentSkill.skill_type}</h4>
                 <SkillLinksDisplay
                   links={this.state.currentSkill.links}
-              />
+                />
+              </Col>
+              <Col lgOffset={3} mdOffset={3}>
+                <div>
+                  {icon}
+                  <WithLogin>
+                    {icon === null ? <h4>Add Icon:</h4> : <h4>Change Icon:</h4>}
+                    <input
+                      type="file"
+                      multiple size="1"
+                      onChange={this.onIconSelected} />
+                  </WithLogin>
+                </div>
+              </Col>
             </Row>
-
-              <WithLogin>
-                <Button
-                  name="AddLink"
-                  bsStyle="primary"
-                  onClick={this.openNewModalType('AddLink')}
-                >
-                  Add Link
-                </Button>
-              </WithLogin>
-              <WithLogin>
-                <Button
-                  name="AddReview"
-                  bsStyle="primary"
-                  onClick={this.openNewModalType('AddReview')}>
-                  Add Review
-                </Button>
+            <WithLogin>
+              <Button
+                name="AddLink"
+                bsStyle="primary"
+                onClick={this.openNewModalType('AddLink')}
+              >
+                Add Link
+              </Button>
             </WithLogin>
-          </SelectedItem>
-
-
-
-
-          <Col mdOffset={2}>
-
-            <h4>Skill Reviews</h4>
-          </Col>
-            {reviewList}
-         </div>
-       );
-      }
+            <WithLogin>
+              <Button
+                name="AddReview"
+                bsStyle="primary"
+                onClick={this.openNewModalType('AddReview')}>
+                Add Review
+              </Button>
+            </WithLogin>
+         </SelectedItem>
+          {reviewList}
+        </div>
+      );
+    }
 
     if (!this.state.isError) {
       return (
@@ -390,8 +384,6 @@ class Skills extends Component {
     }
   }
 }
-
-
 
 Skills.propTypes = {
   params: PropTypes.shape({
