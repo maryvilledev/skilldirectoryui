@@ -280,13 +280,14 @@ class Skills extends Component {
   }
 
   render() {
+    const _this = this;
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
     const icon = this.makeIcon();
     let reviews = null;
     if (this.state.reviews) {
-      reviews = this.state.reviews.map(review => {
-        return <ReviewPanel review={review} key={review.timestamp}/>
+      reviews = this.state.reviews.map((review, index) => {
+        return <ReviewPanel review={review} delete_callback={this.loadReviews} key={review.timestamp}/>
       });
     }
     const reviewList = (
