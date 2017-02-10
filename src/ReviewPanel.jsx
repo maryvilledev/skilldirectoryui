@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react'
-import { Row, Panel, Col, bsStyle } from 'react-bootstrap'
+import { Panel, Col } from 'react-bootstrap'
 
 const ReviewPanel = ({review}) => {
   if(!review) return <div />;
+
+  const body=review.body;
   const time = review.timestamp;
   const good = review.positive;
   const reviewer = review.team_member_name;
@@ -15,20 +17,13 @@ const ReviewPanel = ({review}) => {
     color = "danger"
   }
 
-  const body=review.body;
-
   return (
-
   <div>
-    <Row>
-      <Col>
-        <Panel header={header} bsStyle={color} >
-          <Col>{body}</Col>
-        </Panel>
-      </Col>
-    </Row>
+    <Panel header={header} bsStyle={color} >
+      <Col>{body}</Col>
+    </Panel>
   </div>
-  )
+  );
 }
 
 ReviewPanel.propTypes = {

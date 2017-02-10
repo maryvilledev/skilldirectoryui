@@ -214,12 +214,30 @@ class Skills extends Component {
     const icon = this.state.currentSkill.icon;
     if (icon && icon.url !== '') {
       return (
-        <img
-          src={icon.url}
-          alt="Skill Icon"
-          width="200"
-          style={{ "margin-top": "30px" }} />
+        <a 
+          href="#"
+          onClick={alert("test!")}
+        >
+          <img
+            src={icon.url}
+            alt="Skill Icon"
+            width="200"
+            style={{ "margin-top": "30px" }} />
+        </a>
       );
+      /*return (
+        <button 
+          style={{ 
+            "background": "transparent", 
+            "border": "none !important" }}
+        >
+          <img
+            src={icon.url}
+            alt="Skill Icon"
+            width="200"
+            style={{ "margin-top": "30px" }} />
+        </button>
+      );*/
     }
     return null;
   }
@@ -294,26 +312,24 @@ class Skills extends Component {
     );
     let display = null;
     if (isSkillSelected) {
-      display = (
-        <div>
-         <Row >
-          <Col md={3} mdOffset={1} >
+    display = (
+      <div>
+        <Row>
+          <Col md={2} mdOffset={3}>
             <SelectedItem
               typeName="Skill"
               deleteCallback={this.openNewModalType('DeleteSkill')}
             >
               <Row>
-                <Col  md={4} style={{ "margin-top": 50 }} >
+                <Col>
                   {icon}
                   <h1>{this.state.currentSkill.name}</h1>
-                  <h4>{this.state.currentSkill.skill_type}</h4>
+                  <h3>{this.state.currentSkill.skill_type}</h3>
                   <SkillLinksDisplay
                     links={this.state.currentSkill.links}
                     onClick={this.openNewModalType('AddLink')}
                   />
-
                   <div>
-
                     <WithLogin>
                       <input
                         type="file"
@@ -323,25 +339,28 @@ class Skills extends Component {
                   </div>
                 </Col>
               </Row>
-
-
-              <WithLogin>
-
-              </WithLogin>
-           </SelectedItem>
-         </Col>
-         <Col xs={6} mdOffset={1} style={{ "margin-top": 100 }}  >
-           <h3>Skill Reviews</h3>
-             <Button
-               name="AddReview"
-               bsStyle="primary"
-               onClick={this.openNewModalType('AddReview')}>
-               Add Review
-             </Button>
-           {reviewList}
-         </Col>
-       </Row>
-        </div>
+            </SelectedItem>
+          </Col>
+          <Col xs={5} style={{ "margin-top": 100 }}>
+            <Row>
+              <Col xs={3} style={{ "margin-right": -10 }}>
+                <h3>Skill Reviews</h3>
+              </Col>
+              <Col style={{ "margin-top": 20 }}>
+                <WithLogin>
+                  <Button
+                    name="AddReview"
+                    bsStyle="primary"
+                    onClick={this.openNewModalType('AddReview')}>
+                    Add Review
+                  </Button>
+                </WithLogin>
+              </Col>
+            </Row>
+            <div style={{ "margin-top": 15 }}>{reviewList}</div>
+          </Col>
+        </Row>
+      </div>
       );
     }
 
