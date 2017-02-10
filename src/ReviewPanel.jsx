@@ -22,8 +22,8 @@ const ReviewPanel = ({review}) => {
   return (
   <div>
     <Row>
-      <Col mdOffset={2}>
-        <Panel header={header} bsStyle="danger">
+      <Col xs={6} xsOffset={4} >
+        <Panel header={header} bsStyle="danger" >
           <Col sm={1}>{flags}</Col>
           <Col>{body}</Col>
         </Panel>
