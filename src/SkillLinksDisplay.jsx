@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import { Button, Row, Col } from 'react-bootstrap';
 
 const capitalizeFirstLetter = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const SkillLinksDisplay = ({ links }) => {
+const SkillLinksDisplay = ({ links, onClick }) => {
   if (links && links.length) {
     const linkElements = links.map((link) => {
       return (
@@ -16,7 +17,21 @@ const SkillLinksDisplay = ({ links }) => {
     });
     return (
       <div>
-        <h3>Links:</h3>
+        <Row>
+        <Col xs={3}>
+         <h3>Links</h3>
+        </Col>
+        <Col>
+            <Button
+              name="AddLink"
+              bsStyle="primary"
+              onClick={onClick}
+            >
+              Add Link
+            </Button>
+          </Col>
+          </Row>
+
         <ul>
           { linkElements }
         </ul>

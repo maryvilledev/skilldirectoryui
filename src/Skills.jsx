@@ -296,50 +296,51 @@ class Skills extends Component {
     if (isSkillSelected) {
       display = (
         <div>
-          <SelectedItem
-            typeName="Skill"
-            deleteCallback={this.openNewModalType('DeleteSkill')}
-          >
-            <Row>
-              <Col xs={6} md={4} >
-                <h1>{this.state.currentSkill.name}</h1>
-                <h4>{this.state.currentSkill.skill_type}</h4>
-                <SkillLinksDisplay
-                  links={this.state.currentSkill.links}
-                />
-
-
-                <div >
+         <Row >
+          <Col md={3} mdOffset={1} >
+            <SelectedItem
+              typeName="Skill"
+              deleteCallback={this.openNewModalType('DeleteSkill')}
+            >
+              <Row>
+                <Col  md={4} style={{ "margin-top": 50 }} >
                   {icon}
-                  <WithLogin>
-                    {icon === null ? <h4>Add Icon:</h4> : <h4>Change Icon:</h4>}
-                    <input
-                      type="file"
-                      multiple size="1"
-                      onChange={this.onIconSelected} />
-                  </WithLogin>
-                </div>
-              </Col>
-            </Row>
-            <WithLogin>
-              <Button
-                name="AddLink"
-                bsStyle="primary"
-                onClick={this.openNewModalType('AddLink')}
-              >
-                Add Link
-              </Button>
-            </WithLogin>
-            <WithLogin>
-              <Button
-                name="AddReview"
-                bsStyle="primary"
-                onClick={this.openNewModalType('AddReview')}>
-                Add Review
-              </Button>
-            </WithLogin>
-         </SelectedItem>
-          {reviewList}
+                  <h1>{this.state.currentSkill.name}</h1>
+                  <h4>{this.state.currentSkill.skill_type}</h4>
+                  <SkillLinksDisplay
+                    links={this.state.currentSkill.links}
+                    onClick={this.openNewModalType('AddLink')}
+                  />
+
+                  <div>
+
+                    <WithLogin>
+                      <input
+                        type="file"
+                        multiple size="1"
+                        onChange={this.onIconSelected} />
+                    </WithLogin>
+                  </div>
+                </Col>
+              </Row>
+
+
+              <WithLogin>
+
+              </WithLogin>
+           </SelectedItem>
+         </Col>
+         <Col xs={6} mdOffset={1} style={{ "margin-top": 100 }}  >
+           <h3>Skill Reviews</h3>
+             <Button
+               name="AddReview"
+               bsStyle="primary"
+               onClick={this.openNewModalType('AddReview')}>
+               Add Review
+             </Button>
+           {reviewList}
+         </Col>
+       </Row>
         </div>
       );
     }

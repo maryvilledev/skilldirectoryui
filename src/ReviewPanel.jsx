@@ -7,24 +7,22 @@ const ReviewPanel = ({review}) => {
   const good = review.positive;
   const reviewer = review.team_member_name;
   const header = reviewer + " on " + new Date(time).toDateString();
-  let flags = null;
+  let color = null;
   if (good) {
-    flags = (
-      <p style={{color: "#7CFC00"}}>+</p>
-    )
-  } else {
-    flags = (
-      <p style={{color: "#DC143C"}}>-</p>
-    )
+    color = "success"
   }
+  else {
+    color = "danger"
+  }
+
   const body=review.body;
 
   return (
+
   <div>
     <Row>
-      <Col xs={6} xsOffset={4} >
-        <Panel header={header} bsStyle="danger" >
-          <Col sm={1}>{flags}</Col>
+      <Col>
+        <Panel header={header} bsStyle={color} >
           <Col>{body}</Col>
         </Panel>
       </Col>
