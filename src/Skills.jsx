@@ -10,6 +10,7 @@ import SelectedItem from './SelectedItem.jsx';
 import SkillLinksDisplay from './SkillLinksDisplay.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
 import WithLogin from './WithLogin.jsx';
+import Icon from './Icon.jsx';
 
 const api = (process.env.REACT_APP_API);
 
@@ -34,7 +35,6 @@ class Skills extends Component {
     this.openNewModalType = this.openNewModalType.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
-    this.makeIcon = this.makeIcon.bind(this);
     this.getFormProps = this.getFormProps.bind(this);
 
     this.addSkill = this.addSkill.bind(this);
@@ -210,25 +210,6 @@ class Skills extends Component {
       });
   }
 
-  testAlert() {
-    document.getElementById('file-chooser').click();
-  }
-
-  makeIcon() {
-    const icon = this.state.currentSkill.icon;
-    if (icon && icon.url !== '') {
-      return (
-          <img
-            src={icon.url}
-            alt="Skill Icon"
-            width="200"
-            onClick={this.testAlert}
-            style={{ "margin-top": "30px", "cursor": "pointer" }} />
-      );
-    }
-    return null;
-  }
-
   loadReviews() {
     const currentId = this.state.currentSkill.skill_id;
     return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
@@ -287,7 +268,6 @@ class Skills extends Component {
   render() {
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
-    const icon = this.makeIcon();
     let reviews = null;
     if (this.state.reviews) {
       reviews = this.state.reviews.map(review => {
@@ -309,28 +289,19 @@ class Skills extends Component {
             >
               <Row>
                 <Col style={{ "margin-top": 50 }}>
-                  {icon}
+                  <Icon 
+                    icon={this.state.currentSkill.icon} 
+                    onIconUploaded={this.onIconSelected} 
+                   />
                   <h1>{this.state.currentSkill.name}</h1>
                   <h3>{this.state.currentSkill.skill_type}</h3>
-                <div>
-                 <Col style={{ "margin-top": 25 }} >
-                  <SkillLinksDisplay
-                    links={this.state.currentSkill.links}
-                    onClick={this.openNewModalType('AddLink')}
-                   />
-                 </Col>
-               </div>
                   <div>
-                    <WithLogin>
-                      <input
-                        id="file-chooser"
-                        type="file"
-                        multiple size="1"
-                        onChange={this.onIconSelected}
-                        style={{ "visibility": "hidden", 
-                                 "width": 0, 
-                                 "height": 0 }} />
-                    </WithLogin>
+                  <Col style={{ "margin-top": 25 }} >
+                    <SkillLinksDisplay
+                      links={this.state.currentSkill.links}
+                      onClick={this.openNewModalType('AddLink')}
+                    />
+                  </Col>
                   </div>
                 </Col>
               </Row>
