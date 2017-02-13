@@ -302,20 +302,24 @@ class Skills extends Component {
     display = (
       <div>
         <Row>
-          <Col md={2} mdOffset={3}>
+          <Col md={2} mdOffset={1}>
             <SelectedItem
               typeName="Skill"
               deleteCallback={this.openNewModalType('DeleteSkill')}
             >
               <Row>
-                <Col>
+                <Col style={{ "margin-top": 50 }}>
                   {icon}
                   <h1>{this.state.currentSkill.name}</h1>
                   <h3>{this.state.currentSkill.skill_type}</h3>
+                <div>
+                 <Col style={{ "margin-top": 25 }} >
                   <SkillLinksDisplay
                     links={this.state.currentSkill.links}
                     onClick={this.openNewModalType('AddLink')}
-                  />
+                   />
+                 </Col>
+               </div>
                   <div>
                     <WithLogin>
                       <input
@@ -332,7 +336,7 @@ class Skills extends Component {
               </Row>
             </SelectedItem>
           </Col>
-          <Col xs={5} style={{ "margin-top": 100 }}>
+          <Col xs={5} style={{ "margin-top": 150 }}>
             <Row>
               <Col xs={3} style={{ "margin-right": -10 }}>
                 <h3>Skill Reviews</h3>
