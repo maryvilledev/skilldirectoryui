@@ -210,34 +210,21 @@ class Skills extends Component {
       });
   }
 
+  testAlert() {
+    document.getElementById('file-chooser').click();
+  }
+
   makeIcon() {
     const icon = this.state.currentSkill.icon;
     if (icon && icon.url !== '') {
       return (
-        <a 
-          href="#"
-          onClick={alert("test!")}
-        >
           <img
             src={icon.url}
             alt="Skill Icon"
             width="200"
-            style={{ "margin-top": "30px" }} />
-        </a>
+            onClick={this.testAlert}
+            style={{ "margin-top": "30px", "cursor": "pointer" }} />
       );
-      /*return (
-        <button 
-          style={{ 
-            "background": "transparent", 
-            "border": "none !important" }}
-        >
-          <img
-            src={icon.url}
-            alt="Skill Icon"
-            width="200"
-            style={{ "margin-top": "30px" }} />
-        </button>
-      );*/
     }
     return null;
   }
@@ -332,9 +319,13 @@ class Skills extends Component {
                   <div>
                     <WithLogin>
                       <input
+                        id="file-chooser"
                         type="file"
                         multiple size="1"
-                        onChange={this.onIconSelected} />
+                        onChange={this.onIconSelected}
+                        style={{ "visibility": "hidden", 
+                                 "width": 0, 
+                                 "height": 0 }} />
                     </WithLogin>
                   </div>
                 </Col>
