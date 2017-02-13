@@ -291,7 +291,7 @@ class Skills extends Component {
                 <Col style={{ "margin-top": 50 }}>
                   <Icon 
                     icon={this.state.currentSkill.icon} 
-                    onIconUploaded={this.onIconSelected} 
+                    onIconUploaded={null} 
                    />
                   <h1>{this.state.currentSkill.name}</h1>
                   <h3>{this.state.currentSkill.skill_type}</h3>

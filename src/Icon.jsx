@@ -2,6 +2,13 @@ import React, { PropTypes } from 'react';
 import WithLogin from './WithLogin.jsx'
 import ImagePlaceholder from '../resources/icon-placeholder.png'
 
+/*
+  Icon is a clickable image component. When it is clicked, it brings up a file
+chooser window. If the user selects a file, the uploaded file is passed into 
+the callback defined by the onIconUploaded pop.
+  If the icon prop is undefined or null, then the default image placeholder will
+be displayed.
+*/
 const Icon = ({ icon, onIconUploaded }) => { 
   let imgSrc = ImagePlaceholder;
   if (icon && icon.url !== '')
