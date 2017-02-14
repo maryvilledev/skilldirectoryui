@@ -9,7 +9,7 @@ exports[`<Skills /> matches the stored snapshot 1`] = `
       md={4}
       xs={4}>
       <Select
-        addLabelText="Add "{label}"?"
+        addLabelText="Add \"{label}\"?"
         arrowRenderer={[Function]}
         autosize={true}
         backspaceRemoves={true}
