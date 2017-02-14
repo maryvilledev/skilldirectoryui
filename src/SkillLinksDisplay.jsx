@@ -13,7 +13,7 @@ const SkillLinksDisplay = ({ links, onClick }) => {
       return (
         <li key={link.id}>
           { `${capitalizeFirstLetter(String(link.link_type))}: ` }
-          <a href={link.url}>{link.name}</a>
+          <a target="_blank" href={link.url}>{link.name}</a>
         </li>
       );
     });
