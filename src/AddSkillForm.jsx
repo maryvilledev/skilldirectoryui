@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Col, ControlLabel, Button,
    Form, FormControl, FormGroup } from 'react-bootstrap'
+import { mapSkillType } from './util/util.js'
 
 const skillTypes = [
-  { value: 'compiled', label: 'Compiled' },
-  { value: 'scripted', label: 'Scripted' },
-  { value: 'database', label: 'Database' },
-  { value: 'orchestration', label: 'Orchestration' }
+  { value: 'compiled', label: mapSkillType('compiled')},
+  { value: 'scripted', label: mapSkillType('scripted')},
+  { value: 'database', label: mapSkillType('database')},
+  { value: 'orchestration', label: mapSkillType('orchestration')}
 ];
 
 const options = skillTypes.map((type, index) => {

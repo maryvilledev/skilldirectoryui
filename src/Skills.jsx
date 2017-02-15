@@ -11,6 +11,7 @@ import SkillLinksDisplay from './SkillLinksDisplay.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
 import WithLogin from './WithLogin.jsx';
 import Icon from './Icon.jsx';
+import { mapSkillType } from './util/util.js'
 
 const api = (process.env.REACT_APP_API);
 
@@ -294,7 +295,7 @@ class Skills extends Component {
                     onIconUploaded={this.onIconSelected}
                    />
                   <h1>{this.state.currentSkill.name}</h1>
-                  <h3>{this.state.currentSkill.skill_type}</h3>
+                  <h3>{mapSkillType(this.state.currentSkill.skill_type)}</h3>
                   <div>
                   <Col style={{ "margin-top": 25 }} >
                     <SkillLinksDisplay
