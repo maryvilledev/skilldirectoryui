@@ -7,6 +7,5 @@ const skillTypesMap = {
 
 // Maps the skill type received from API to a nicer string/description
 export const mapSkillType = (skillType) => {
-  console.log('mapping' + skillType);
   return skillTypesMap[skillType];
 }
