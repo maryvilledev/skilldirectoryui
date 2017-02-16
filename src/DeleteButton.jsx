@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 const DeleteButton = ({name, onClick}) => (
   <Button
     name={name}
-    bsStyle="danger"
+    bsStyle='danger'
     onClick={onClick}
     children='Delete'
   />

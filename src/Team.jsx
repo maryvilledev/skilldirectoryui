@@ -6,7 +6,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import Select from 'react-select';
 
-import SelectedItem from './SelectedItem.jsx';
+import ItemDisplayer from './ItemDisplayer';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
 import TeamModalContainer from './TeamModalContainer.jsx';
 import WithLogin from './WithLogin.jsx';
@@ -157,14 +157,14 @@ class Team extends React.Component {
     let selectedItem = null;
     if (this.state.selectedTeamMember.id) {
       selectedItem = (
-        <SelectedItem
+        <ItemDisplayer
           typeName="TeamMember"
           deleteCallback={this.openNewModalType('DeleteTeamMember')}
         >
           <TeamMemberDisplay
             selected={this.state.selectedTeamMember}
           />
-        </SelectedItem>
+        </ItemDisplayer>
       );
     }
     return (
