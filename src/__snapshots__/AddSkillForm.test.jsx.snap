@@ -48,19 +48,19 @@ exports[`<AddSkillForm /> matches the stored snapshot 1`] = `
           onChange={[Function]}>
           <option
             value="compiled">
-            Compiled
+            Programming Language (Compiled)
           </option>
           <option
             value="scripted">
-            Scripted
+            Programming Language (Scripted)
           </option>
           <option
             value="database">
-            Database
+            Database Language
           </option>
           <option
             value="orchestration">
-            Orchestration
+            DevOps Tool
           </option>
         </FormControl>
       </Col>

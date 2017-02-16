@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 import WithLogin from './WithLogin'
 
 const capitalizeFirstLetter = (str) => {

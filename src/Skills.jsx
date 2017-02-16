@@ -6,12 +6,11 @@ import { Row, Col, Button, Grid } from 'react-bootstrap';
 import Select from 'react-select';
 
 import ReviewPanel from './ReviewPanel.jsx';
-import ItemDisplayer from './ItemDisplayer';
 import SkillLinksDisplay from './SkillLinksDisplay.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
 import WithLogin from './WithLogin.jsx';
 import Icon from './Icon.jsx';
-import DeleteButton from './DeleteButton.jsx';
+import { mapSkillType } from './util/util.js'
 
 const api = (process.env.REACT_APP_API);
 
@@ -308,7 +307,7 @@ class Skills extends Component {
           </tr>
           </table>
         </Row>
-        <h3>{this.state.currentSkill.skill_type}</h3>
+        <h3>{mapSkillType(this.state.currentSkill.skill_type)}</h3>
         <SkillLinksDisplay
           links={this.state.currentSkill.links}
           onClick={this.openNewModalType('AddLink')}

@@ -46,12 +46,10 @@ const Icon = ({ icon, onIconUploaded }) => {
 };
 
 Icon.propTypes = {
-  icon: PropTypes.arrayOf(
-    PropTypes.shape({
+  icon: PropTypes.object({
       skill_id: PropTypes.string,
       url: PropTypes.string,
-    }),
-  ),
+  }),
   onIconUploaded: PropTypes.func.isRequired,
 };
 
