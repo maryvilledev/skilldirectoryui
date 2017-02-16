@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 import WithLogin from './WithLogin'
 
 const capitalizeFirstLetter = (str) => {
@@ -21,24 +21,31 @@ const SkillLinksDisplay = ({ links, onClick }) => {
     return (
       <div>
         <Row>
-          <Col xs={2} style={{ "margin-right": 35 }}>
+          <table style={{width: '250px'}}>
+          <tr>
+            <td>
             <h2>Links</h2>
-          </Col>
-          <Col xs={3} style={{ "margin-top": 20 }}>
+            </td>
+            <td>
             <WithLogin>
               <Button
                 name="AddLink"
-                bsStyle="primary"
+                bsStyle="info"
+                bsSize="small"
                 onClick={onClick}
-              >
+                style={{ marginTop: '12%' }}>
                 Add Link
               </Button>
             </WithLogin>
-          </Col>
+            </td>
+          </tr>
+          </table>
         </Row>
+        <Row>
         <ul>
           { linkElements }
         </ul>
+        </Row>
       </div>
     );
 };

@@ -17,7 +17,7 @@ const Icon = ({ icon, onIconUploaded }) => {
   const onImgClicked  = () => document.getElementById(fileChooserID).click();
 
   return (
-    <div> 
+    <span> 
       <img
         src={imgSrc}
         alt='Skill Icon'
@@ -41,7 +41,7 @@ const Icon = ({ icon, onIconUploaded }) => {
           }} 
         />
       </WithLogin>
-    </div>
+    </span>
   );
 };
 

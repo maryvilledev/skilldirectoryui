@@ -2,11 +2,10 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Grid } from 'react-bootstrap';
 import Select from 'react-select';
 
 import ReviewPanel from './ReviewPanel.jsx';
-import SelectedItem from './SelectedItem.jsx';
 import SkillLinksDisplay from './SkillLinksDisplay.jsx';
 import SkillModalContainer from './SkillModalContainer.jsx';
 import WithLogin from './WithLogin.jsx';
@@ -275,59 +274,72 @@ class Skills extends Component {
         return <ReviewPanel review={review} key={review.timestamp}/>
       });
     }
-    const reviewList = (
-      <div>{reviews}</div>
-    );
-    let display = null;
-    if (isSkillSelected) {
-    display = (
-      <div>
-        <Row>
-          <Col md={2} mdOffset={1}>
-            <SelectedItem
-              typeName="Skill"
-              deleteCallback={this.openNewModalType('DeleteSkill')}
-            >
-              <Row>
-                <Col style={{ "margin-top": 50 }}>
-                  <Icon
-                    icon={this.state.currentSkill.icon}
-                    onIconUploaded={this.onIconSelected}
-                   />
-                  <h1>{this.state.currentSkill.name}</h1>
-                  <h3>{mapSkillType(this.state.currentSkill.skill_type)}</h3>
-                  <div>
-                  <Col style={{ "margin-top": 25 }} >
-                    <SkillLinksDisplay
-                      links={this.state.currentSkill.links}
-                      onClick={this.openNewModalType('AddLink')}
-                    />
-                  </Col>
-                  </div>
-                </Col>
-              </Row>
-            </SelectedItem>
-          </Col>
-          <Col xs={5} style={{ "margin-top": 150 }}>
-            <Row>
-              <Col xs={3} style={{ "margin-right": -10 }}>
-                <h3>Skill Reviews</h3>
-              </Col>
-              <Col style={{ "margin-top": 20 }}>
-                <WithLogin>
-                  <Button
-                    name="AddReview"
-                    bsStyle="primary"
-                    onClick={this.openNewModalType('AddReview')}>
-                    Add Review
-                  </Button>
-                </WithLogin>
-              </Col>
-            </Row>
-            <div style={{ "margin-top": 15 }}>{reviewList}</div>
-          </Col>
+      const reviewList = (
+        <div>{reviews}</div>
+      );
+      let display = null;
+      if (isSkillSelected) {
+      display = (
+        <Grid>
+          <Col sm={4} md={3} mdOffset={1} style={{ marginRight: '5%' }}>
+          <Icon
+            icon={this.state.currentSkill.icon}
+            onIconUploaded={this.onIconSelected}
+            />
+          <Row>
+            <table style={{width: '250px'}}>
+              <tr>
+              <td>
+              <h1>{this.state.currentSkill.name}</h1>
+              </td>
+              <td>
+              <WithLogin>
+                <Button
+                  name={'DeleteSkill'}
+                  bsStyle='danger'
+                  bsSize='small'
+                  onClick={this.openNewModalType('DeleteSkill')}
+                  children='Delete'
+                  style={{ marginLeft: '15%', marginTop: '12%' }} 
+                />            
+              </WithLogin>
+            </td>
+          </tr>
+          </table>
         </Row>
-      </div>
+        <h3>{mapSkillType(this.state.currentSkill.skill_type)}</h3>
+        <SkillLinksDisplay
+          links={this.state.currentSkill.links}
+          onClick={this.openNewModalType('AddLink')}
+        />
+      </Col>
+      <Col sm={10} md={7} style={{ "margin-top": 25 }}>
+        <Row>
+          <table style={{width: '100%'}}>
+          <tr>
+            <td align='left'>
+            <h2>Skill Reviews</h2>
+            </td>
+            <td align='right'>
+            <WithLogin>
+              <Button
+                name="AddReview"
+                bsStyle="info"
+                bsSize="small"
+                onClick={this.openNewModalType('AddReview')}
+                style={{ float: 'right', marginTop: '12%' }}>
+                Add Review
+              </Button>
+            </WithLogin>
+            </td>
+          </tr>
+          </table>
+        </Row>
+        <Row style={{ "margin-top": 15 }}>
+          {reviewList}
+        </Row>
+      </Col>
+      </Grid>
       );
     }
 
