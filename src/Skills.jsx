@@ -296,7 +296,7 @@ class Skills extends Component {
               <td>
               <WithLogin>
                 <Button
-                  name={name}
+                  name={'DeleteSkill'}
                   bsStyle='danger'
                   bsSize='small'
                   onClick={this.openNewModalType('DeleteSkill')}
