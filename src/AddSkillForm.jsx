@@ -43,8 +43,6 @@ class AddSkillForm extends React.Component {
   }
 
   onTypeChange(ev) {
-    console.log('addskillform typechange ev:')
-    console.log(ev);
     this.onChange('skill_type')(ev.target.value);
   }
 

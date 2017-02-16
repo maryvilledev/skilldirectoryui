@@ -67,7 +67,6 @@ class Skills extends Component {
   onSkillChange(ev) {
     // Get the ID of the selected skill
     const skillId = ev.target.value;
-    console.log('skillID: ' + skillId);
     // Load the current skill's info and then route the user
     return this.loadCurrentSkill(skillId)
       .then(browserHistory.push(`/skills/${skillId}`))
