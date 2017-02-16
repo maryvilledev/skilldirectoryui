@@ -1,10 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from 'react-bootstrap/lib/Button';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import Select from 'react-select';
 
 import ItemDisplayer from './ItemDisplayer';
 import TeamMemberDisplay from './TeamMemberDisplay.jsx';
@@ -41,8 +40,9 @@ class Team extends React.Component {
     this.fetchTeamMembers();
   }
 
-  onSelectChange(obj) {
-    axios.get(`${api}/teammembers/${obj.id}`)
+  onSelectChange(ev) {
+    const teamMemberID = ev.target.value;
+    axios.get(`${api}/teammembers/${teamMemberID}`)
       .then((result) => {
         const teamMemberData = result.data;
         this.setState({
@@ -155,6 +155,11 @@ class Team extends React.Component {
 
   render() {
     let selectedItem = null;
+    const tmOptions = this.state.teamMembers.map((teamMember, idx) =>
+      <option key={idx} value={teamMember.id}>
+        {teamMember.name}
+      </option>
+    );
     if (this.state.selectedTeamMember.id) {
       selectedItem = (
         <ItemDisplayer
@@ -171,13 +176,21 @@ class Team extends React.Component {
       <div>
         <Row>
           <Col xs={4} md={4}>
-            <Select
+            <FormControl 
+              name='teamMembers'
+              componentClass='select' 
+              onChange={this.onSelectChange} >
+              {<option selected disabled>Select A Team Member...</option>}
+              {tmOptions}
+            </FormControl>
+
+            {/*<Select
               name="teamMembers"
               labelKey="name"
               value={this.state.selectedTeamMember.name}
               options={this.state.teamMembers}
               onChange={this.onSelectChange}
-            />
+            />*/}
           </Col>
           <WithLogin>
             <Button

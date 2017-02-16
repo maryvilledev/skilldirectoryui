@@ -2,8 +2,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
-import { Row, Col, Button, Grid } from 'react-bootstrap';
-import Select from 'react-select';
+import { Row, Col, Button, Grid, FormControl } from 'react-bootstrap';
 
 import ReviewPanel from './ReviewPanel.jsx';
 import ItemDisplayer from './ItemDisplayer';
@@ -67,7 +66,8 @@ class Skills extends Component {
 
   onSkillChange(ev) {
     // Get the ID of the selected skill
-    const skillId = ev.id;
+    const skillId = ev.target.value;
+    console.log('skillID: ' + skillId);
     // Load the current skill's info and then route the user
     return this.loadCurrentSkill(skillId)
       .then(browserHistory.push(`/skills/${skillId}`))
@@ -269,6 +269,11 @@ class Skills extends Component {
   render() {
     const currentSkillID = this.state.currentSkill.skill_id;
     const isSkillSelected = currentSkillID !== "";
+    const skillOptions = this.state.skills.map((skill, idx) =>
+      <option key={idx} value={skill.id}>
+        {skill.name}
+      </option>
+    );
     let reviews = null;
     if (this.state.reviews) {
       reviews = this.state.reviews.map(review => {
@@ -349,13 +354,13 @@ class Skills extends Component {
         <div>
           <Row>
             <Col xs={4} md={4}>
-              <Select
-                name="skills"
-                labelKey="name"
-                onChange={this.onSkillChange}
-                value={this.state.currentSkill.skill_type}
-                options={this.state.skills}
-              />
+              <FormControl 
+                name='skills'
+                componentClass='select' 
+                onChange={this.onSkillChange} >
+                {<option selected disabled>Select A Skill...</option>}
+                {skillOptions}
+              </FormControl>
             </Col>
             <WithLogin>
               <Button
