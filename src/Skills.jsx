@@ -311,7 +311,7 @@ class Skills extends Component {
           </tr>
           </table>
         </Row>
-        <h3>{mapSkillType(this.state.currentSkill.skill_type)}</h3>
+        <h4>{mapSkillType(this.state.currentSkill.skill_type)}</h4>
         <SkillLinksDisplay
           links={this.state.currentSkill.links}
           onClick={this.openNewModalType('AddLink')}

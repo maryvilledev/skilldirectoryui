@@ -9,3 +9,15 @@ const skillTypesMap = {
 export const mapSkillType = (skillType) => {
   return skillTypesMap[skillType];
 }
+
+const linkTypesMap = {
+  'blog':           'Blog',
+  'webpage':        'Webpage',
+  'tutorial':       'Tutorial',
+  'developer-tool': 'Developer Tool',
+}
+
+// Maps the link type received from API to a nicer string/description
+export const mapLinkType = (linkType) => {
+  return linkTypesMap[linkType];
+}
