@@ -128,6 +128,7 @@ class AddSkillLinkForm extends React.Component {
                 componentClass="select"
                 onChange={this.onLinkTypeChange}
               >
+                {<option selected disabled>Select A Type...</option>}
                 {options}
               </FormControl>
             </Col>
