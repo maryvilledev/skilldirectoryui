@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import LoginLink from './LoginLink.jsx';
 
+
 class Header extends React.Component {
   render() {
     return (
@@ -20,20 +21,18 @@ class Header extends React.Component {
           //Make sure all these paths are absolute (starting with a '/') so the
           //route will be handled properly
           }
-            <Nav>
-              <NavItem eventKey={1}>
-                <Link to="/skills">Skills</Link>
-              </NavItem>
-              <NavItem eventKey={2}>
-                <Link to="/team">Team</Link>
-              </NavItem>
-            </Nav>
-          <Nav pullRight>
-            <NavItem  eventKey={3}>
-              <LoginLink />
+          <Nav>
+            <NavItem eventKey={1}>
+              <Link to="/skills">Skills</Link>
+            </NavItem>
+            <NavItem eventKey={2}>
+              <Link to="/team">Team</Link>
             </NavItem>
           </Nav>
-          </Navbar>
+          <Nav pullRight>
+              <LoginLink />
+          </Nav>
+        </Navbar>
         {this.props.children}
       </Grid>
     );
