@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Button, Row } from 'react-bootstrap';
-import WithLogin from './WithLogin'
-
-const capitalizeFirstLetter = (str) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
+import WithLogin from './WithLogin';
+import { mapLinkType } from './util/util.js';
 
 const SkillLinksDisplay = ({ links, onClick }) => {
   let linkElements = null;
@@ -12,7 +9,7 @@ const SkillLinksDisplay = ({ links, onClick }) => {
     linkElements = links.map((link) => {
       return (
         <li key={link.id}>
-          { `${capitalizeFirstLetter(String(link.link_type))}: ` }
+          {mapLinkType(link.link_type) + ': '}
           <a target="_blank" href={link.url}>{link.name}</a>
         </li>
       );

@@ -2,6 +2,22 @@ import React, { PropTypes } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Col, ControlLabel, Button,
    Form, FormControl, FormGroup } from 'react-bootstrap';
+import { mapLinkType } from './util/util.js';
+
+const linkTypes = [
+  { value: 'tutorial',       label: mapLinkType('tutorial')},
+  { value: 'blog',           label: mapLinkType('blog')},
+  { value: 'webpage',        label: mapLinkType('webpage')},
+  { value: 'developer-tool', label: mapLinkType('developer-tool')}
+];
+
+const options = linkTypes.map((type, index) => {
+  return (
+    <option key={index} value={type.value}>
+      {type.label}
+    </option>
+  );
+});
 
 /* eslint-disable no-useless-escape */
 /* http://stackoverflow.com/a/30970319 */
@@ -112,16 +128,7 @@ class AddSkillLinkForm extends React.Component {
                 componentClass="select"
                 onChange={this.onLinkTypeChange}
               >
-                <option key={null} value={null} />
-                <option key="blog" value="blog">
-                  Blog
-                </option>
-                <option key="tutorial" value="tutorial">
-                  Tutorial
-                </option>
-                <option key="webpage" value="webpage">
-                  Webpage
-                </option>
+                {options}
               </FormControl>
             </Col>
           </FormGroup>
