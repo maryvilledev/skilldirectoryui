@@ -1,7 +1,7 @@
 echo $API
 
 if [ "$API" == "" ]; then
-ecoh "Setting Default API URL"
+echo "Setting Default API URL"
   API="http://localhost:8080/api"
 fi
 
@@ -9,6 +9,9 @@ if [ "$CLIENT" == "" ]; then
 echo "Setting Default Client Id"
   CLIENT="cea07783faa101a3c5fc"
 fi
+
+echo "API: $API"
+echo "CLIENTID: $CLIENT"
 
 REACT_APP_GITHUB_CLIENT=$CLIENT REACT_APP_API=$API npm run build
 
