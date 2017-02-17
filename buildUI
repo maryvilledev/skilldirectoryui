@@ -13,7 +13,7 @@ fi
 echo "API: $API"
 echo "CLIENTID: $CLIENT"
 
-REACT_APP_GITHUB_CLIENT=$CLIENT REACT_APP_API=$API npm run build
+REACT_APP_GITHUB_CLIENT_ID=$CLIENT REACT_APP_API=$API npm run build
 
 
 cd build && pushstate-server .
