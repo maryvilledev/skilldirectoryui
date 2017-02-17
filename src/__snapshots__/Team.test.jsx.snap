@@ -8,50 +8,17 @@ exports[`<Team /> matches the stored snapshot 1`] = `
       componentClass="div"
       md={4}
       xs={4}>
-      <Select
-        addLabelText="Add \"{label}\"?"
-        arrowRenderer={[Function]}
-        autosize={true}
-        backspaceRemoves={true}
-        backspaceToRemoveMessage="Press backspace to remove {label}"
-        clearAllText="Clear all"
-        clearRenderer={[Function]}
-        clearValueText="Clear value"
-        clearable={true}
-        deleteRemoves={true}
-        delimiter=","
-        disabled={false}
-        escapeClearsValue={true}
-        filterOptions={[Function]}
-        ignoreAccents={true}
-        ignoreCase={true}
-        inputProps={Object {}}
-        isLoading={false}
-        joinValues={false}
-        labelKey="name"
-        matchPos="any"
-        matchProp="any"
-        menuBuffer={0}
-        menuRenderer={[Function]}
-        multi={false}
+      <FormControl
+        bsClass="form-control"
+        componentClass="select"
         name="teamMembers"
-        noResultsText="No results found"
-        onBlurResetsInput={true}
-        onChange={[Function]}
-        onCloseResetsInput={true}
-        openAfterFocus={false}
-        optionComponent={[Function]}
-        options={Array []}
-        pageSize={5}
-        placeholder="Select..."
-        required={false}
-        scrollMenuIntoView={true}
-        searchable={true}
-        simpleValue={false}
-        tabSelectsValue={true}
-        value=""
-        valueComponent={[Function]}
-        valueKey="value" />
+        onChange={[Function]}>
+        <option
+          disabled={true}
+          selected={true}>
+          Select A Team Member...
+        </option>
+      </FormControl>
     </Col>
     <WithLogin>
       <Button
