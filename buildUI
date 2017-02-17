@@ -1,9 +1,16 @@
 echo $API
 
 if [ "$API" == "" ]; then
-  API="http://localhost:8080"
+ecoh "Setting Default API URL"
+  API="http://localhost:8080/api"
 fi
 
-REACT_APP_API=$API npm run build
+if [ "$CLIENT" == "" ]; then
+echo "Setting Default Client Id"
+  CLIENT="cea07783faa101a3c5fc"
+fi
+
+REACT_APP_GITHUB_CLIENT=$CLIENT REACT_APP_API=$API npm run build
+
 
 cd build && pushstate-server .
