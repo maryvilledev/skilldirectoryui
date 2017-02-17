@@ -36,6 +36,11 @@ const SkillLinksDisplay = ({ links, onClick }) => {
 
   const linksList = (
     <span>
+      <h4><img src={webpageIcon} role='presentation'/> Webpages</h4>
+      <ul>
+      {links === undefined ? null :
+       links.filter(l => l.link_type === 'webpage').map(makeLinkListItem)}
+      </ul>
       <h4><img src={tutorialIcon} role='presentation'/> Tutorials</h4>
       <ul>
       {links === undefined ? null : 
@@ -45,11 +50,6 @@ const SkillLinksDisplay = ({ links, onClick }) => {
       <ul>
       {links === undefined ? null :
        links.filter(l => l.link_type === 'blog').map(makeLinkListItem)}
-      </ul>
-      <h4><img src={webpageIcon} role='presentation'/> Webpages</h4>
-      <ul>
-      {links === undefined ? null :
-       links.filter(l => l.link_type === 'webpage').map(makeLinkListItem)}
       </ul>
       <h4><img src={developerToolIcon} role='presentation'/> Developer Tools</h4>
       <ul>
