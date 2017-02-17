@@ -8,9 +8,9 @@ export const ModalStyle = {
   },
   content: {
     position: 'fixed',
-    top: '250px',
-    left: '500px',
-    right: '500px',
-    bottom: '250px',
+    top: '15%',
+    left: '25%',
+    right: '25%',
+    bottom: '25%',
   }
 }
