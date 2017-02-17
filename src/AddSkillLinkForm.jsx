@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import 'react-select/dist/react-select.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Col, ControlLabel, Button,
    Form, FormControl, FormGroup } from 'react-bootstrap';
