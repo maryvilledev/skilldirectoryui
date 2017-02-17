@@ -42,7 +42,7 @@ const LoginLink = () => {
     <div>
       <a
         href={authURL}
-        target="_blank" >
+      >
         Sign in to Github
       </a>
     </div>
