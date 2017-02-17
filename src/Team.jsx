@@ -183,14 +183,6 @@ class Team extends React.Component {
               {<option selected disabled>Select A Team Member...</option>}
               {tmOptions}
             </FormControl>
-
-            {/*<Select
-              name="teamMembers"
-              labelKey="name"
-              value={this.state.selectedTeamMember.name}
-              options={this.state.teamMembers}
-              onChange={this.onSelectChange}
-            />*/}
           </Col>
           <WithLogin>
             <Button
