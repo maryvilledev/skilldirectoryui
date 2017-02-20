@@ -9,6 +9,7 @@ const logOut = () => {
   cookie.save('isLoggedIn', false);
   cookie.remove('user_id');
   cookie.remove('name');
+  cookie.remove('login');
   cookie.remove('avatar_url');
   cookie.remove('github_token');
   browserHistory.push('/home');
