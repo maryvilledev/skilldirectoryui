@@ -50,6 +50,7 @@ const LoginLink = () => {
   return (
     <div>
       <a
+        style={{ color: 'white' }}
         href={authURL}
       >
         Sign in to Github
