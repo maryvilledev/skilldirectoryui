@@ -24,7 +24,7 @@ const Auth = ({ location: { query: { code } } }) => {
     .then((data) => data.access_token)
     .then((access_token) => {
       // Make a request to Github for the user's profile info
-      cookie.save("github_token", access_token);
+      cookie.save('github_token', access_token);
       return fetch('https://api.github.com/user', {
         method: 'GET',
         headers: {
@@ -34,11 +34,12 @@ const Auth = ({ location: { query: { code } } }) => {
       })
     })
     .then((response) => response.json())
-    .then(({ avatar_url, id, name }) => {
-      cookie.save("avatar_url", avatar_url);
-      cookie.save("user_id", id);
-      cookie.save("name", name);
-      cookie.save("isLoggedIn", true);
+    .then(({ avatar_url, id, login, name }) => {
+      cookie.save('avatar_url', avatar_url);
+      cookie.save('user_id', id);
+      cookie.save('login', login);
+      cookie.save('name', name);
+      cookie.save('isLoggedIn', true);
     })
     .then(() => {
       browserHistory.push('/home');

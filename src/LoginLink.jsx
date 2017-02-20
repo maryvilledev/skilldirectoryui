@@ -9,6 +9,7 @@ const logOut = () => {
   cookie.save('isLoggedIn', false);
   cookie.remove('user_id');
   cookie.remove('name');
+  cookie.remove('login');
   cookie.remove('avatar_url');
   cookie.remove('github_token');
   browserHistory.push('/home');
@@ -22,6 +23,16 @@ const isLoggedIn = () => {
   return cookieValue === true || cookieValue === 'true';
 }
 
+const displayName = () => {
+  const name = cookie.load('name');
+  // If the user doesn't have a name field, it will be stored as 'null' (string),
+  // so manually check that the value isn't null
+  if (!name || name === 'null') {
+    return cookie.load('login');
+  }
+  return name;
+}
+
 const LoginLink = () => {
   if (isLoggedIn()) {
     return (
@@ -32,9 +43,7 @@ const LoginLink = () => {
           src={cookie.load("avatar_url")}
           width={50}
         />
-        <span onClick={logOut}>
-          Hello { cookie.load('name') || 'user' }! | Log out
-        </span>
+      Hello <span id="displayName">{ displayName() }</span>! | <span onClick={logOut}>Log out</span>
       </div>
     );
   }
