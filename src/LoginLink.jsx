@@ -49,7 +49,7 @@ const LoginLink = () => {
     );
   }
   return (
-    <div >
+    <div>
       <a
         href={authURL}
       >
