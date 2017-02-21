@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import ReviewPanel from './ReviewPanel.jsx'
+import { Col, Grid } from 'react-bootstrap';
 
 const api = (process.env.REACT_APP_API);
 
@@ -9,7 +11,7 @@ class Home extends React.Component {
     this.state = { 
       totalTeamMembers: null, 
       totalSkills: null,
-      recentSkillReviews: null,
+      recentReviews: null,
      };
   }
 
@@ -21,31 +23,29 @@ class Home extends React.Component {
       this.setState({ totalSkills: total })
     });
     getRecentSkillReviews(api, reviews => {
-      this.setState({ recentSkillReviews: reviews });
+      this.setState({ recentReviews: reviews });
     }, 5);
   }
 
   render() {
-    let skillReviews = null;
-    if(this.state.recentSkillReviews != null) {
-      skillReviews = this.state.recentSkillReviews.map(skillReview =>
-        <li key={skillReview.id}>
-            <div>
-              {`${skillReview.team_member_name} reviewed the 
-                ${skillReview.skill_name} skill:`}
-            </div>
-            <div>{skillReview.body}</div>
-        </li>
-      );
+    let reviews = null;
+    if (this.state.recentReviews) {
+        reviews = this.state.recentReviews.map(review => 
+          <ReviewPanel review={review} key={review.timestamp}/>
+        );
     }
+    
     return (
-      <div>
-        <h1>Skill Directory Home</h1>
-        <h3>Team Members: <a href="/team">{this.state.totalTeamMembers}</a></h3>
-        <h3>Unique Skills: <a href="/skills">{this.state.totalSkills}</a></h3>
-        {skillReviews == null ? null : <h3>Recent Skill Reviews:</h3>}
-        <ul>{skillReviews}</ul>
-      </div>
+      <Grid>
+      <Col sm={4} md={3} mdOffset={1}>
+      <h3>Team Members: <a href="/team">{this.state.totalTeamMembers}</a></h3>
+      <h3>Unique Skills: <a href="/skills">{this.state.totalSkills}</a></h3>
+      </Col>
+      <Col sm={10} md={7}>
+      {reviews == null ? null : <h3>Recent Skill Reviews:</h3>}
+      {reviews}
+      </Col>
+      </Grid>
     );
   }
 }
