@@ -30,7 +30,9 @@ class Header extends React.Component {
             </NavItem>
           </Nav>
           <Nav pullRight>
+            <NavItem >
               <LoginLink />
+            </NavItem>
           </Nav>
         </Navbar>
         {this.props.children}

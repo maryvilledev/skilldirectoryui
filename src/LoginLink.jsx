@@ -1,7 +1,8 @@
 import React from 'react';
 import cookie from 'react-cookie';
+import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-import gitIcon from '../resources/Octocat.png';
+import gitIcon from '../resources/GitHub-Mark-64px.png';
 
 const client_id = (process.env.REACT_APP_GITHUB_CLIENT_ID);
 const authURL = `https://github.com/login/oauth/authorize?scope=user:email%20read:org&client_id=${client_id}`;
@@ -10,7 +11,6 @@ const logOut = () => {
   cookie.save('isLoggedIn', false);
   cookie.remove('user_id');
   cookie.remove('name');
-  cookie.remove('login');
   cookie.remove('avatar_url');
   cookie.remove('github_token');
   browserHistory.push('/home');
@@ -24,43 +24,36 @@ const isLoggedIn = () => {
   return cookieValue === true || cookieValue === 'true';
 }
 
-const displayName = () => {
-  const name = cookie.load('name');
-  // If the user doesn't have a name field, it will be stored as 'null' (string),
-  // so manually check that the value isn't null
-  if (!name || name === 'null') {
-    return cookie.load('login');
-  }
-  return name;
-}
-
 const LoginLink = () => {
   if (isLoggedIn()) {
+    const userIcon = (
+      <img
+        alt="Github Avatar"
+        src={cookie.load("avatar_url")}
+        width='25'
+        style={{ paddingRight: '20%' }}
+      />
+    );
     return (
-      <div>
-        <img
-          alt="Github Avatar"
-          height={50}
-          src={cookie.load("avatar_url")}
-          width={50}
-        />
-      Hello <span id="displayName">{ displayName() }</span>! | <span onClick={logOut}>Log out</span>
-      </div>
+      <DropdownButton bsStyle='default' title={userIcon} >
+        <MenuItem onClick={logOut}> Log out</MenuItem>
+      </DropdownButton>
     );
   }
   return (
-    <div padding-top={'10'} >
-      <a
-        href={authURL}
-      >
+      <Button
+        onClick={ () => window.location = authURL }
+        bsStyle='default'
+        bsSize='small' >
       <img
-        style={{ marginTop:'20%' , marginRight:'20%'}}
+        style={{ paddingRight: '8%'}}
         src={gitIcon}
-        height={35}
-        width={35}
-        />
-      </a>
-    </div>
+        width='28'
+      />
+    Login with Github
+      </Button>
+
+
   )
 };
 
