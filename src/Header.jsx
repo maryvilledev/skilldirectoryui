@@ -29,7 +29,7 @@ class Header extends React.Component {
               <Link to="/team">Team</Link>
             </NavItem>
           </Nav>
-          <Nav pullRight >
+          <Nav pullRight>
               <LoginLink />
           </Nav>
         </Navbar>
