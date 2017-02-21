@@ -1,18 +1,31 @@
 exports[`<Home /> matches the stored snapshot 1`] = `
-<div>
-  <h1>
-    Skill Directory Home
-  </h1>
-  <h3>
-    Team Members: 
-    <a
-      href="/team" />
-  </h3>
-  <h3>
-    Unique Skills: 
-    <a
-      href="/skills" />
-  </h3>
-  <ul />
-</div>
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={false}>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={3}
+    mdOffset={1}
+    sm={4}>
+    <h3>
+      Team Members: 
+      <a
+        href="/team" />
+    </h3>
+    <h3>
+      Unique Skills: 
+      <a
+        href="/skills" />
+    </h3>
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={7}
+    sm={10}>
+    
+  </Col>
+</Grid>
 `;
