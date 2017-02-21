@@ -22,7 +22,7 @@ describe('<Skills />', () => {
   describe('when the user is not logged in', () => {
     beforeEach(() => {
       cookie.save('isLoggedIn', false);
-    })
+    });
     it('should not display the Add Skill button', () => {
       const wrapper = mount(<Skills />);
       const addSkillButton = wrapper.find('[name="AddSkill"]');
