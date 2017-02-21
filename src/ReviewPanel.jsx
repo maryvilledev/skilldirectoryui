@@ -9,8 +9,16 @@ const ReviewPanel = ({ review, showSkillName }) => {
   const tmID    = review.team_member_id;
   const skillID = review.skill_id;
 
-  const reviewer  = <a href={`/team/${tmID}`}>{review.team_member_name}</a> 
-  const skillName = <a href={`/skills/${skillID}`}>{review.skill_name}</a>
+  const reviewer  = (
+    <a href={`/team/${tmID}`} style={{ textDecoration: 'underline' }}>
+      {review.team_member_name}
+    </a> 
+  );
+  const skillName = (
+    <a href={`/skills/${skillID}`} style={{ textDecoration: 'underline' }}>
+      {review.skill_name}
+    </a>
+  );
 
   const header = (
     <span>
