@@ -54,7 +54,7 @@ const LoginLink = () => {
         href={authURL}
       >
       <img
-        style={{ marginTop:'20%' , marginRight:'20%'}}
+        style={{ marginTop:'20%' , marginRight:'20%' }}
         src={gitIcon}
         height={35}
         width={35}
