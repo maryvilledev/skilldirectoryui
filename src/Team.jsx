@@ -124,7 +124,6 @@ class Team extends React.Component {
   }
 
   loadCurrentTeamMember(currentID) {
-    console.log('Loading current team member!')
     return axios.get(`${api}/teammembers/${currentID}`)
       .then(res => {
         const result = res.data;
