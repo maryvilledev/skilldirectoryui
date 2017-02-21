@@ -31,7 +31,7 @@ class Home extends React.Component {
     let reviews = null;
     if (this.state.recentReviews) {
         reviews = this.state.recentReviews.map(review => 
-          <ReviewPanel review={review} key={review.timestamp}/>
+          <ReviewPanel review={review} showSkillName={true} />
         );
     }
     
