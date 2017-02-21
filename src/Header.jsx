@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 import { Link } from 'react-router';
-import { Button, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import LoginLink from './LoginLink.jsx';

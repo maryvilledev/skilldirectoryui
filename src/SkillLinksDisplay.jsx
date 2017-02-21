@@ -8,7 +8,8 @@ import developerToolIcon from '../resources/wrench-icon.png';
 
 const SkillLinksDisplay = ({ links, onClick }) => {
   const makeLinkListItem = (link, idx) => 
-    (<li key={idx}><a href={link.url}>{link.name}</a></li>)
+    // target='_blank' makes link open in new tab
+    (<li key={idx}><a target='_blank' href={link.url}>{link.name}</a></li>)
 
   const linkHeader = (
     <Row>
