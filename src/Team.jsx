@@ -19,7 +19,7 @@ class Team extends React.Component {
       teamMembers: [],
       isModalDisplayed: false,
       displayedModalType: '',
-      selectedTeamMember: {
+      currentTeamMember: {
         id: '',
         name: '',
         title: '',
@@ -29,7 +29,7 @@ class Team extends React.Component {
     this.openNewModalType = this.openNewModalType.bind(this);
     this.closeModal = this.closeModal.bind(this);
 
-    this.fetchTeamMembers = this.fetchTeamMembers.bind(this);
+    this.loadTeamMembers = this.loadTeamMembers.bind(this);
     this.onSelectChange = this.onSelectChange.bind(this);
     this.addTeamMember = this.addTeamMember.bind(this);
     this.shouldDelete = this.shouldDelete.bind(this);
@@ -37,7 +37,17 @@ class Team extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchTeamMembers();
+    // Fetch all team members
+    this.loadTeamMembers()
+    .then(() => {
+      // Load the current teammember only if there was an id param (in the URL)
+      if (this.props.params && this.props.params.id)
+        this.loadCurrentTeamMember(this.props.params.id);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   }
 
   onSelectChange(ev) {
@@ -46,7 +56,7 @@ class Team extends React.Component {
       .then((result) => {
         const teamMemberData = result.data;
         this.setState({
-          selectedTeamMember: {
+          currentTeamMember: {
             id: teamMemberData.id,
             name: teamMemberData.name,
             title: teamMemberData.title,
@@ -54,7 +64,7 @@ class Team extends React.Component {
         });
       })
       .then(() => {
-        browserHistory.push(`/team/${this.state.selectedTeamMember.id}`);
+        browserHistory.push(`/team/${this.state.currentTeamMember.id}`);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -100,8 +110,8 @@ class Team extends React.Component {
     });
   }
 
-  fetchTeamMembers() {
-    axios.get(`${api}/teammembers/`)
+  loadTeamMembers() {
+    return axios.get(`${api}/teammembers/`)
       .then((result) => {
         const teamMembers = result.data.slice();
         this.setState({
@@ -113,13 +123,29 @@ class Team extends React.Component {
       });
   }
 
+  loadCurrentTeamMember(currentID) {
+    console.log('Loading current team member!')
+    return axios.get(`${api}/teammembers/${currentID}`)
+      .then(res => {
+        const result = res.data;
+        this.setState({
+          currentTeamMember: {
+            id:    result.id,
+            name:  result.name,
+            title: result.title,
+          },
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
   addTeamMember(name, title) {
     axios.post(`${api}/teammembers/`, {
       name,
       title,
     }).then((response) => {
       this.closeModal();
-      this.fetchTeamMembers();
+      this.loadTeamMembers();
     }).catch((err) => {
       console.log(`Error: ${err}`);
     });
@@ -133,17 +159,17 @@ class Team extends React.Component {
   }
 
   deleteTeamMember() {
-    axios.delete(`${api}/teammembers/${this.state.selectedTeamMember.id}`)
+    axios.delete(`${api}/teammembers/${this.state.currentTeamMember.id}`)
       .then(() => {
         this.setState({
-          selectedTeamMember: {
+          currentTeamMember: {
             id: '',
             name: '',
             title: '',
           },
         });
         // Refetch the list of team members
-        this.fetchTeamMembers();
+        this.loadTeamMembers();
       })
       .then(() => {
         browserHistory.push('/team/');
@@ -160,14 +186,14 @@ class Team extends React.Component {
         {teamMember.name}
       </option>
     );
-    if (this.state.selectedTeamMember.id) {
+    if (this.state.currentTeamMember.id) {
       selectedItem = (
         <ItemDisplayer
           typeName="TeamMember"
           deleteCallback={this.openNewModalType('DeleteTeamMember')}
         >
           <TeamMemberDisplay
-            selected={this.state.selectedTeamMember}
+            selected={this.state.currentTeamMember}
           />
         </ItemDisplayer>
       );
