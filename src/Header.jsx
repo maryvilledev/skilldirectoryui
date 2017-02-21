@@ -32,7 +32,10 @@ class Header extends React.Component {
           <Nav pullRight>
             <NavItem >
               <LoginLink />
+<<<<<<< HEAD
             </NavItem>
+=======
+>>>>>>> d3d4eb7705154296fc907a04aec9823d91b081a3
           </Nav>
         </Navbar>
         {this.props.children}

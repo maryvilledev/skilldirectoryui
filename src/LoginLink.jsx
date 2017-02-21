@@ -2,7 +2,11 @@ import React from 'react';
 import cookie from 'react-cookie';
 import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
+<<<<<<< HEAD
 import gitIcon from '../resources/GitHub-Mark-64px.png';
+=======
+import gitIcon from '../resources/Octocat.png';
+>>>>>>> d3d4eb7705154296fc907a04aec9823d91b081a3
 
 const client_id = (process.env.REACT_APP_GITHUB_CLIENT_ID);
 const authURL = `https://github.com/login/oauth/authorize?scope=user:email%20read:org&client_id=${client_id}`;
@@ -41,14 +45,13 @@ const LoginLink = () => {
     );
   }
   return (
+<<<<<<< HEAD
       <Button
         onClick={ () => window.location = authURL }
         bsStyle='default'
         bsSize='small' >
       <img
         style={{ paddingRight: '8%'}}
-        src={gitIcon}
-        width='28'
       />
     Login with Github
       </Button>
