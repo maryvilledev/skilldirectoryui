@@ -51,20 +51,7 @@ exports[`<Header /> matches the stored snapshot 1`] = `
       pullLeft={false}
       pullRight={true}
       stacked={false}>
-      <Button
-        active={false}
-        block={false}
-        bsClass="btn"
-        bsStyle="primary"
-        disabled={false}
-        style={
-          Object {
-            "marginRight": "5%",
-            "marginTop": "5%",
-          }
-        }>
-        <LoginLink />
-      </Button>
+      <LoginLink />
     </Nav>
   </Uncontrolled(Navbar)>
 </Grid>

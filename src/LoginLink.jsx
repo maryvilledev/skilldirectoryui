@@ -1,6 +1,8 @@
 import React from 'react';
 import cookie from 'react-cookie';
 import { browserHistory } from 'react-router';
+import gitIcon from '../resources/Octocat.png';
+
 
 const client_id = (process.env.REACT_APP_GITHUB_CLIENT_ID);
 const authURL = `https://github.com/login/oauth/authorize?scope=user:email%20read:org&client_id=${client_id}`;
@@ -39,12 +41,18 @@ const LoginLink = () => {
     );
   }
   return (
-    <div>
+    <div padding-top={'10'} >
+
       <a
-        style={{ color: 'white' }}
+
         href={authURL}
       >
-        Sign in to Github
+      <img
+        style={{ marginTop:'20%' , marginRight:'20%'}}
+        src={gitIcon}
+        height={35}
+        width={35}
+        />
       </a>
     </div>
   )

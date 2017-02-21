@@ -30,12 +30,8 @@ class Header extends React.Component {
             </NavItem>
           </Nav>
           <Nav pullRight >
-
-            <Button
-              bsStyle='primary'
-              style={{ marginTop: '5%', marginRight: '5%' }}  >
               <LoginLink />
-            </Button>
+
           </Nav>
         </Navbar>
         {this.props.children}
