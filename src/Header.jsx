@@ -18,8 +18,8 @@ class Header extends React.Component {
             </Navbar.Brand>
           </Navbar.Header>
           {
-          //Make sure all these paths are absolute (starting with a '/') so the
-          //route will be handled properly
+          // Make sure all these paths are absolute (starting with a '/') so the
+          // route will be handled properly
           }
           <Nav>
             <NavItem eventKey={1}>
@@ -30,7 +30,9 @@ class Header extends React.Component {
             </NavItem>
           </Nav>
           <Nav pullRight>
+            <NavItem >
               <LoginLink />
+            </NavItem>
           </Nav>
         </Navbar>
         {this.props.children}

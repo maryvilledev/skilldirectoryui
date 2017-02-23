@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import cookie from 'react-cookie';
+import { Button } from 'react-bootstrap';
 import { mount, shallow } from 'enzyme';
 
 import LoginLink from './LoginLink.jsx';
@@ -15,7 +16,7 @@ describe('<LoginLink />', () => {
     });
     it('should display a link to Github', () => {
       const loginLink = shallow(<LoginLink />);
-      const githubLink = loginLink.find('a');
+      const githubLink = loginLink.find(Button);
       expect(githubLink).toHaveLength(1);
     });
   });
@@ -30,21 +31,8 @@ describe('<LoginLink />', () => {
     });
     it('should not display the link to Github', () => {
       const loginLink = shallow(<LoginLink />);
-      const githubLink = loginLink.find('a');
+      const githubLink = loginLink.find(Button);
       expect(githubLink).toHaveLength(0);
-    });
-    it('should display the user\'s name from Github', () => {
-      cookie.save('name', 'foo bar baz');
-      const loginLink = shallow(<LoginLink />);
-      const displayName = loginLink.find('#displayName')
-      expect(displayName.text()).toEqual('foo bar baz');
-    });
-    it('should display the user\'s login ID from Github if they don\'t have a name', () => {
-      cookie.save('name', null);
-      cookie.save('login', 'username')
-      const loginLink = shallow(<LoginLink />);
-      const displayName = loginLink.find('#displayName')
-      expect(displayName.text()).toEqual('username');
     });
   });
 });

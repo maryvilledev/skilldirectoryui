@@ -51,7 +51,11 @@ exports[`<Header /> matches the stored snapshot 1`] = `
       pullLeft={false}
       pullRight={true}
       stacked={false}>
-      <LoginLink />
+      <NavItem
+        active={false}
+        disabled={false}>
+        <LoginLink />
+      </NavItem>
     </Nav>
   </Uncontrolled(Navbar)>
 </Grid>
