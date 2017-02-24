@@ -1,6 +1,8 @@
 import React from 'react';
 import cookie from 'react-cookie';
+import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
+import gitIcon from '../resources/github-icon.png';
 
 const client_id = (process.env.REACT_APP_GITHUB_CLIENT_ID);
 const authURL = `https://github.com/login/oauth/authorize?scope=user:email%20read:org&client_id=${client_id}`;
@@ -24,28 +26,40 @@ const isLoggedIn = () => {
 
 const LoginLink = () => {
   if (isLoggedIn()) {
-    return (
-      <div>
+    const title = (
+      <span>
         <img
-          alt="Github Avatar"
-          height={50}
-          src={cookie.load("avatar_url")}
-          width={50}
+          alt='Github Avatar'
+          src={cookie.load('avatar_url')}
+          width='35'
+          style={{ paddingRight: '10px' }}
         />
-        <span onClick={logOut}>
-          Hello { cookie.load('name') || 'user' }! | Log out
-        </span>
-      </div>
+        <b style={{ paddingRight: '5px' }}>{cookie.load('name')}</b>
+      </span>
+    );
+    return (
+      <DropdownButton 
+        bsStyle='default' 
+        title={title}  
+        style={{ padding: '5px' }}
+      >
+        <MenuItem onClick={logOut}> Log out</MenuItem>
+      </DropdownButton>
     );
   }
   return (
-    <div>
-      <a
-        href={authURL}
-        target="_blank" >
-        Sign in to Github
-      </a>
-    </div>
+      <Button
+        onClick={ () => window.location = authURL }
+        bsStyle='default'
+        bsSize='small' 
+      >
+        <img 
+          role='presentation'
+          src={gitIcon} 
+          width='28' 
+          style={{ paddingRight: '8%'}} />
+        <b>Login with Github</b>
+      </Button>
   )
 };
 

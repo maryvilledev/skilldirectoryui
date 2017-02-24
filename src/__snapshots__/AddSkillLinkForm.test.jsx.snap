@@ -68,6 +68,11 @@ exports[`<AddSkillLinkForm /> matches the stored snapshot 1`] = `
           name="linkType"
           onChange={[Function]}>
           <option
+            disabled={true}
+            selected={true}>
+            Select A Type...
+          </option>
+          <option
             value="tutorial">
             Tutorial
           </option>
