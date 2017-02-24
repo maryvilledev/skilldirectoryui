@@ -22,7 +22,7 @@ class Skills extends Component {
       isModalDisplayed: false,
       displayedModalType: '',
       currentSkill: {
-        skill_id: '',
+        id: '',
         name: '',
         skill_type: '',
         links: [],
@@ -144,13 +144,13 @@ class Skills extends Component {
     const postData = {
       link_type: newLinkData.linkType,
       name: newLinkData.linkName,
-      skill_id: this.state.currentSkill.skill_id,
+      skill_id: this.state.currentSkill.id,
       url: newLinkData.linkUrl,
     };
     axios.post(`${api}/links/`, postData)
     .then(this.closeModal)
     .then(() => {
-      this.loadCurrentSkill(this.state.currentSkill.skill_id);
+      this.loadCurrentSkill(this.state.currentSkill.id);
     })
     .catch((err) => {
       console.log(err);
@@ -159,7 +159,7 @@ class Skills extends Component {
 
   addSkillReview(newReviewData) {
     const postData = {
-      skill_id: this.state.currentSkill.skill_id,
+      skill_id: this.state.currentSkill.id,
       team_member_id: newReviewData.teamMemberId,
       body: newReviewData.body,
       positive: newReviewData.positive,
@@ -210,7 +210,7 @@ class Skills extends Component {
   }
 
   loadReviews() {
-    const currentId = this.state.currentSkill.skill_id;
+    const currentId = this.state.currentSkill.id;
     return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
       .then((response) => {
         const reviews = response.data;
@@ -235,7 +235,7 @@ class Skills extends Component {
      .then(() => {
        this.setState({
          currentSkill: {
-           skill_id: '',
+           id: '',
            name: '',
            skill_type: '',
            links: [],
@@ -255,7 +255,7 @@ class Skills extends Component {
   onIconSelected(ev) {
     // Setup form data for multipart POST request
     const formData = new FormData();
-    formData.append('skill_id', this.state.currentSkill.skill_id)
+    formData.append('skill_id', this.state.currentSkill.id)
     formData.append('icon', ev.target.files[0])
 
     // Send request to API
@@ -265,7 +265,7 @@ class Skills extends Component {
   }
 
   render() {
-    const currentSkillID = this.state.currentSkill.skill_id;
+    const currentSkillID = this.state.currentSkill.id;
     const isSkillSelected = currentSkillID !== "";
     const skillOptions = this.state.skills.map((skill, idx) =>
       <option key={idx} value={skill.id}>
@@ -304,8 +304,8 @@ class Skills extends Component {
                   bsSize='small'
                   onClick={this.openNewModalType('DeleteSkill')}
                   children='Delete'
-                  style={{ marginLeft: '15%', marginTop: '12%' }} 
-                />            
+                  style={{ marginLeft: '15%', marginTop: '12%' }}
+                />
               </WithLogin>
             </td>
           </tr>
@@ -352,9 +352,9 @@ class Skills extends Component {
         <div>
           <Row>
             <Col xs={4} md={4}>
-              <FormControl 
+              <FormControl
                 name='skills'
-                componentClass='select' 
+                componentClass='select'
                 onChange={this.onSkillChange} >
                 {<option selected disabled>Select A Skill...</option>}
                 {skillOptions}
