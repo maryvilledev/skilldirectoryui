@@ -22,10 +22,12 @@ class Skills extends Component {
       isModalDisplayed: false,
       displayedModalType: '',
       currentSkill: {
-        id: '',
+        skill_id: '',
+        ID: 0,
         name: '',
         skill_type: '',
         links: [],
+        icon: '',
       },
       reviews: [],
     };
@@ -144,13 +146,13 @@ class Skills extends Component {
     const postData = {
       link_type: newLinkData.linkType,
       name: newLinkData.linkName,
-      skill_id: this.state.currentSkill.id,
+      skill_id: this.state.currentSkill.ID,
       url: newLinkData.linkUrl,
     };
     axios.post(`${api}/links/`, postData)
     .then(this.closeModal)
     .then(() => {
-      this.loadCurrentSkill(this.state.currentSkill.id);
+      this.loadCurrentSkill(this.state.currentSkill.ID);
     })
     .catch((err) => {
       console.log(err);
@@ -159,7 +161,7 @@ class Skills extends Component {
 
   addSkillReview(newReviewData) {
     const postData = {
-      skill_id: this.state.currentSkill.id,
+      skill_id: this.state.currentSkill.ID,
       team_member_id: newReviewData.teamMemberId,
       body: newReviewData.body,
       positive: newReviewData.positive,
@@ -194,13 +196,15 @@ class Skills extends Component {
         const skillResults = res.data;
         this.setState({
           currentSkill: {
-            skill_id: skillResults.id,
+            skill_id: skillResults.skill_id,
+            ID: skillResults.ID,
             name: skillResults.name,
             skill_type: skillResults.skill_type,
             links: skillResults.links,
-            icon: skillResults.icon,
+            icon: skillResults.icon_url,
           },
         });
+        console.log(this.state.currentSkill)
       })
       .then(this.loadReviews)
       .catch((err) => {
@@ -210,7 +214,7 @@ class Skills extends Component {
   }
 
   loadReviews() {
-    const currentId = this.state.currentSkill.id;
+    const currentId = this.state.currentSkill.ID;
     return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
       .then((response) => {
         const reviews = response.data;
@@ -231,11 +235,12 @@ class Skills extends Component {
   }
 
   deleteSkill() {
-    axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
+    axios.delete(`${api}/skills/${this.state.currentSkill.ID}`)
      .then(() => {
        this.setState({
          currentSkill: {
-           id: '',
+           skill_id: '',
+           ID: 0,
            name: '',
            skill_type: '',
            links: [],
@@ -253,9 +258,10 @@ class Skills extends Component {
   }
 
   onIconSelected(ev) {
+    console.log(this.state.currentSkill);
     // Setup form data for multipart POST request
     const formData = new FormData();
-    formData.append('skill_id', this.state.currentSkill.id)
+    formData.append('skill_id', this.state.currentSkill.ID)
     formData.append('icon', ev.target.files[0])
 
     // Send request to API
@@ -265,8 +271,8 @@ class Skills extends Component {
   }
 
   render() {
-    const currentSkillID = this.state.currentSkill.id;
-    const isSkillSelected = currentSkillID !== "";
+    const currentSkillID = this.state.currentSkill.ID;
+    const isSkillSelected = currentSkillID !== 0;
     const skillOptions = this.state.skills.map((skill, idx) =>
       <option key={idx} value={skill.id}>
         {skill.name}
@@ -286,14 +292,14 @@ class Skills extends Component {
       display = (
         <Grid>
           <Col sm={4} md={3} mdOffset={1} style={{ marginRight: '5%' }}>
-          <Icon
-            icon={this.state.currentSkill.icon}
-            onIconUploaded={this.onIconSelected}
+            <Icon
+              icon={this.state.currentSkill.icon}
+              onIconUploaded={this.onIconSelected}
             />
-          <Row>
-            <table style={{width: '250px'}}>
-              <tr>
-              <td>
+            <Row>
+              <table style={{width: '250px'}}>
+                <tr>
+                  <td>
               <h1>{this.state.currentSkill.name}</h1>
               </td>
               <td>
