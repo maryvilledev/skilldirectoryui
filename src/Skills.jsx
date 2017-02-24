@@ -160,12 +160,14 @@ class Skills extends Component {
   }
 
   addSkillReview(newReviewData) {
+    console.log(newReviewData)
     const postData = {
       skill_id: this.state.currentSkill.ID,
-      team_member_id: newReviewData.teamMemberId,
+      team_member_id: parseInt(newReviewData.team_member_id),
       body: newReviewData.body,
       positive: newReviewData.positive,
     };
+    console.log(postData)
     // Post form data to API endpoint
     return axios.post(`${api}/skillreviews/`, postData)
     .then(this.closeModal)
