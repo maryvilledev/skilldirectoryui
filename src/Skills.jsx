@@ -28,8 +28,8 @@ class Skills extends Component {
         skill_type: '',
         links: [],
         icon: '',
-      },
-      reviews: [],
+        SkillReviews: [],
+      }
     };
 
     // Bind all the things
@@ -46,7 +46,6 @@ class Skills extends Component {
     this.shouldDelete = this.shouldDelete.bind(this);
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
-    this.loadReviews = this.loadReviews.bind(this);
     this.onSkillChange = this.onSkillChange.bind(this);
     this.onIconSelected = this.onIconSelected.bind(this);
   }
@@ -172,7 +171,7 @@ class Skills extends Component {
     return axios.post(`${api}/skillreviews/`, postData)
     .then(this.closeModal)
     .then(() => {
-      this.loadReviews();
+      this.loadCurrentSkill(this.state.currentSkill.ID);
     })
     .catch((err) => {
       console.log(err);
@@ -204,28 +203,14 @@ class Skills extends Component {
             skill_type: skillResults.skill_type,
             links: skillResults.links,
             icon: skillResults.icon_url,
+            SkillReviews: skillResults.SkillReviews,
           },
         });
         console.log(this.state.currentSkill)
       })
-      .then(this.loadReviews)
       .catch((err) => {
         console.log(err);
         this.setState({ isError: true });
-      });
-  }
-
-  loadReviews() {
-    const currentId = this.state.currentSkill.ID;
-    return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
-      .then((response) => {
-        const reviews = response.data;
-        this.setState({
-          reviews,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
@@ -246,8 +231,8 @@ class Skills extends Component {
            name: '',
            skill_type: '',
            links: [],
-         },
-         reviews: [],
+           SkillReviews: [],
+         }
        });
      })
      .then(this.loadSkills)
@@ -281,8 +266,8 @@ class Skills extends Component {
       </option>
     );
     let reviews = null;
-    if (this.state.reviews) {
-      reviews = this.state.reviews.map(review => {
+    if (this.state.currentSkill.SkillReviews) {
+      reviews = this.state.currentSkill.SkillReviews.map(review => {
         return <ReviewPanel review={review} key={review.timestamp}/>
       });
     }
