@@ -26,7 +26,7 @@ class Skills extends Component {
         ID: 0,
         name: '',
         skill_type: '',
-        links: [],
+        Links: [],
         icon: '',
         SkillReviews: [],
       }
@@ -201,7 +201,7 @@ class Skills extends Component {
             ID: skillResults.ID,
             name: skillResults.name,
             skill_type: skillResults.skill_type,
-            links: skillResults.links,
+            links: skillResults.Links,
             icon: skillResults.icon_url,
             SkillReviews: skillResults.SkillReviews,
           },
