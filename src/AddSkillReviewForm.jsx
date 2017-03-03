@@ -13,7 +13,7 @@ const validateInput = (userInput) => {
     alert('Cannot submit empty review.');
     return false;
   }
-  if (userInput.team_member_id === '') {
+  if (userInput.team_member_id === 0) {
     alert('Please select a Team Member.');
     return false;
   }

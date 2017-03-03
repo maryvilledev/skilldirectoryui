@@ -261,7 +261,7 @@ class Skills extends Component {
     const currentSkillID = this.state.currentSkill.ID;
     const isSkillSelected = currentSkillID !== 0;
     const skillOptions = this.state.skills.map((skill, idx) =>
-      <option key={idx} value={skill.id}>
+      <option key={idx} value={skill.ID}>
         {skill.name}
       </option>
     );
@@ -383,7 +383,7 @@ class Skills extends Component {
 
 Skills.propTypes = {
   params: PropTypes.shape({
-    id: PropTypes.string,
+    ID: PropTypes.string,
   }).isRequired,
 };
 
