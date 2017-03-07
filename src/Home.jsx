@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import ReviewPanel from './ReviewPanel.jsx'
+import { Col, Grid } from 'react-bootstrap';
 
 const api = (process.env.REACT_APP_API);
 
@@ -9,7 +11,7 @@ class Home extends React.Component {
     this.state = {
       totalTeamMembers: null,
       totalSkills: null,
-      recentSkillReviews: null,
+      recentReviews: null,
      };
   }
 
@@ -21,31 +23,29 @@ class Home extends React.Component {
       this.setState({ totalSkills: total })
     });
     getRecentSkillReviews(api, reviews => {
-      this.setState({ recentSkillReviews: reviews });
+      this.setState({ recentReviews: reviews });
     }, 5);
   }
 
   render() {
-    let skillReviews = null;
-    if(this.state.recentSkillReviews != null) {
-      skillReviews = this.state.recentSkillReviews.map(skillReview =>
-        <li key={skillReview.ID}>
-            <div>
-              {`${skillReview.TeamMember.name} reviewed the
-                ${skillReview.Skill.name} skill:`}
-            </div>
-            <div>{skillReview.body}</div>
-        </li>
-      );
+    let reviews = null;
+    if (this.state.recentReviews) {
+        reviews = this.state.recentReviews.map(review =>
+          <ReviewPanel review={review} showSkillName={true} />
+        );
     }
+
     return (
-      <div>
-        <h1>Skill Directory Home</h1>
-        <h3>Team Members: <a href="/team">{this.state.totalTeamMembers}</a></h3>
-        <h3>Unique Skills: <a href="/skills">{this.state.totalSkills}</a></h3>
-        {skillReviews == null ? null : <h3>Recent Skill Reviews:</h3>}
-        <ul>{skillReviews}</ul>
-      </div>
+      <Grid>
+      <Col sm={4} md={3} mdOffset={1}>
+      <h3>Team Members: <a href="/team">{this.state.totalTeamMembers}</a></h3>
+      <h3>Unique Skills: <a href="/skills">{this.state.totalSkills}</a></h3>
+      </Col>
+      <Col sm={10} md={7}>
+      {reviews == null ? null : <h3>Recent Skill Reviews:</h3>}
+      {reviews}
+      </Col>
+      </Grid>
     );
   }
 }
@@ -95,8 +95,8 @@ function getRecentSkillReviews(api, callback, numReviews) {
 
 // Sorts arguments by their timestamp field.
 function sortByTimestamp(a, b) {
-  const aTime = new Date(a.timestamp).getTime();
-  const bTime = new Date(b.timestamp).getTime();
+  const aTime = new Date(a.UpdatedAt).getTime();
+  const bTime = new Date(b.UpdatedAt).getTime();
   if(aTime < bTime)
     return 1;
   else if(aTime > bTime)

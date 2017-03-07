@@ -332,7 +332,7 @@ class Skills extends Component {
           </tr>
           </table>
         </Row>
-        <Row style={{ "margin-top": 15 }}>
+        <Row>
           {reviewList}
         </Row>
       </Col>
