@@ -1,6 +1,8 @@
 import React from 'react';
 import cookie from 'react-cookie';
+import { Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
+import gitIcon from '../resources/github-icon.png';
 
 const client_id = (process.env.REACT_APP_GITHUB_CLIENT_ID);
 const authURL = `https://github.com/login/oauth/authorize?scope=user:email%20read:org&client_id=${client_id}`;
@@ -9,7 +11,6 @@ const logOut = () => {
   cookie.save('isLoggedIn', false);
   cookie.remove('user_id');
   cookie.remove('name');
-  cookie.remove('login');
   cookie.remove('avatar_url');
   cookie.remove('github_token');
   browserHistory.push('/home');
@@ -23,38 +24,42 @@ const isLoggedIn = () => {
   return cookieValue === true || cookieValue === 'true';
 }
 
-const displayName = () => {
-  const name = cookie.load('name');
-  // If the user doesn't have a name field, it will be stored as 'null' (string),
-  // so manually check that the value isn't null
-  if (!name || name === 'null') {
-    return cookie.load('login');
-  }
-  return name;
-}
-
 const LoginLink = () => {
   if (isLoggedIn()) {
-    return (
-      <div>
+    const title = (
+      <span>
         <img
-          alt="Github Avatar"
-          height={50}
-          src={cookie.load("avatar_url")}
-          width={50}
+          alt='Github Avatar'
+          src={cookie.load('avatar_url')}
+          width='35'
+          style={{ paddingRight: '10px' }}
         />
-      Hello <span id="displayName">{ displayName() }</span>! | <span onClick={logOut}>Log out</span>
-      </div>
+        <b style={{ paddingRight: '5px' }}>{cookie.load('name')}</b>
+      </span>
+    );
+    return (
+      <DropdownButton 
+        bsStyle='default' 
+        title={title}  
+        style={{ padding: '5px' }}
+      >
+        <MenuItem onClick={logOut}> Log out</MenuItem>
+      </DropdownButton>
     );
   }
   return (
-    <div>
-      <a
-        href={authURL}
+      <Button
+        onClick={ () => window.location = authURL }
+        bsStyle='default'
+        bsSize='small' 
       >
-        Sign in to Github
-      </a>
-    </div>
+        <img 
+          role='presentation'
+          src={gitIcon} 
+          width='28' 
+          style={{ paddingRight: '8%'}} />
+        <b>Login with Github</b>
+      </Button>
   )
 };
 

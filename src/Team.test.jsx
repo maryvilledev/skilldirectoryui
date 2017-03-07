@@ -62,13 +62,13 @@ describe('<Team />', () => {
     describe('the delete button', () => {
       it('appears when a team member is selected', () => {
         const wrapper = mount(<Team />);
-        wrapper.setState({ currentTeamMember: { id: '1' } });
+        wrapper.setState({ currentTeamMember: { ID: 1 } });
         const deleteButton = wrapper.find('[name="DeleteTeamMember"]');
         expect(deleteButton).toHaveLength(1);
       });
       it('opens a DeleteModal when clicked', () => {
         const wrapper = mount(<Team />);
-        wrapper.setState({ currentTeamMember: { id: '1' } });
+        wrapper.setState({ currentTeamMember: { ID: 1 } });
         const teamModalContainer = wrapper.find(TeamModalContainer);
         const deleteButton = wrapper.find('[name="DeleteTeamMember"]');
         expect(teamModalContainer.prop('isModalDisplayed')).toBe(false);

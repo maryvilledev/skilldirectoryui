@@ -8,8 +8,8 @@ const api = (process.env.REACT_APP_API);
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      totalTeamMembers: null, 
+    this.state = {
+      totalTeamMembers: null,
       totalSkills: null,
       recentReviews: null,
      };
@@ -30,11 +30,11 @@ class Home extends React.Component {
   render() {
     let reviews = null;
     if (this.state.recentReviews) {
-        reviews = this.state.recentReviews.map(review => 
+        reviews = this.state.recentReviews.map(review =>
           <ReviewPanel review={review} showSkillName={true} />
         );
     }
-    
+
     return (
       <Grid>
       <Col sm={4} md={3} mdOffset={1}>
@@ -78,6 +78,7 @@ function getSkillReviewsSorted(api, callback, sortFunc) {
   axios.get(api + '/skillreviews/')
     .then(res => {
       callback(res.data.sort(sortFunc));
+      console.log(res.data)
     })
     .catch(err => {
       console.error(err)
@@ -88,14 +89,14 @@ function getSkillReviewsSorted(api, callback, sortFunc) {
 // Size of array is bounded by `numReviews`. Lower elements hold more recent
 // reviews, so [0] is most recent one.
 function getRecentSkillReviews(api, callback, numReviews) {
-  getSkillReviewsSorted(api, 
+  getSkillReviewsSorted(api,
   skillReviews => callback(skillReviews.slice(0, numReviews)), sortByTimestamp);
 }
 
 // Sorts arguments by their timestamp field.
 function sortByTimestamp(a, b) {
-  const aTime = new Date(a.timestamp).getTime();
-  const bTime = new Date(b.timestamp).getTime();
+  const aTime = new Date(a.UpdatedAt).getTime();
+  const bTime = new Date(b.UpdatedAt).getTime();
   if(aTime < bTime)
     return 1;
   else if(aTime > bTime)

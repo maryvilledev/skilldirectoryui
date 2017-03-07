@@ -4,29 +4,29 @@ import ImagePlaceholder from '../resources/icon-placeholder.png'
 
 /*
   Icon is a clickable image component. When it is clicked, it brings up a file
-chooser window. If the user selects a file, the uploaded file is passed into 
+chooser window. If the user selects a file, the uploaded file is passed into
 the callback defined by the onIconUploaded pop.
   If the icon prop is undefined or null, then the default image placeholder will
 be displayed.
 */
-const Icon = ({ icon, onIconUploaded }) => { 
+const Icon = ({ icon, onIconUploaded }) => {
   let imgSrc = ImagePlaceholder;
-  if (icon && icon.url !== '')
-    imgSrc = icon.url;
+  if (icon !== '')
+    imgSrc = icon;
   const fileChooserID = 'file-chooser';
   const onImgClicked  = () => document.getElementById(fileChooserID).click();
 
   return (
-    <span> 
+    <span>
       <img
         src={imgSrc}
         alt='Skill Icon'
         width='210'
         onClick={onImgClicked}
-        style={{ 
-          'margin-top': '30px', 
+        style={{
+          'margin-top': '30px',
           'cursor': 'pointer',
-        }} 
+        }}
       />
       <WithLogin>
         <input
@@ -34,11 +34,11 @@ const Icon = ({ icon, onIconUploaded }) => {
           type='file'
           multiple size='1'
           onChange={onIconUploaded}
-          style={{ 
+          style={{
             'visibility': 'hidden',
-            'width': 0, 
+            'width': 0,
             'height': 0,
-          }} 
+          }}
         />
       </WithLogin>
     </span>

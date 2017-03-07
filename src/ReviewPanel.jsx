@@ -5,18 +5,21 @@ const ReviewPanel = ({ review, showSkillName }) => {
   if(!review) return null;
 
   const body    = review.body;
-  const time    = review.timestamp;
-  const tmID    = review.team_member_id;
-  const skillID = review.skill_id;
+  const time    = review.CreatedAt;
+  const tmID    = review.TeamMember.ID;
+  const skillID = review.Skill.ID;
+
+  console.log(review)
+  console.log(skillID)
 
   const reviewer  = (
     <a href={`/team/${tmID}`} style={{ textDecoration: 'underline' }}>
-      {review.team_member_name}
-    </a> 
+      {review.TeamMember.name}
+    </a>
   );
   const skillName = (
     <a href={`/skills/${skillID}`} style={{ textDecoration: 'underline' }}>
-      {review.skill_name}
+      {review.Skill.name}
     </a>
   );
 

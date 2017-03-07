@@ -20,7 +20,7 @@ class Team extends React.Component {
       isModalDisplayed: false,
       displayedModalType: '',
       currentTeamMember: {
-        id: '',
+        ID: '',
         name: '',
         title: '',
       },
@@ -57,14 +57,14 @@ class Team extends React.Component {
         const teamMemberData = result.data;
         this.setState({
           currentTeamMember: {
-            id: teamMemberData.id,
+            ID: teamMemberData.ID,
             name: teamMemberData.name,
             title: teamMemberData.title,
           },
         });
       })
       .then(() => {
-        browserHistory.push(`/team/${this.state.currentTeamMember.id}`);
+        browserHistory.push(`/team/${this.state.currentTeamMember.ID}`);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -129,7 +129,7 @@ class Team extends React.Component {
         const result = res.data;
         this.setState({
           currentTeamMember: {
-            id:    result.id,
+            ID:    result.ID,
             name:  result.name,
             title: result.title,
           },
@@ -158,11 +158,11 @@ class Team extends React.Component {
   }
 
   deleteTeamMember() {
-    axios.delete(`${api}/teammembers/${this.state.currentTeamMember.id}`)
+    axios.delete(`${api}/teammembers/${this.state.currentTeamMember.ID}`)
       .then(() => {
         this.setState({
           currentTeamMember: {
-            id: '',
+            ID: '',
             name: '',
             title: '',
           },
@@ -181,11 +181,11 @@ class Team extends React.Component {
   render() {
     let selectedItem = null;
     const tmOptions = this.state.teamMembers.map((teamMember, idx) =>
-      <option key={idx} value={teamMember.id}>
+      <option key={idx} value={teamMember.ID}>
         {teamMember.name}
       </option>
     );
-    if (this.state.currentTeamMember.id) {
+    if (this.state.currentTeamMember.ID) {
       selectedItem = (
         <ItemDisplayer
           typeName="TeamMember"
@@ -201,9 +201,9 @@ class Team extends React.Component {
       <div>
         <Row>
           <Col xs={4} md={4}>
-            <FormControl 
+            <FormControl
               name='teamMembers'
-              componentClass='select' 
+              componentClass='select'
               onChange={this.onSelectChange} >
               {<option selected disabled>Select A Team Member...</option>}
               {tmOptions}
