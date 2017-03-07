@@ -6,8 +6,8 @@ const api = (process.env.REACT_APP_API);
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      totalTeamMembers: null, 
+    this.state = {
+      totalTeamMembers: null,
       totalSkills: null,
       recentSkillReviews: null,
      };
@@ -29,10 +29,10 @@ class Home extends React.Component {
     let skillReviews = null;
     if(this.state.recentSkillReviews != null) {
       skillReviews = this.state.recentSkillReviews.map(skillReview =>
-        <li key={skillReview.id}>
+        <li key={skillReview.ID}>
             <div>
-              {`${skillReview.team_member_name} reviewed the 
-                ${skillReview.skill_name} skill:`}
+              {`${skillReview.TeamMember.name} reviewed the
+                ${skillReview.Skill.name} skill:`}
             </div>
             <div>{skillReview.body}</div>
         </li>
@@ -78,6 +78,7 @@ function getSkillReviewsSorted(api, callback, sortFunc) {
   axios.get(api + '/skillreviews/')
     .then(res => {
       callback(res.data.sort(sortFunc));
+      console.log(res.data)
     })
     .catch(err => {
       console.error(err)
@@ -88,7 +89,7 @@ function getSkillReviewsSorted(api, callback, sortFunc) {
 // Size of array is bounded by `numReviews`. Lower elements hold more recent
 // reviews, so [0] is most recent one.
 function getRecentSkillReviews(api, callback, numReviews) {
-  getSkillReviewsSorted(api, 
+  getSkillReviewsSorted(api,
   skillReviews => callback(skillReviews.slice(0, numReviews)), sortByTimestamp);
 }
 
