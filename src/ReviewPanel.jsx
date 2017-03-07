@@ -5,9 +5,9 @@ const ReviewPanel = ({review}) => {
   if(!review) return <div />;
 
   const body=review.body;
-  const time = review.timestamp;
+  const time = review.CreatedAt;
   const good = review.positive;
-  const reviewer = review.team_member_name;
+  const reviewer = review.TeamMember.name;
   const header = reviewer + " on " + new Date(time).toDateString();
   let color = null;
   if (good) {

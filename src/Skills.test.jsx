@@ -31,19 +31,19 @@ describe('<Skills />', () => {
     describe('when a skill is selected', () => {
       it('should not display the Add Link button', () => {
         const wrapper = mount(<Skills/>);
-        wrapper.setState({ currentSkill: { skill_id: '1' } });
+        wrapper.setState({ currentSkill: { skill_id: 1 } });
         const addLinkButton = wrapper.find('[name="AddLink"]');
         expect(addLinkButton).toHaveLength(0);
       });
       it('should not display the Add Review button', () => {
         const wrapper = mount(<Skills/>);
-        wrapper.setState({ currentSkill: { skill_id: '1' } });
+        wrapper.setState({ currentSkill: { skill_id: 1 } });
         const addReviewButton = wrapper.find('[name="AddReview"]');
         expect(addReviewButton).toHaveLength(0);
       });
       it('should not display the Delete Skill button', () => {
         const wrapper = mount(<Skills/>);
-        wrapper.setState({ currentSkill: { skill_id: '1' } });
+        wrapper.setState({ currentSkill: { skill_id: 1 } });
         const deleteButton = wrapper.find('[name="DeleteSkill"]');
         expect(deleteButton).toHaveLength(0);
       });
@@ -106,13 +106,13 @@ describe('<Skills />', () => {
       describe('the Add Link button', () => {
         it('should be displayed', () => {
           const wrapper = mount(<Skills/>);
-          wrapper.setState({ currentSkill: { skill_id: '1' } });
+          wrapper.setState({ currentSkill: { skill_id: 1 } });
           const addLinkButton = wrapper.find('[name="AddLink"]');
           expect(addLinkButton).toHaveLength(1);
         });
         it('opens an AddSkillLinkForm when clicked', () => {
           const wrapper = mount(<Skills />);
-          wrapper.setState({ currentSkill: { skill_id: '1' } });
+          wrapper.setState({ currentSkill: { skill_id: 1 } });
           const skillModalWrapper = wrapper.find(SkillModalContainer);
           const addLinkButton = wrapper.find('[name="AddLink"]');
           expect(skillModalWrapper.prop('isModalDisplayed')).toBe(false);
@@ -125,13 +125,13 @@ describe('<Skills />', () => {
       describe('the Add Review button', () => {
         it('should be displayed', () => {
           const wrapper = mount(<Skills/>);
-          wrapper.setState({ currentSkill: { skill_id: '1' } });
+          wrapper.setState({ currentSkill: { ID: 1 } });
           const addReviewButton = wrapper.find('[name="AddReview"]');
           expect(addReviewButton).toHaveLength(1);
         });
         it('opens a SkillReviewsForm when clicked', () => {
           const wrapper = mount(<Skills />);
-          wrapper.setState({ currentSkill: { skill_id: '1' } });
+          wrapper.setState({ currentSkill: { ID: 1 } });
           const skillModalWrapper = wrapper.find(SkillModalContainer);
           const addReviewButton = wrapper.find('[name="AddReview"]');
           expect(skillModalWrapper.prop('isModalDisplayed')).toBe(false);
@@ -144,13 +144,13 @@ describe('<Skills />', () => {
       describe('the Delete Skill button', () => {
         it('should be displayed', () => {
           const wrapper = mount(<Skills/>);
-          wrapper.setState({ currentSkill: { skill_id: '1' } });
+          wrapper.setState({ currentSkill: { ID: 1 } });
           const deleteButton = wrapper.find('[name="DeleteSkill"]');
           expect(deleteButton).toHaveLength(1);
         });
         it('opens a DeleteModal when clicked', () => {
           const wrapper = mount(<Skills />);
-          wrapper.setState({ currentSkill: { skill_id: '1' } });
+          wrapper.setState({ currentSkill: { ID: 1 } });
           const skillModalWrapper = wrapper.find(SkillModalContainer);
           const deleteButton = wrapper.find('[name="DeleteSkill"]');
           expect(skillModalWrapper.prop('isModalDisplayed')).toBe(false);

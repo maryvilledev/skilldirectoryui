@@ -13,7 +13,7 @@ const validateInput = (userInput) => {
     alert('Cannot submit empty review.');
     return false;
   }
-  if (userInput.teamMemberId === '') {
+  if (userInput.team_member_id === 0) {
     alert('Please select a Team Member.');
     return false;
   }
@@ -25,7 +25,7 @@ class AddSkillReviewForm extends React.Component {
     super(props);
     this.state = {
       teamMembers: null,
-      teamMemberId: '',
+      team_member_id: 0,
       positive: true,
       body: '',
     };
@@ -40,6 +40,7 @@ class AddSkillReviewForm extends React.Component {
     axios.get(`${this.props.api}/teammembers/`)
       .then((result) => {
         this.setState({ teamMembers: result.data });
+        console.log(result.data)
       })
       .catch((err) => {
         console.log(`Error GETing team members: ${err}`);
@@ -68,7 +69,7 @@ class AddSkillReviewForm extends React.Component {
   }
 
   onTeamMemberChange(ev) {
-    this.onChange('teamMemberId')(ev.target.value);
+    this.onChange('team_member_id')(ev.target.value);
   }
 
   onSubmit(ev) {
@@ -87,8 +88,8 @@ class AddSkillReviewForm extends React.Component {
       teamMembers = this.state.teamMembers.map((teamMember) => {
         return (
           <option
-            key={teamMember.id}
-            value={teamMember.id}
+            key={teamMember.ID}
+            value={teamMember.ID}
           >
             {teamMember.name}
           </option>

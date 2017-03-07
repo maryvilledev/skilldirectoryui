@@ -23,11 +23,13 @@ class Skills extends Component {
       displayedModalType: '',
       currentSkill: {
         skill_id: '',
+        ID: 0,
         name: '',
         skill_type: '',
-        links: [],
-      },
-      reviews: [],
+        Links: [],
+        icon: '',
+        SkillReviews: [],
+      }
     };
 
     // Bind all the things
@@ -44,7 +46,6 @@ class Skills extends Component {
     this.shouldDelete = this.shouldDelete.bind(this);
     this.loadSkills = this.loadSkills.bind(this);
     this.loadCurrentSkill = this.loadCurrentSkill.bind(this);
-    this.loadReviews = this.loadReviews.bind(this);
     this.onSkillChange = this.onSkillChange.bind(this);
     this.onIconSelected = this.onIconSelected.bind(this);
   }
@@ -144,13 +145,13 @@ class Skills extends Component {
     const postData = {
       link_type: newLinkData.linkType,
       name: newLinkData.linkName,
-      skill_id: this.state.currentSkill.skill_id,
+      skill_id: this.state.currentSkill.ID,
       url: newLinkData.linkUrl,
     };
     axios.post(`${api}/links/`, postData)
     .then(this.closeModal)
     .then(() => {
-      this.loadCurrentSkill(this.state.currentSkill.skill_id);
+      this.loadCurrentSkill(this.state.currentSkill.ID);
     })
     .catch((err) => {
       console.log(err);
@@ -158,17 +159,19 @@ class Skills extends Component {
   }
 
   addSkillReview(newReviewData) {
+    console.log(newReviewData)
     const postData = {
-      skill_id: this.state.currentSkill.skill_id,
-      team_member_id: newReviewData.teamMemberId,
+      skill_id: this.state.currentSkill.ID,
+      team_member_id: parseInt(newReviewData.team_member_id),
       body: newReviewData.body,
       positive: newReviewData.positive,
     };
+    console.log(postData)
     // Post form data to API endpoint
     return axios.post(`${api}/skillreviews/`, postData)
     .then(this.closeModal)
     .then(() => {
-      this.loadReviews();
+      this.loadCurrentSkill(this.state.currentSkill.ID);
     })
     .catch((err) => {
       console.log(err);
@@ -194,32 +197,20 @@ class Skills extends Component {
         const skillResults = res.data;
         this.setState({
           currentSkill: {
-            skill_id: skillResults.id,
+            skill_id: skillResults.skill_id,
+            ID: skillResults.ID,
             name: skillResults.name,
             skill_type: skillResults.skill_type,
-            links: skillResults.links,
-            icon: skillResults.icon,
+            links: skillResults.Links,
+            icon: skillResults.icon_url,
+            SkillReviews: skillResults.SkillReviews,
           },
         });
+        console.log(this.state.currentSkill)
       })
-      .then(this.loadReviews)
       .catch((err) => {
         console.log(err);
         this.setState({ isError: true });
-      });
-  }
-
-  loadReviews() {
-    const currentId = this.state.currentSkill.skill_id;
-    return axios.get(`${api}/skillreviews?skill_id=${currentId}`)
-      .then((response) => {
-        const reviews = response.data;
-        this.setState({
-          reviews,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }
 
@@ -231,16 +222,17 @@ class Skills extends Component {
   }
 
   deleteSkill() {
-    axios.delete(`${api}/skills/${this.state.currentSkill.skill_id}`)
+    axios.delete(`${api}/skills/${this.state.currentSkill.ID}`)
      .then(() => {
        this.setState({
          currentSkill: {
            skill_id: '',
+           ID: 0,
            name: '',
            skill_type: '',
            links: [],
-         },
-         reviews: [],
+           SkillReviews: [],
+         }
        });
      })
      .then(this.loadSkills)
@@ -253,9 +245,10 @@ class Skills extends Component {
   }
 
   onIconSelected(ev) {
+    console.log(this.state.currentSkill);
     // Setup form data for multipart POST request
     const formData = new FormData();
-    formData.append('skill_id', this.state.currentSkill.skill_id)
+    formData.append('skill_id', this.state.currentSkill.ID)
     formData.append('icon', ev.target.files[0])
 
     // Send request to API
@@ -265,16 +258,16 @@ class Skills extends Component {
   }
 
   render() {
-    const currentSkillID = this.state.currentSkill.skill_id;
-    const isSkillSelected = currentSkillID !== "";
+    const currentSkillID = this.state.currentSkill.ID;
+    const isSkillSelected = currentSkillID !== 0;
     const skillOptions = this.state.skills.map((skill, idx) =>
-      <option key={idx} value={skill.id}>
+      <option key={idx} value={skill.ID}>
         {skill.name}
       </option>
     );
     let reviews = null;
-    if (this.state.reviews) {
-      reviews = this.state.reviews.map(review => {
+    if (this.state.currentSkill.SkillReviews) {
+      reviews = this.state.currentSkill.SkillReviews.map(review => {
         return <ReviewPanel review={review} key={review.timestamp}/>
       });
     }
@@ -286,14 +279,14 @@ class Skills extends Component {
       display = (
         <Grid>
           <Col sm={4} md={3} mdOffset={1} style={{ marginRight: '5%' }}>
-          <Icon
-            icon={this.state.currentSkill.icon}
-            onIconUploaded={this.onIconSelected}
+            <Icon
+              icon={this.state.currentSkill.icon}
+              onIconUploaded={this.onIconSelected}
             />
-          <Row>
-            <table style={{width: '250px'}}>
-              <tr>
-              <td>
+            <Row>
+              <table style={{width: '250px'}}>
+                <tr>
+                  <td>
               <h1>{this.state.currentSkill.name}</h1>
               </td>
               <td>
@@ -304,8 +297,8 @@ class Skills extends Component {
                   bsSize='small'
                   onClick={this.openNewModalType('DeleteSkill')}
                   children='Delete'
-                  style={{ marginLeft: '15%', marginTop: '12%' }} 
-                />            
+                  style={{ marginLeft: '15%', marginTop: '12%' }}
+                />
               </WithLogin>
             </td>
           </tr>
@@ -352,9 +345,9 @@ class Skills extends Component {
         <div>
           <Row>
             <Col xs={4} md={4}>
-              <FormControl 
+              <FormControl
                 name='skills'
-                componentClass='select' 
+                componentClass='select'
                 onChange={this.onSkillChange} >
                 {<option selected disabled>Select A Skill...</option>}
                 {skillOptions}
@@ -390,7 +383,7 @@ class Skills extends Component {
 
 Skills.propTypes = {
   params: PropTypes.shape({
-    id: PropTypes.string,
+    ID: PropTypes.string,
   }).isRequired,
 };
 

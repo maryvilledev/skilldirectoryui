@@ -20,7 +20,7 @@ class Team extends React.Component {
       isModalDisplayed: false,
       displayedModalType: '',
       selectedTeamMember: {
-        id: '',
+        ID: '',
         name: '',
         title: '',
       },
@@ -47,14 +47,14 @@ class Team extends React.Component {
         const teamMemberData = result.data;
         this.setState({
           selectedTeamMember: {
-            id: teamMemberData.id,
+            ID: teamMemberData.ID,
             name: teamMemberData.name,
             title: teamMemberData.title,
           },
         });
       })
       .then(() => {
-        browserHistory.push(`/team/${this.state.selectedTeamMember.id}`);
+        browserHistory.push(`/team/${this.state.selectedTeamMember.ID}`);
       })
       .catch((err) => {
         console.log(`Error: ${err}`);
@@ -133,11 +133,11 @@ class Team extends React.Component {
   }
 
   deleteTeamMember() {
-    axios.delete(`${api}/teammembers/${this.state.selectedTeamMember.id}`)
+    axios.delete(`${api}/teammembers/${this.state.selectedTeamMember.ID}`)
       .then(() => {
         this.setState({
           selectedTeamMember: {
-            id: '',
+            ID: '',
             name: '',
             title: '',
           },
@@ -156,11 +156,11 @@ class Team extends React.Component {
   render() {
     let selectedItem = null;
     const tmOptions = this.state.teamMembers.map((teamMember, idx) =>
-      <option key={idx} value={teamMember.id}>
+      <option key={idx} value={teamMember.ID}>
         {teamMember.name}
       </option>
     );
-    if (this.state.selectedTeamMember.id) {
+    if (this.state.selectedTeamMember.ID) {
       selectedItem = (
         <ItemDisplayer
           typeName="TeamMember"
@@ -176,9 +176,9 @@ class Team extends React.Component {
       <div>
         <Row>
           <Col xs={4} md={4}>
-            <FormControl 
+            <FormControl
               name='teamMembers'
-              componentClass='select' 
+              componentClass='select'
               onChange={this.onSelectChange} >
               {<option selected disabled>Select A Team Member...</option>}
               {tmOptions}
